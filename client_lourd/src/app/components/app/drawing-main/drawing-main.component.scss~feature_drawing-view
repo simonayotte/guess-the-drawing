@@ -1,0 +1,20 @@
+.drawing-main {
+    display: flex;
+    position: fixed;
+    flex-direction: row;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: #888888;
+    overflow: scroll;
+}
+
+toolbar {
+    order: 1;
+}
+
+drawing {
+    order: 2;
+    align-self: flex-start;
+}

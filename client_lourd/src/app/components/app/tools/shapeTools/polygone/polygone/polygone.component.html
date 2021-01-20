@@ -1,0 +1,5 @@
+<h1>{{name}}</h1>
+<p class="number-sides">Nombres de côtés :
+  <input #numberSidesInput [(ngModel)]="numberSides" (keyup)="onInput($event)" (change)="onValueChange($event)" type="number" min="3" max="12"/>
+</p>
+<app-shape-tool [shapeTool]="tool"></app-shape-tool>

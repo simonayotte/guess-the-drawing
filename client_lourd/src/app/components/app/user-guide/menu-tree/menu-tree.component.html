@@ -1,0 +1,39 @@
+<mat-tree [dataSource]="menu" [treeControl]="treeControl" class="menu">
+
+  <!-- leaf nodes -->
+  <mat-tree-node *matTreeNodeDef="let menuItem">
+    <li class="menuItem">
+      
+      <button [class.description-selected]="descriptionIsSelected(menuItem.id)" mat-button (click)='displayDescription(menuItem.id)'>
+        <mat-icon></mat-icon>
+        {{menuItem.name}}
+      </button>
+    </li>
+  </mat-tree-node>
+
+  
+  <!-- expandable nodes -->
+  <mat-nested-tree-node *matTreeNodeDef="let menuItem; when: hasChild">
+    
+    <li>
+      <div class="menuItem">
+
+        <button mat-button matTreeNodeToggle (click)=resetMenuExpansion()>
+          <mat-icon *ngIf="!menuIsExpanded()">
+            {{treeControl.isExpanded(menuItem) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+          <mat-icon *ngIf="menuIsExpanded()">{{'expand_more' }}</mat-icon>
+          {{menuItem.name}}
+        </button>
+        
+      </div>
+  
+      <ul [class.tree-invisible]="categoryIsHidden(menuItem)">
+        <ng-container *ngIf="menuIsExpanded()"> {{treeControl.expand(menuItem)}}</ng-container>
+        <ng-container matTreeNodeOutlet></ng-container>
+      </ul>
+
+    </li>
+  </mat-nested-tree-node>
+
+</mat-tree>

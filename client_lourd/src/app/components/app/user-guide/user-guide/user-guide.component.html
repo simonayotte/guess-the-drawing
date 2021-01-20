@@ -1,0 +1,28 @@
+
+<mat-sidenav-container class="user-guide">
+
+    <mat-sidenav class="menu" mode="side" opened>
+        <menu-tree></menu-tree>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-card class=description>
+            <mat-card-actions align="start">
+                <button mat-button class="navigation" id="back" (click)='closeDialog()'>Retour</button>
+                <button mat-button class="navigation" id="previous" [disabled]= "isFirstDescription() " (click)=previousDescription()>Précédent</button>
+                <button mat-button class="navigation" id="next" [disabled]= "isLastDescription()" (click)=nextDescription()>Suivant</button>
+            </mat-card-actions>
+
+            <mat-card-title class="title">
+              {{getDescriptionTitle()}}
+            </mat-card-title>
+
+            <mat-card-content class="paragraph" *ngFor=' let  paragraph of getDescriptionParagraphs() '>
+                {{paragraph}}
+            </mat-card-content>
+        </mat-card>
+
+
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

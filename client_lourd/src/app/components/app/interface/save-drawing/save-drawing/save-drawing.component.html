@@ -1,0 +1,52 @@
+<div>
+  <div id = 'divFermer'>
+      <button mat-raised-button (click)="closeDialog()">Retour</button>
+  </div>
+  <h2>Sauvegarde Dessin</h2>
+  <div class='columns'>
+
+    <div id='inputs'>
+      <div id='name'>
+        <h4>Entrez un nom: </h4>
+        <p>Le nom est obligatoire</p>
+        <mat-form-field appearance="fill">
+          <mat-label>Nom</mat-label>
+          <input matInput #name class='inputs' (keyup)="onInputChangeName(name.value, $event)">
+        </mat-form-field>
+      </div>
+
+      <div id='tags'>
+        <h4>Entrez un/des tag(s):</h4>
+        <p>Le tag est facultatif</p>
+        <mat-form-field appearance="fill" id=chip-list>
+          <input placeholder="Tags" matInput #tag class='inputs' (keyup)="onInputChangeTag(tag.value, $event)">
+          <br>
+          <br>
+          <button #btnAddTag  mat-raised-button (click)="addTag()" (click)="resetValue()" disabled='btnAddTag()'>Ajouter tag</button>
+          <br>
+          <br>
+          <mat-chip-list>
+            <mat-chip *ngFor='let tag of tags' (removed)="removeTag(tag)">
+                {{tag}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+      <div id = 'specification'>
+        <p>Le tag et le nom doivent respecter ces conditions:<br>
+        &nbsp;&nbsp;&nbsp;- Min: 2 caractères, Max: 50 caractères<br>
+        &nbsp;&nbsp;&nbsp;- Contenir que des lettres et/ou des chiffres<br>
+        &nbsp;&nbsp;&nbsp;- AUCUN CARACTÈRES SPÉCIAUX OU D'ESPACES (ex:!"/$%?&*)</p>
+      </div>
+      <div id = 'previsualisation'>
+        <h4>Prévisualisation</h4>
+        <mat-card-content>
+          <canvas #canvas id="previewCanvas" width="200" height="200"></canvas>
+        </mat-card-content>
+        <br>
+        <button #btnSaveDrawing  mat-raised-button (click)='saveDrawing()' disabled='btnSaveDrawing()'>Sauvegarder dessin</button>
+      </div>
+    </div>
+  </div>
+<canvas #exportCanvas [hidden]="true"></canvas>
