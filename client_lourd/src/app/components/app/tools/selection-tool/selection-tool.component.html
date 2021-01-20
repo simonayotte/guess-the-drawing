@@ -1,0 +1,21 @@
+<div class="toolAttributes">
+    <h1>Outil de</h1>
+    <h1>Sélection</h1>
+    <div>
+        <button mat-fab class="material" [disabled] = 'selectedElementsService.selectedElements.value.length === 0' [ngClass]='navigationButton' (click) = 'onCtrlC()'> 
+            <img class="icon" width="24" height="24" src="/assets/iconPictures/copy.svg">    
+        </button>
+        <button mat-fab class="material" [disabled] = 'this.clipBoardService.clipBoardContent.length === 0' [ngClass]='navigationButton' (click) = 'onCtrlV()'> 
+            <img class="icon" width="24" height="24" src="/assets/iconPictures/paste.svg"> 
+        </button>
+    </div>
+    <button mat-fab class="material" [disabled] = 'selectedElementsService.selectedElements.value.length === 0' [ngClass]='navigationButton' (click) = 'onCtrlX()'>
+        <img class="icon" width="24" height="24" src="/assets/iconPictures/scissors.svg"> 
+    </button>
+    <button mat-fab class="material" [disabled] = 'selectedElementsService.selectedElements.value.length === 0' [ngClass]='navigationButton' (click) = 'onCtrlD()'>
+        <img class="icon" width="24" height="24" src="/assets/iconPictures/duplicate.svg"> 
+    </button>
+    <button mat-fab class="material" [disabled] = 'selectedElementsService.selectedElements.value.length === 0' [ngClass]='navigationButton' (click) = 'onDelete()'>
+        <img class="icon" width="24" height="24" src="/assets/iconPictures/bin.svg"> 
+    </button>
+</div>

@@ -1,0 +1,23 @@
+<div>
+    <div id = 'divFermer'>
+        <button mat-raised-button (click) = "closeDialog()">Retour</button>
+    </div>
+    <div id = 'titre'>
+        <h2>Nouveau Dessin</h2>
+    </div>
+        <ol>
+            <li>
+                <p>Entrer la largeur: </p>
+                <input #width class = 'inputs' (keyup) = "onInputChangeWidth(width.value, $event)">
+            </li>
+            <li>
+                <p>Entrer la hauteur: </p>
+                <input #height class = 'inputs' (keyup) =  "onInputChangeHeight(height.value, $event)">
+            </li>
+            <li>
+                <app-color-picker (drawingCanBeCreated) = "buttonIsDisplayed($event)"></app-color-picker></li>
+            <li id = 'alignedBtn'>
+                <button [disabled] = "!drawingCanBeCreated()" mat-raised-button routerLink="/draw" (click) = "createNewDrawing()">Créer nouveau dessin</button>
+            </li>
+        </ol>
+</div>

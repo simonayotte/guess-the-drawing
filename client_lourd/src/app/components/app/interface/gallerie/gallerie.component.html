@@ -1,0 +1,48 @@
+<div id="gallerie">
+  <div id='tags'>
+    <h4>Entrez un/des tag(s):</h4>
+    <p>Le tag est facultatif</p>
+    <mat-form-field appearance="fill" id=chip-list>
+      <input placeholder="Tags" matInput #tag class='inputs' (keyup)="onInputChangeTag(tag.value, $event)">
+      <br>
+      <br>
+      <button #btnAddTag  mat-raised-button (mousedown)="addTag()" (mousedown)="resetValue()" disabled='btnAddTag()'>Ajouter tag</button>
+      <br>
+      <br>
+      <mat-chip-list>
+        <mat-chip *ngFor='let tag of tags' (removed)="removeTag(tag)">
+            {{tag}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field>
+    <button mat-raised-button  (mousedown)='search()'>
+      SEARCH
+    </button>
+  </div>
+  <div id="metaDatas">
+    <div class="metaData" *ngFor= "let data of metaDataDB">
+      <h1 class="title">
+        {{data.name}}
+      </h1>
+      <div id="chipList" *ngFor= "let tag of data.tags">
+        <div class="chip">{{tag}}</div>
+      </div>
+      <canvas id="{{data._id}}"></canvas>
+      
+      <button mat-raised-button id="open" (mousedown)='openDrawing(data)'>
+        Open
+      </button>
+      <button mat-raised-button id="delete" (mousedown)='deleteDrawing(data._id)'>
+        Delete
+      </button>
+    </div>
+  </div>
+  <div *ngIf='isDrawings()'>
+    <h1 *ngIf='!loading'>
+      Il n'y a pas de dessin disponible!
+    </h1>
+    <mat-spinner *ngIf='loading' [diameter]="500"></mat-spinner>
+  </div>
+</div>
+

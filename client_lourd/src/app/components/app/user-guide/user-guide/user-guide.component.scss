@@ -1,0 +1,53 @@
+.user-guide{
+    position: relative;
+    height: 100%;
+    background: #eee;
+
+}
+
+.menu {
+    height: 100%;
+    width: 350px;
+    background-color: #fff;
+}
+
+mat-card {
+    min-width: 200px;
+    background-color: #fff;
+    color: #000;
+}
+
+
+button {
+    display: inline-block;
+    text-align: center;
+}
+
+#previous, #next {
+    width: 20%;
+    left: 30%;
+}
+.navigation{
+    min-width: 85px;
+    background-color:#ffe489;
+    color: #000;
+}
+
+.navigation:active:not(:disabled){
+    box-shadow: 0 6px 12px 0 rgba(0,0,0,0.40), 0 8px 25px 0 rgba(0,0,0,0.25);
+  }
+
+.navigation:disabled {
+    background-color:#cccccc;
+    color: #666666;
+}
+
+.navigation:hover:not(:disabled) {
+    background-color:#f5bd07;
+    color: #000;
+}
+
+#back {
+    background-color: #43405A;
+    color: #fff;
+}
