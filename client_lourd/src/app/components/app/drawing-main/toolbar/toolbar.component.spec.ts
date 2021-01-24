@@ -5,16 +5,13 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppModule } from 'src/app/app.module';
 import { MaterialModule } from 'src/app/material/material.module';
 import { Color } from '../../tools/color-picker/color';
-import { SelectionToolComponent } from '../../tools/selection-tool/selection-tool.component';
 import { ToolButton } from '../../tools/tool-button';
 import { ToolbarComponent } from './toolbar.component';
 
 const DIALOG_SERVICE = 'dialogService';
 const GRID_SERVICE = 'gridService';
 const SELECTED_BUTTON = 'selectedButton';
-const CLEAR_SELECTION_RECTANGLE = 'clearSelectionRectangle';
 const SELECT_BUTTON = 'selectButton';
-const SELECTION = 8;
 
 describe('a toolbar component', () => {
   let component: ToolbarComponent;
@@ -91,15 +88,6 @@ describe('a toolbar component', () => {
     expect(component.toolSelected).toBe(true);
   });
 
-  it('clearSelectionRectangle should call clearSelection if the the selected tool is the selection tool', () => {
-    component.selectedButton = component.buttons[SELECTION];
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component.selectedButton.tool, 'clearSelection');
-    component[CLEAR_SELECTION_RECTANGLE]();
-    expect((component.selectedButton.tool as SelectionToolComponent).clearSelection).toHaveBeenCalled();
-  });
-
   it('openSaveDrawingDialog should call openSaveDrawingDialog of dialogService', () => {
     spyOn(component[DIALOG_SERVICE], 'openSaveDrawingDialog');
     component.openSaveDrawingDialog();
@@ -158,120 +146,11 @@ describe('a toolbar component', () => {
     }).toThrowError();
   });
 
-  it('aerosolToolShortcut should call onSelect', () => {
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'selectButton');
-    component.aerosolToolShortcut();
-    expect(component[SELECT_BUTTON]).toHaveBeenCalled();
-  });
-
-  it('color-applicator should call onSelect', () => {
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'selectButton');
-    component.colorApplicatorShortcut();
-    expect(component[SELECT_BUTTON]).toHaveBeenCalled();
-  });
-
-  it('selectionToolShortcut should call onSelect', () => {
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'selectButton');
-    component.selectionToolShortcut();
-    expect(component[SELECT_BUTTON]).toHaveBeenCalled();
-  });
-
-  it('pipetteShortcut should call onSelect', () => {
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'selectButton');
-    component.pipetteShortcut();
-    expect(component[SELECT_BUTTON]).toHaveBeenCalled();
-  });
-
   it('eraserShortcut should call onSelect', () => {
     // We disable this any so we can spy on a private function
     // tslint:disable-next-line: no-any
     spyOn<any>(component, 'selectButton');
     component.eraserShortcut();
-    expect(component[SELECT_BUTTON]).toHaveBeenCalled();
-  });
-
-  it('onKeyDown should call selectionTool.onAltDown if the key pressed is alt', () => {
-    const mockAlt = jasmine.createSpyObj('Alt', ['key', 'preventDefault']);
-    mockAlt.key = 'Alt';
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component.buttons[SELECTION].tool, 'onAltDown');
-    component.onKeyDown(mockAlt);
-    expect(component.buttons[SELECTION].tool.onAltDown).toHaveBeenCalled();
-  });
-
-  it('onKeyDown should call selectionTool.onShiftDown if the key pressed is shift', () => {
-    const mockShift = jasmine.createSpyObj('Shift', ['key', 'preventDefault']);
-    mockShift.key = 'Shift';
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component.buttons[SELECTION].tool, 'onShiftDown');
-    component.onKeyDown(mockShift);
-    expect(component.buttons[SELECTION].tool.onShiftDown).toHaveBeenCalled();
-  });
-
-  it('onKeyUp should call selectionTool.onAltUp if the key pressed is alt', () => {
-    const mockAlt = jasmine.createSpyObj('Alt', ['key', 'preventDefault']);
-    mockAlt.key = 'Alt';
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component.buttons[SELECTION].tool, 'onAltUp');
-    component.onKeyUp(mockAlt);
-    expect(component.buttons[SELECTION].tool.onAltUp).toHaveBeenCalled();
-  });
-
-  it('onKeyUp should call selectionTool.onShiftUp if the key pressed is shift', () => {
-    const mockShift = jasmine.createSpyObj('Shift', ['key', 'preventDefault']);
-    mockShift.key = 'Shift';
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component.buttons[SELECTION].tool, 'onShiftUp');
-    component.onKeyUp(mockShift);
-    expect(component.buttons[SELECTION].tool.onShiftUp).toHaveBeenCalled();
-  });
-
-  it('onKeyUp should call not selectionTool.onShiftUp/onAltUp if the key pressed is neither shift or alt', () => {
-    const mockKey = jasmine.createSpyObj('Shift', ['key', 'preventDefault']);
-    mockKey.key = 'Space';
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component.buttons[SELECTION].tool, 'onShiftUp');
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component.buttons[SELECTION].tool, 'onAltUp');
-    component.onKeyUp(mockKey);
-    expect(component.buttons[SELECTION].tool.onShiftUp).toHaveBeenCalledTimes(0);
-    expect(component.buttons[SELECTION].tool.onAltUp).toHaveBeenCalledTimes(0);
-  });
-
-  it('onKeyDown should call not selectionTool.onShiftDown/onAltDown if the key pressed is neither shift or alt', () => {
-    const mockKey = jasmine.createSpyObj('Shift', ['key', 'preventDefault']);
-    mockKey.key = 'Space';
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component.buttons[SELECTION].tool, 'onShiftDown');
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component.buttons[SELECTION].tool, 'onAltDown');
-    component.onKeyDown(mockKey);
-    expect(component.buttons[SELECTION].tool.onShiftDown).toHaveBeenCalledTimes(0);
-    expect(component.buttons[SELECTION].tool.onAltDown).toHaveBeenCalledTimes(0);
-  });
-
-  // brushToolShortcut
-  it('brushToolShortcut should call onSelect', () => {
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'selectButton');
-    component.brushToolShortcut();
     expect(component[SELECT_BUTTON]).toHaveBeenCalled();
   });
 
@@ -281,15 +160,6 @@ describe('a toolbar component', () => {
     // tslint:disable-next-line: no-any
     spyOn<any>(component, 'selectButton');
     component.pencilToolShortcut();
-    expect(component[SELECT_BUTTON]).toHaveBeenCalled();
-  });
-
-  // lineToolShortcut
-  it('lineToolShortcut should call onSelect', () => {
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'selectButton');
-    component.lineToolShortcut();
     expect(component[SELECT_BUTTON]).toHaveBeenCalled();
   });
 

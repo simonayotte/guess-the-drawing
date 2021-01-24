@@ -4,17 +4,7 @@ import { MatProgressSpinnerModule} from '@angular/material';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppModule } from 'src/app/app.module';
 import { MaterialModule } from 'src/app/material/material.module';
-import { SelectedColorsService } from 'src/app/services/color-picker/selected-colors.service';
-import { ContinueDrawingService } from 'src/app/services/continue-drawing/continue-drawing.service';
 import { DialogDismissService } from 'src/app/services/Dialog/dialog-dismiss.service';
-import { DrawingSizeService } from 'src/app/services/drawing/drawing-size.service';
-import { GallerieDrawingService } from 'src/app/services/gallerie-services/gallerie-drawing/gallerie-drawing.service';
-import { SvgService } from 'src/app/services/svg-service/svg.service';
-import { PathDrawingService } from 'src/app/services/tools/path-drawing/path-drawing.service';
-import { CommandInvokerService } from '../../../../services/drawing/command-invoker.service';
-import { EraserService } from '../../../../services/tools/eraser-service/eraser.service';
-import { AbstractTool } from '../../tools/abstract-tool';
-import { SelectionToolComponent } from '../../tools/selection-tool/selection-tool.component';
 import { DrawingComponent } from './drawing.component';
 
 const LEFT_BUTTON = 0;
@@ -29,19 +19,13 @@ const eraserService = 'eraserService';
 const gallerieDrawing = 'gallerieDrawing';
 const ADD_PATH = 'addPath';
 const CALLED_FOUR_TIMES = 4;
-const SELECTION_TOOL = 'Outil de Sélection';
 const PIPETTE = 'pipette';
-const REMOVE_SELECTION_PATH = 'removeSelectionPath';
 
 describe('a drawing component', () => {
   let component: DrawingComponent;
   let fixture: ComponentFixture<DrawingComponent>;
   const path: SVGPathElement = {} as SVGPathElement;
-  const mockContinueDrawing = new ContinueDrawingService(
-    new GallerieDrawingService(), new DrawingSizeService(), new SelectedColorsService(), new SvgService());
   let dialogDismissService: DialogDismissService;
-  let commandInvoker: CommandInvokerService;
-  let selectionToolMock: SelectionToolComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -55,8 +39,6 @@ describe('a drawing component', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     dialogDismissService = TestBed.get(DialogDismissService);
-    commandInvoker = TestBed.get(CommandInvokerService);
-    selectionToolMock = TestBed.get(SelectionToolComponent);
     dialogDismissService.dismissDecision(true);
   });
 
@@ -117,30 +99,6 @@ describe('a drawing component', () => {
 
     component.onDrag(mockEvent);
     expect(mockEvent.preventDefault).toHaveBeenCalled();
-  });
-  it('onContextMenu should call prevent default if the selectedTool is the selection', () => {
-    const mockEvent = new MouseEvent('click');
-    spyOn(mockEvent, 'preventDefault');
-    component.tool.name = SELECTION_TOOL;
-    component.onContextMenu(mockEvent);
-    expect(mockEvent.preventDefault).toHaveBeenCalled();
-  });
-
-  it('onContextMenu should call prevent default if the selectedTool is the pipette', () => {
-    const mockEvent = new MouseEvent('click');
-    spyOn(mockEvent, 'preventDefault');
-    component.tool.name = PIPETTE;
-    component.onContextMenu(mockEvent);
-    expect(mockEvent.preventDefault).toHaveBeenCalled();
-  });
-
-  it('onContextMenu should not call preventDefault', () => {
-    const WRONG_TOOL = 'wrong tool';
-    const mockEvent = new MouseEvent('click');
-    spyOn(mockEvent, 'preventDefault');
-    component.tool.name = WRONG_TOOL;
-    component.onContextMenu(mockEvent);
-    expect(mockEvent.preventDefault).toHaveBeenCalledTimes(0);
   });
 
   // onMouseClick
@@ -532,102 +490,6 @@ describe('a drawing component', () => {
     expect(clearStackSpy).toHaveBeenCalled();
   });
 
-  it('when the user presses ctrl + z it should call the command invoker undo function and removeSelectionPath', () => {
-    const mockEvent = new KeyboardEvent('control.z');
-    const commandInvokerRedoSpy = spyOn(commandInvoker, 'undo');
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'removeSelectionPath');
-    component.undo(mockEvent);
-    expect(component[REMOVE_SELECTION_PATH]).toHaveBeenCalled();
-    expect(commandInvokerRedoSpy).toHaveBeenCalled();
-  });
-  it('when the user presses delete with the selection tool, it should call the delete function of the tool', () => {
-    const mockEvent = new KeyboardEvent('delete');
-    component.tool = selectionToolMock;
-    component.tool.onDelete = jasmine.createSpy().and.callFake(() => {return; });
-    component.onDelete(mockEvent);
-    expect(component.tool.onDelete).toHaveBeenCalled();
-  });
-  it('when the user presses ctrl + V with the selection tool, it should call the onCtrlV function of the tool', () => {
-    const mockEvent = new KeyboardEvent('control.v');
-    component.tool = selectionToolMock;
-    component.tool.onCtrlV = jasmine.createSpy().and.callFake(() => {return; });
-    component.onControlV(mockEvent);
-    expect(component.tool.onCtrlV).toHaveBeenCalled();
-  });
-  it('when the user presses ctrl + C with the selection tool, it should call the onCtrlC function of the tool', () => {
-    const mockEvent = new KeyboardEvent('control.c');
-    component.tool = selectionToolMock;
-    component.tool.onCtrlC = jasmine.createSpy().and.callFake(() => {return; });
-    component.onControlC(mockEvent);
-    expect(component.tool.onCtrlC).toHaveBeenCalled();
-  });
-  it('when the user presses ctrl + X with the selection tool, it should call the onCtrlX function of the tool', () => {
-    const mockEvent = new KeyboardEvent('control.x');
-    component.tool = selectionToolMock;
-    component.tool.onCtrlX = jasmine.createSpy().and.callFake(() => {return; });
-    component.onControlX(mockEvent);
-    expect(component.tool.onCtrlX).toHaveBeenCalled();
-  });
-  it('when the user presses ctrl + D with the selection tool, it should call the onCtrlD function of the tool', () => {
-    const mockEvent = new KeyboardEvent('control.d');
-    component.tool = selectionToolMock;
-    component.tool.onCtrlD = jasmine.createSpy().and.callFake(() => {return; });
-    component.onCtrlD(mockEvent);
-    expect(component.tool.onCtrlD).toHaveBeenCalled();
-  });
-  it('when the user presses ctrl + D not with the selection tool, it should not call the onCtrlD function of the tool', () => {
-    const mockEvent = new KeyboardEvent('control.d');
-    component.tool = {} as AbstractTool;
-    component.tool.name = 'notSelectionTool';
-    component.tool.onCtrlD = jasmine.createSpy();
-    component.onCtrlD(mockEvent);
-    expect(component.tool.onCtrlD).not.toHaveBeenCalled();
-  });
-  it('when the user presses delete not with the selection tool, it should not call the onDelete function of the tool', () => {
-    const mockEvent = new KeyboardEvent('delete');
-    component.tool = {} as AbstractTool;
-    component.tool.name = 'notSelectionTool';
-    component.tool.onDelete = jasmine.createSpy();
-    component.onDelete(mockEvent);
-    expect(component.tool.onDelete).not.toHaveBeenCalled();
-  });
-  it('when the user presses ctrl + x not with the selection tool, it should not call the onCtrlX function of the tool', () => {
-    const mockEvent = new KeyboardEvent('control.x');
-    component.tool = {} as AbstractTool;
-    component.tool.name = 'notSelectionTool';
-    component.tool.onCtrlX = jasmine.createSpy();
-    component.onControlX(mockEvent);
-    expect(component.tool.onCtrlX).not.toHaveBeenCalled();
-  });
-  it('when the user presses ctrl + c not with the selection tool, it should not call the onCtrlC function of the tool', () => {
-    const mockEvent = new KeyboardEvent('control.c');
-    component.tool = {} as AbstractTool;
-    component.tool.name = 'notSelectionTool';
-    component.tool.onCtrlC = jasmine.createSpy();
-    component.onControlC(mockEvent);
-    expect(component.tool.onCtrlC).not.toHaveBeenCalled();
-  });
-  it('when the user presses ctrl + v not with the selection tool, it should not call the onCtrlV function of the tool', () => {
-    const mockEvent = new KeyboardEvent('control.v');
-    component.tool = {} as AbstractTool;
-    component.tool.name = 'notSelectionTool';
-    component.tool.onCtrlV = jasmine.createSpy();
-    component.onControlV(mockEvent);
-    expect(component.tool.onCtrlV).not.toHaveBeenCalled();
-  });
-  it('when the user presses ctrl + shift + z it should call the command invoker redo function and removeSelectionPath', () => {
-    const mockEvent = new KeyboardEvent('control.shift.z');
-    const commandInvokerRedoSpy = spyOn(commandInvoker, 'redo');
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'removeSelectionPath');
-    component.redo(mockEvent);
-    expect(commandInvokerRedoSpy).toHaveBeenCalled();
-    expect(component[REMOVE_SELECTION_PATH]).toHaveBeenCalled();
-  });
-
   it('should call append child when whe call addPathToElement', () => {
     const pathElement: SVGPathElement = {} as SVGPathElement;
     // We disable this any so we can spy on a private function
@@ -660,13 +522,6 @@ describe('a drawing component', () => {
     component.onControlA(mockEvent);
     expect(mockEvent.preventDefault).toHaveBeenCalled();
     expect(mockEvent.stopPropagation).toHaveBeenCalled();
-  });
-
-  it('onControlA should call selectAll if the selected tool is the selection tool', () => {
-    component.tool = jasmine.createSpyObj('mockTool', ['selectAll', 'name']);
-    component.tool.name = SELECTION_TOOL;
-    component.onControlA(new KeyboardEvent('control.shift.A'));
-    expect((component.tool as SelectionToolComponent).selectAll).toHaveBeenCalled();
   });
 
   it('onKeyDown should call onArrowsChange if a arrowss key is pressed', () => {
@@ -703,22 +558,6 @@ describe('a drawing component', () => {
     component.onKeyUp(new KeyboardEvent('control'));
     expect(component.arrowKeysDown.set).toHaveBeenCalledTimes(0);
     expect(component.tool.onArrowsChange).toHaveBeenCalledTimes(0);
-  });
-
-  it('onControlA should call selectAll if the selected tool is the selection tool', () => {
-    const mockTool = jasmine.createSpyObj('selectionTool', ['name', 'selectAll']);
-    mockTool.name = SELECTION_TOOL;
-    component.tool = mockTool;
-    component.onControlA(new KeyboardEvent('control.ctrl.A'));
-    expect((component.tool as SelectionToolComponent).selectAll).toHaveBeenCalled();
-  });
-
-  it('removeSelectionPath should remove the current path if the selected tool is the selection and should clear the selection', () => {
-    component.tool = jasmine.createSpyObj('mockTool', ['name', 'clearSelection']);
-    component.tool.name = SELECTION_TOOL;
-    component.removePathOfElement = jasmine.createSpy().and.callFake(() => {return; });
-    component[REMOVE_SELECTION_PATH]();
-    expect(component.removePathOfElement).toHaveBeenCalled();
   });
 
   it('onMouseWheel should call onMouseWheel', () => {

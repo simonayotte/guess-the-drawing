@@ -1,4 +1,4 @@
-import { Renderer2 } from '@angular/core';
+/*import { Renderer2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ShapeToolComponent } from './shapeTools/shape-tool/shape-tool.component';
 
@@ -13,8 +13,8 @@ class MockRenderer2 {
     return;
   }
 }
-
-describe('Abstract tool', () => {
+*/
+/* describe('Abstract tool', () => {
   let mockShapeTool: ShapeToolComponent;
   let mockMouseEvent: MouseEvent;
   let mockKeyboardEvent: KeyboardEvent;
@@ -247,3 +247,4 @@ describe('Abstract tool', () => {
     }
   });
 });
+*/

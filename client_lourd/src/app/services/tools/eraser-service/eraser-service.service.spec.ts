@@ -19,8 +19,6 @@ class MockRenderer2 {
 
 describe('EraserServiceService', () => {
   let service: EraserService;
-  const AREA_TRIANGLE = 'areaTriangle';
-  const COORDS_TO_DOMPOINT = 'coordsToDomPoint';
   const FILLED_PATH_TO_CHECK  = 'filledPathToCheck';
   const RENDERER = 'renderer';
   const ADD_MULTIPLE_PATH = 'addMultiplePath';
@@ -50,7 +48,6 @@ describe('EraserServiceService', () => {
   // I Desactived the ts-lint to be able to create three fake points with fake values without creating 9 variables for the magic numbers
   const DOMPOINT_A = new DOMPoint(10, 30);
   const DOMPOINT_B = new DOMPoint(20, 30);
-  const DOMPOINT_C = new DOMPoint(15, 90);
   /* tslint:enable */
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -440,19 +437,6 @@ describe('EraserServiceService', () => {
     expect(spyArray).toHaveBeenCalled();
     expect(unshiftspy).toHaveBeenCalledTimes(TOTAL_LENGTH * NB_PATH);
   });
-  it('expect coordsToDomPoint to return a domPoint', () => {
-    const x = 10;
-    const y = 35;
-    const coords: [number, number] = [x, y];
-    const domPoint: DOMPoint = service[COORDS_TO_DOMPOINT](coords);
-    expect(domPoint.x).toBe(x);
-    expect(domPoint.y).toBe(y);
-  });
-  it('expect areaTriangle to return the good area for the given points', () => {
-    const EXPECTED_VALUE = 300;
-    const area = service[AREA_TRIANGLE](DOMPOINT_A, DOMPOINT_B, DOMPOINT_C);
-    expect(area).toBe(EXPECTED_VALUE);
-  });
   it('refresh transform should find the path and add the new transform', () => {
     const path: SVGPathElement = {} as SVGPathElement;
     const selectedElement = [path, path, path];
@@ -478,12 +462,6 @@ describe('EraserServiceService', () => {
     service[FILLED_PATH_TO_CHECK] = [[path, DOMPOINT], [path, DOMPOINT]];
     service.refreshTransform(selectedElement, [xTransform, yTransform]);
     expect(service[POINTS_FROM_PATHS][0][0]).toBe(DOMPOINT);
-  });
-  it('getTranslate of path should return the translate of the path', () => {
-    const path: SVGPathElement = {} as SVGPathElement;
-    service[FILLED_PATH_TO_CHECK] = [[path, DOMPOINT_A]];
-    const GET_TRANSLATE_OF_FILLED_PATH = 'getTranlateOfFilledPath';
-    expect(service[GET_TRANSLATE_OF_FILLED_PATH](path)).toBe(DOMPOINT_A);
   });
   it('addMPoints should add the M points of d attribut', () => {
     const ADD_M_POINTS = 'addMPoints';

@@ -22,7 +22,6 @@ import { GridAttributesComponent } from '../../tools/grid-attributes/grid-attrib
 import { ToolButton } from '../../tools/tool-button';
 
 const PENCIL = 0;
-const BRUSH = 1;
 const ERASER = 3;
 const BACKGROUND_COLOR = 2;
 
@@ -137,11 +136,6 @@ export class ToolbarComponent implements AfterViewInit {
       this.gridService.gridActivationSubject.next(!this.gridActivation);
     }
   }
-
-  @HostListener('document:keyup.w', ['$event']) brushToolShortcut(): void {
-    this.selectButton(BRUSH);
-  }
-
   @HostListener('document:keyup.c', ['$event']) pencilToolShortcut(): void {
     this.selectButton(PENCIL);
   }
