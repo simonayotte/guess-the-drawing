@@ -16,7 +16,6 @@ import { SvgManager } from '../../tools/graphics/svg-manager';
 
 const LEFT_BUTTON = 0;
 const NUMBER_CHILD_NOT_TO_DELETE = 5;
-const PIPETTE = 'pipette';
 const TOOL_BAR_WIDTH = 120;
 const TYPES_OF_ELEMENT = ['path', 'g', 'svg'];
 
@@ -108,11 +107,6 @@ export class DrawingComponent implements AfterViewInit, OnInit {
       this.tool.onMouseWheel(event);
     } catch (error) {
       this.handleError(error);
-    }
-  }
-  @HostListener('contextmenu', ['$event']) onContextMenu(event: MouseEvent): void {
-    if (this.tool.name === PIPETTE) {
-      event.preventDefault();
     }
   }
   @HostListener('mousedown', ['$event']) onMouseDownInElement(event: MouseEvent): void {

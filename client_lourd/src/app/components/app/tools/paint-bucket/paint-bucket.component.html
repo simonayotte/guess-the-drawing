@@ -1,5 +1,0 @@
-<div class="toolAttributes">
-    <h1>{{name}}</h1>
-    <p>Tolérance : <input #toleranceInput [(ngModel)]="tolerance" (change)="onValueChange($event)" (keyup)="onInput($event)" type="number" min="0" max="100"/>%</p>
-    <mat-slider min="0" max="100" step="1" [(ngModel)]="tolerance" (input)="onToleranceSliderChange($event)" aria-hidden="false"></mat-slider>
-</div>

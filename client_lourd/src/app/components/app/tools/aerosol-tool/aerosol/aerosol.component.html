@@ -1,8 +1,0 @@
-<div class="toolAttributes">
-    <h1>{{name}}</h1>
-    <p>Diamètre : <input #diameterInput [(ngModel)]="diameter" (change)="onValueChange($event, 'Diameter')" (keyup)="onInput($event, 'Diameter')" type="number" min="1" max="25"/>px</p>
-    <mat-slider min="1" max="25" step="1" [(ngModel)]="diameter" (input)="onDiameterSliderChange($event)" aria-hidden="false"></mat-slider>
-    <p>Vitesse d'émission :</p>
-    <p><input #emissionSpeedInput [(ngModel)]="emissionPerSecond" (keyup)="onInput($event, 'EmissionSpeed')" (change)="onValueChange($event, 'EmissionSpeed')" type="number" min="10" max="500"/> émissions/seconde</p>
-    <mat-slider min="10" max="500" step="1" [(ngModel)]="emissionPerSecond" (input)="onEmissionSpeedSliderChange($event)" aria-hidden="false"></mat-slider>
-</div>

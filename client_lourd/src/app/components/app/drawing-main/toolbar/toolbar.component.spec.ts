@@ -198,30 +198,6 @@ describe('a toolbar component', () => {
     expect(component[SELECT_BUTTON]).toHaveBeenCalled();
   });
 
-  it('ellipseShortcut should call onSelect', () => {
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'selectButton');
-    component.ellipseShortcut();
-    expect(component[SELECT_BUTTON]).toHaveBeenCalled();
-  });
-
-  it('polygoneShortcut should call onSelect', () => {
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'selectButton');
-    component.polygoneShortcut();
-    expect(component[SELECT_BUTTON]).toHaveBeenCalled();
-  });
-
-  it('paintBucketShortcut should call onSelect', () => {
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'selectButton');
-    component.paintBucketShortcut();
-    expect(component[SELECT_BUTTON]).toHaveBeenCalled();
-  });
-
   it('onKeyDown should call selectionTool.onAltDown if the key pressed is alt', () => {
     const mockAlt = jasmine.createSpyObj('Alt', ['key', 'preventDefault']);
     mockAlt.key = 'Alt';

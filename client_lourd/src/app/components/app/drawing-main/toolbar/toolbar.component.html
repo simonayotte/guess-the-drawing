@@ -38,15 +38,8 @@
 </div>
 <div [hidden] = "!toolSelected" class="toolAttributes">
     <app-pencil [hidden]="!(selectedButton.tool.name === 'Crayon' && toolSelected)" [tool]='selectedButton.tool'></app-pencil>
-    <app-paint-brush [hidden]="!(selectedButton.tool.name === 'Pinceau' && toolSelected)" [tool]='selectedButton.tool'></app-paint-brush>
-    <app-polygone [hidden]="!(selectedButton.tool.name === 'Polygone' && toolSelected)" [tool]='selectedButton.tool'></app-polygone>
-    <app-ellipse [hidden]="!(selectedButton.tool.name === 'Ellipse' && toolSelected)" [tool]='selectedButton.tool'></app-ellipse>
-    <app-line-tool [hidden]="!(selectedButton.tool.name === 'Ligne' && toolSelected)" [tool]='selectedButton.tool'></app-line-tool>
     <app-eraser [hidden]="!(selectedButton.tool.name === 'Efface' && toolSelected)"></app-eraser>
-    <app-aerosol [hidden]="!(selectedButton.tool.name === 'Aérosol' && toolSelected)" [tool]='selectedButton.tool'></app-aerosol>
     <app-grid-attributes [hidden]="!(selectedButton.tool.name === 'Grille' && toolSelected)" [tool]='selectedButton.tool'></app-grid-attributes>
-    <app-pipette [hidden]="!(selectedButton.tool.name === 'Pipette' && toolSelected)"></app-pipette>
-    <app-paint-bucket [hidden]="!(selectedButton.tool.name === 'Sceau de peinture' && toolSelected)" [tool]='selectedButton.tool'></app-paint-bucket>
     <div [hidden] = "!toolSelected" >
         <h3 [hidden] = "!toolSelected" id='color-title'>Couleurs et opacités :</h3>
     </div>

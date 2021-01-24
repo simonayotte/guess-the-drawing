@@ -45,16 +45,13 @@ export class EraserService {
     return this.path;
   }
   addPath(path: SVGPathElement): void {
-    const id = path.getAttribute('id');
-    if (id !== 'bucketFill') {
-      if (path.hasChildNodes()) {
-        this.addMultiplePath(path);
-      } else {
-        this.addSinglePath(path);
-      }
-      if (path.getAttribute('fill') !== 'none' && this.isFillableForm(id)) {
-        this.filledPathToCheck.push([path, TranslateReader.readTransform(path)]);
-      }
+    if (path.hasChildNodes()) {
+      this.addMultiplePath(path);
+    } else {
+      this.addSinglePath(path);
+    }
+    if (path.getAttribute('fill') !== 'none') {
+      this.filledPathToCheck.push([path, TranslateReader.readTransform(path)]);
     }
   }
   private addMultiplePath(g: SVGPathElement): void {
@@ -69,9 +66,6 @@ export class EraserService {
         this.pointsFromPaths.unshift([point, g, Number(width)]);
       }
      }
-  }
-  isFillableForm(id: string | null): boolean {
-    return (id === 'rectangle' || id === 'ellipse' || id === 'polygone');
   }
   removePath(path: SVGPathElement): void {
     this.pointsFromPaths = this.pointsFromPaths.filter((elementToRemove) => elementToRemove[1] !== path);
@@ -125,9 +119,6 @@ export class EraserService {
       this.lastRedColor = pathSelected.getAttribute('stroke') !== RED ? RED : DARKER_RED;
       pathSelected.setAttribute('stroke', this.lastRedColor);
       pathSelected.setAttribute('stroke-width', newSize);
-      if (pathSelected.getAttribute('id') === 'ligne' || pathSelected.getAttribute('id') === 'aerosol' ) {
-        pathSelected.setAttribute('fill', this.lastRedColor);
-      }
     }
   }
   private determineNewWidthSize(actualSize: string|null): string {
@@ -147,14 +138,10 @@ export class EraserService {
   }
   private revertSelectedPath(posMouse: [number, number]): void {
     const pathToRevert = this.redPath[PATH];
-    if (!this.mouseIsStillInCollision(posMouse, pathToRevert) && this.redPath[COLOR] !== null &&
-        !this.checkFilledForm(posMouse, pathToRevert)) {
+    if (!this.mouseIsStillInCollision(posMouse, pathToRevert) && this.redPath[COLOR] !== null) {
       const color = this.redPath[COLOR].toString();
       pathToRevert.setAttribute('stroke', color);
       pathToRevert.setAttribute('stroke-width', this.redPath[WIDTH]);
-      if (pathToRevert.getAttribute('id') === 'ligne' || pathToRevert.getAttribute('id') === 'aerosol') {
-        pathToRevert.setAttribute('fill', color);
-      }
     }
   }
   private constructEraserPath(event: MouseEvent): void {
@@ -180,7 +167,7 @@ export class EraserService {
   private handleCollision(posMouse: [number, number]): SVGPathElement | null {
     let pathFound: SVGPathElement | null = null;
     for (const element of this.pointsFromPaths) {
-      if (this.checkIfRadiusIntersect(posMouse, element) || this.checkFilledForm(posMouse, element[1])) {
+      if (this.checkIfRadiusIntersect(posMouse, element)) {
         if (this.isErasing) {
           pathFound = element[1];
           this.pathToRemove.push(element[1]);
@@ -223,112 +210,7 @@ export class EraserService {
       }
     }
   }
-  private checkFilledForm(posMouse: [number, number], path: SVGPathElement): boolean {
-    if (this.filledPathToCheck.find((pathFound) => pathFound[0] === path) !== undefined) {
-      if (path.getAttribute('id') === 'rectangle') {
-        return this.checkIfInsideRectangle(posMouse, path);
-      } else if (path.getAttribute('id') === 'ellipse') {
-        return this.checkIfInsideEllipse(posMouse, path);
-      } else if (path.getAttribute('id') === 'polygone') {
-        return this.checkIfInsidePolygone(posMouse, path);
-      }
-    }
-    return false;
-  }
-  private checkIfInsideRectangle(posMouse: [number, number], path: SVGPathElement): boolean {
-    const translate = this.getTranlateOfFilledPath(path);
-    let pointControl: string[] = [];
-    let d: string | null;
-    const pair: [number, number][] = [];
-    d = path.getAttribute('d');
-    if (d !== null) {
-      pointControl = d.split(' ');
-      pointControl = pointControl.filter((elem) => elem !== 'M' && elem !== 'L' && elem !== 'Z');
-      for (let i = 0; i < pointControl.length; i++) {
-        pair.push([Number(pointControl[i]) + translate.x , Number(pointControl[++i]) + translate.y]);
-      }
-      const maxY = Math.max.apply(Math, pair.map((y) => y[1]));
-      const minY = Math.min.apply(Math, pair.map((y) => y[1]));
-      const maxX = Math.max.apply(Math, pair.map((x) => x[0]));
-      const minX = Math.min.apply(Math, pair.map((x) => x[0]));
-      if (posMouse[0] <= maxX && posMouse[0] >= minX && posMouse[1] <= maxY && posMouse[1] >= minY) { return true; }
-    }
-    return false;
-  }
-  private getTranlateOfFilledPath(path: SVGPathElement): DOMPoint {
-    const translate = this.filledPathToCheck.find((pathfound) => pathfound[0] === path);
-    if (translate !== null && translate !== undefined && translate[1] !== undefined) {
-      return translate[1];
-    }
-    return new DOMPoint(0, 0, 0, 0);
-  }
-  private checkIfInsideEllipse(posMouse: [number, number], path: SVGPathElement): boolean {
-    const translate = this.getTranlateOfFilledPath(path);
-    let pointControl: string[] = [];
-    let d: string | null;
-    let xCenter = 0; let yCenter = 0;
-    let pairRadiusString = ['', ''];
-    let radiusX = 0; let radiusY = 0;
-    let ellipseInequality = 0;
-    d = path.getAttribute('d');
-    if (d !== null) {
-      pointControl = d.split(' ');
-      pointControl = pointControl.filter((elem) => elem !== 'M' && elem !== 'L' && elem !== 'Z');
-      xCenter = Number(pointControl[0]) + translate.x;
-      pairRadiusString = pointControl[2].substring(1, pointControl[2].length).split(',');
-      radiusX = Math.abs(Number(pairRadiusString[0])); radiusY = Math.abs(Number(pairRadiusString[1]));
-      yCenter = Number(pointControl[1]) + radiusY + translate.y;
-      ellipseInequality = (Math.pow((posMouse[0] - xCenter) , 2) / Math.pow(radiusX , 2)) +
-                          (Math.pow((posMouse[1] - yCenter) , 2) / Math.pow(radiusY , 2));
-      if (ellipseInequality <= 1) {return true; }
-    }
-    return false;
-  }
-  private checkIfInsidePolygone(posMouse: [number, number], path: SVGPathElement): boolean {
-    const translate = this.getTranlateOfFilledPath(path);
-    let isInside = false;
-    let splitPoint: string[] = [];
-    const pairPoint: DOMPoint [] = [];
-    const center: [number, number] = [0, 0];
-    let d: string | null;
-    d = path.getAttribute('d');
-    if (d !== null) {
-      splitPoint = d.split(' ').filter((elem) => elem !== 'M' && elem !== 'L' && elem !== 'Z');
-      for (let i = 0; i < splitPoint.length; i++) {
-        pairPoint.push(this.coordsToDomPoint([Number(splitPoint[i]) + translate.x, Number(splitPoint[++i]) + translate.y]));
-      }
-      const minX = Math.min.apply(Math, pairPoint.map((p) => p.x));
-      const maxX  = Math.max.apply(Math, pairPoint.map((p) => p.x));
-      const minY =  Math.min.apply(Math, pairPoint.map((p) => p.y));
-      const maxY = Math.max.apply(Math, pairPoint.map((p) => p.y));
-      center[0] = minX + ((maxX - minX) / 2.0);
-      center[1] = minY + ((maxY - minY) / 2.0);
-      const centerDom = this.coordsToDomPoint(center);
-      for (let i = 0; i < pairPoint.length - 1; i++ ) {
-        if (this.checkIfInsideTriangle(posMouse, centerDom, pairPoint[i], pairPoint[i + 1])) {
-          isInside = true; break;
-        }
-      }
-      if (this.checkIfInsideTriangle(posMouse, centerDom, pairPoint[pairPoint.length - 1], pairPoint[0])) {
-        isInside = true;
-      }
-    }
-    return isInside;
-  }
-  private checkIfInsideTriangle(posMouse: [number, number], a: DOMPoint, b: DOMPoint, c: DOMPoint): boolean {
-    const point = this.coordsToDomPoint(posMouse);
-    const areaOfMaintriangle = this.areaTriangle(a, b, c);
-    const areaOfSubTriangleABP = this.areaTriangle(point, a, b);
-    const areaOfSubTriangleAPC = this.areaTriangle(point, b, c);
-    const areaOfSubTrianglePBC = this.areaTriangle(point, a, c);
-    const areaOfAllSubTriangle = areaOfSubTriangleABP + areaOfSubTriangleAPC + areaOfSubTrianglePBC;
-    if (Math.round(areaOfAllSubTriangle) === Math.round(areaOfMaintriangle)) { return true; }
-    return false;
-  }
-  private coordsToDomPoint(pos: [number, number]): DOMPoint {return new DOMPoint(pos[0], pos[1], 0, 0); }
-  private areaTriangle(a: DOMPoint, b: DOMPoint, c: DOMPoint): number {
-    return Math.abs((a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2.0);
-  }
+
   refreshTransform(paths: SVGPathElement[], translate: [number, number]): void {
     const X = 0; const Y = 1;
     for (const path of paths) {

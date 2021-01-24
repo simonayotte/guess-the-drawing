@@ -21,13 +21,8 @@ describe('EraserServiceService', () => {
   let service: EraserService;
   const AREA_TRIANGLE = 'areaTriangle';
   const COORDS_TO_DOMPOINT = 'coordsToDomPoint';
-  const CHECK_IF_INSIDE_TRIANGLE = 'checkIfInsideTriangle';
-  const CHECK_FILLED_FORM = 'checkFilledForm';
   const FILLED_PATH_TO_CHECK  = 'filledPathToCheck';
   const RENDERER = 'renderer';
-  const CHECK_IF_INSIDE_POLYGON = 'checkIfInsidePolygone';
-  const CHECK_IF_INSIDE_RECTANGLE = 'checkIfInsideRectangle';
-  const CHECK_IF_INSIDE_ELLIPSE = 'checkIfInsideEllipse';
   const ADD_MULTIPLE_PATH = 'addMultiplePath';
   const POINTS_FROM_PATHS = 'pointsFromPaths';
   const ADD_SINGLE_PATH = 'addSinglePath';
@@ -49,14 +44,6 @@ describe('EraserServiceService', () => {
   const ON_MOUSE_ENTER = 'onMouseEnter';
   const COMMAND_INVOKER = 'commandInvoker';
   const MOUSE_IS_IN_DRAWING = 'mouseIsInDrawing';
-  const POLYGONE_PATH = 'M 640.5 182 L 510.18511793171376 244.75633965698296' +
-                        ' L 478 385.76855487018935 L 568.1806964641978 498.8515714590926' +
-                        ' L 712.8193035358022 498.8515714590926 L 803 385.7685548701894 L 770.8148820682862 244.75633965698302 Z';
-  const RECTANGLE_PATH = 'M 264 146 L 264 435 L 671 435 L 671 146 Z';
-  const ELLIPSE_PATH = 'M 720.5 153 a349.5,143.5 0 1,0 1,0 Z';
-  const ID_ARRAY_WITH_FUNCTION = [['rectangle', CHECK_IF_INSIDE_RECTANGLE],
-                                  ['ellipse', CHECK_IF_INSIDE_ELLIPSE],
-                                  ['polygone', CHECK_IF_INSIDE_POLYGON]];
   const PATH = 'path';
   const width = 5;
   /* tslint:disable */
@@ -77,32 +64,7 @@ describe('EraserServiceService', () => {
     service[RENDERER] = TestBed.get(Renderer2);
     spyOn(TranslateReader, 'readTransform').and.returnValue(DOMPOINT_A);
   });
-  for (const elem of ID_ARRAY_WITH_FUNCTION) {
-    it('should call right function depending on the paths id', () => {
-      const path: SVGPathElement = {} as SVGPathElement;
-      const xPos = 0;
-      const yPos = 0;
-      path.getAttribute = jasmine.createSpy().and.returnValue(elem[0]);
-      service[FILLED_PATH_TO_CHECK].push([path, DOMPOINT_A]);
-      // We disable this lint so we can spy on a private function
-      // tslint:disable-next-line: no-any
-      const spyOnMethod = spyOn<any>(service, elem[1]);
-      service[CHECK_FILLED_FORM]([xPos, yPos], path);
-      expect(spyOnMethod).toHaveBeenCalled();
-    });
-  }
-  it('should call right function depending on the paths id', () => {
-    const path: SVGPathElement = {} as SVGPathElement;
-    const xPos = 0;
-    const yPos = 0;
-    path.getAttribute = jasmine.createSpy().and.returnValue('ligne');
-    spyOn(service[FILLED_PATH_TO_CHECK], 'find').and.returnValue([path, DOMPOINT_A]);
-    // We disable this lint so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    const spyOnMethod = spyOn<any>(service, CHECK_IF_INSIDE_POLYGON);
-    service[CHECK_FILLED_FORM]([xPos, yPos], path);
-    expect(spyOnMethod).not.toHaveBeenCalled();
-  });
+  
   it('onmousemove should construct eraserpath  and handlecollision', () => {
     const mockMouseEvent = new MouseEvent('mouseEvent');
     service[CONSTRUCT_ERASER_PATH] = jasmine.createSpy().and.callFake(() => {return; });
@@ -115,22 +77,7 @@ describe('EraserServiceService', () => {
     service.initializeRenderer(service[RENDERER]);
     expect(service[RENDERER]).toBe(service[RENDERER]);
   });
-  it('addPath should call single path if no children', () => {
-    const path: SVGPathElement = {} as SVGPathElement;
-    service.isFillableForm = jasmine.createSpy().and.returnValue(true);
-    path.getAttribute = jasmine.createSpy().and.returnValue('none');
-    path.hasChildNodes = jasmine.createSpy().and.returnValue(false);
-    service[ADD_SINGLE_PATH] = jasmine.createSpy().and.callFake(() => {return; });
-    service.addPath(path);
-    expect(service[ADD_SINGLE_PATH]).toHaveBeenCalled();
-  });
-  it('addPath not add the path if its a bucket fill', () => {
-    const path: SVGPathElement = {} as SVGPathElement;
-    path.getAttribute = jasmine.createSpy().and.returnValue('bucketFill');
-    service[ADD_SINGLE_PATH] = jasmine.createSpy().and.callFake(() => {return; });
-    service.addPath(path);
-    expect(service[ADD_SINGLE_PATH]).not.toHaveBeenCalled();
-  });
+  
   it('addPath should call single path if no children', () => {
     const path: SVGPathElement = {} as SVGPathElement;
     path.getAttribute = jasmine.createSpy().and.returnValue('rectangle');
@@ -139,10 +86,7 @@ describe('EraserServiceService', () => {
     service.addPath(path);
     expect(service[ADD_SINGLE_PATH]).toHaveBeenCalled();
   });
-  it('isfillable form should return true if form is fillable else false', () => {
-    expect(service.isFillableForm('rectangle')).toBeTruthy();
-    expect(service.isFillableForm('ligne')).toBeFalsy();
-  });
+
   it('addPath should multiple path if children', () => {
     const path: SVGPathElement = {} as SVGPathElement;
     path.getAttribute = jasmine.createSpy().and.returnValue('rectangle');
@@ -334,7 +278,6 @@ describe('EraserServiceService', () => {
     service[RED_PATH][0].setAttribute = jasmine.createSpy().and.callFake(() => {return; });
     service[RED_PATH][0].getAttribute = jasmine.createSpy().and.callFake(() => 'ligne');
     service[MOUSE_IS_STILL_IN_COLL] = jasmine.createSpy().and.returnValue(false);
-    service[CHECK_FILLED_FORM] = jasmine.createSpy().and.returnValue(false);
     service[REVERT_SELECTED_PATH]([X_POS, Y_POS]);
     expect(service[RED_PATH][0].setAttribute).toHaveBeenCalled();
   });
@@ -345,7 +288,6 @@ describe('EraserServiceService', () => {
     service[RED_PATH][0].setAttribute = jasmine.createSpy().and.callFake(() => {return; });
     service[RED_PATH][0].getAttribute = jasmine.createSpy().and.callFake(() => 'allo');
     service[MOUSE_IS_STILL_IN_COLL] = jasmine.createSpy().and.returnValue(false);
-    service[CHECK_FILLED_FORM] = jasmine.createSpy().and.returnValue(false);
     service[REVERT_SELECTED_PATH]([X_POS, Y_POS]);
     expect(service[RED_PATH][0].setAttribute).toHaveBeenCalled();
   });
@@ -356,7 +298,6 @@ describe('EraserServiceService', () => {
     service[RED_PATH][0].setAttribute = jasmine.createSpy().and.callFake(() => {return; });
     service[RED_PATH][0].getAttribute = jasmine.createSpy().and.callFake(() => 'allo');
     service[MOUSE_IS_STILL_IN_COLL] = jasmine.createSpy().and.returnValue(true);
-    service[CHECK_FILLED_FORM] = jasmine.createSpy().and.returnValue(true);
     service[REVERT_SELECTED_PATH]([X_POS, Y_POS]);
     expect(service[RED_PATH][0].setAttribute).not.toHaveBeenCalled();
   });
@@ -420,7 +361,6 @@ describe('EraserServiceService', () => {
     const SPY_ON_SELECTED = spyOn<any>(service, SET_PATH_TO_SELECTED).and.callFake(() => { return; });
     service[PATH_TO_REMOVE].push = jasmine.createSpy().and.callFake(() => {return; });
     service[IS_ERASING] = true;
-    service[CHECK_FILLED_FORM] = jasmine.createSpy().and.returnValue(true);
     service[CHECK_IF_RADIUS_INTERSECT] = jasmine.createSpy().and.returnValue(true);
     service[REVERT_SELECTED_PATH] = jasmine.createSpy();
     service[HANDLE_COLLISION]([X_POS, Y_POS]);
@@ -438,7 +378,6 @@ describe('EraserServiceService', () => {
     // tslint:disable-next-line: no-any
     const SPY_ON_SELECTED = spyOn<any>(service, SET_PATH_TO_SELECTED).and.callFake(() => { return; });
     service[IS_ERASING] = false;
-    service[CHECK_FILLED_FORM] = jasmine.createSpy().and.returnValue(true);
     service[CHECK_IF_RADIUS_INTERSECT] = jasmine.createSpy().and.returnValue(true);
     service[REVERT_SELECTED_PATH] = jasmine.createSpy();
     service[HANDLE_COLLISION]([X_POS, Y_POS]);
@@ -449,7 +388,6 @@ describe('EraserServiceService', () => {
     const X_POS = 10; const Y_POS = 20;
     const path: SVGPathElement = {} as SVGPathElement;
     service[POINTS_FROM_PATHS].push([DOMPOINT_A, path, width]);
-    service[CHECK_FILLED_FORM] = jasmine.createSpy().and.returnValue(false);
     service[CHECK_IF_RADIUS_INTERSECT] = jasmine.createSpy().and.returnValue(false);
     service[REVERT_SELECTED_PATH] = jasmine.createSpy();
     service[HANDLE_COLLISION]([X_POS, Y_POS]);
@@ -460,7 +398,6 @@ describe('EraserServiceService', () => {
     service[IS_ERASING] = true;
     const path: SVGPathElement = {} as SVGPathElement;
     service[POINTS_FROM_PATHS].push([DOMPOINT_A, path, width]);
-    service[CHECK_FILLED_FORM] = jasmine.createSpy().and.returnValue(true);
     service[CHECK_IF_RADIUS_INTERSECT] = jasmine.createSpy().and.returnValue(true);
     service[SET_PATH_TO_SELECTED] = jasmine.createSpy().and.callFake(() => {return; });
     service[REMOVE_PATH] = jasmine.createSpy().and.callFake(() => {return; });
@@ -503,95 +440,6 @@ describe('EraserServiceService', () => {
     expect(spyArray).toHaveBeenCalled();
     expect(unshiftspy).toHaveBeenCalledTimes(TOTAL_LENGTH * NB_PATH);
   });
-  it('if the path to check is not filled, checkFilledForm should return false', () => {
-    spyOn(service[FILLED_PATH_TO_CHECK], 'find').and.returnValue(undefined);
-    const path: SVGPathElement = {} as SVGPathElement;
-    const xPos = 509;
-    const yPos = 235;
-    const returnValue = service[CHECK_FILLED_FORM]([xPos, yPos], path);
-    expect(returnValue).toBeFalsy();
-  });
-  it('check if inside rectangle should return false if mouse is outisde', () => {
-    const path: SVGPathElement = {} as SVGPathElement;
-    path.getAttribute = jasmine.createSpy().and.returnValue(RECTANGLE_PATH);
-    const xPos = 1000;
-    const yPos = 235;
-    const isInside = service[CHECK_IF_INSIDE_RECTANGLE]([xPos, yPos], path);
-    expect(isInside).toBeFalsy();
-  });
-  it('check if inside rectangle should return true if mouse is inside', () => {
-    const path: SVGPathElement = {} as SVGPathElement;
-    path.getAttribute = jasmine.createSpy().and.returnValue(RECTANGLE_PATH);
-    const xPos = 509;
-    const yPos = 235;
-    const isInside = service[CHECK_IF_INSIDE_RECTANGLE]([xPos, yPos], path);
-    expect(isInside).toBeTruthy();
-  });
-  it('check if inside rectangle should return false if path is null', () => {
-    const path: SVGPathElement = {} as SVGPathElement;
-    path.getAttribute = jasmine.createSpy().and.returnValue(null);
-    const xPos = 20;
-    const yPos = 50;
-    const isInside = service[CHECK_IF_INSIDE_RECTANGLE]([xPos, yPos], path);
-    expect(isInside).toBeFalsy();
-  });
-  it('check if inside polygone should return true if click is inside polygone', () => {
-    const X_MOUSE = 674;
-    const Y_MOUSE = 269;
-    const path: SVGPathElement = {} as SVGPathElement;
-    path.getAttribute = jasmine.createSpy().and.returnValue(ELLIPSE_PATH);
-    const isInside = service[CHECK_IF_INSIDE_ELLIPSE]([X_MOUSE, Y_MOUSE], path);
-    expect(isInside).toBeTruthy();
-  });
-  it('check if inside ellipse should return false if click is outside', () => {
-    const path: SVGPathElement = {} as SVGPathElement;
-    path.getAttribute = jasmine.createSpy().and.returnValue(ELLIPSE_PATH);
-    const xPos = 20;
-    const yPos = 50;
-    const isInside = service[CHECK_IF_INSIDE_ELLIPSE]([xPos, yPos], path);
-    expect(isInside).toBeFalsy();
-  });
-  it('check if inside ellipse should return false if path is null', () => {
-    const path: SVGPathElement = {} as SVGPathElement;
-    path.getAttribute = jasmine.createSpy().and.returnValue(null);
-    const xPos = 700;
-    const yPos = 200;
-    const isInside = service[CHECK_IF_INSIDE_ELLIPSE]([xPos, yPos], path);
-    expect(isInside).toBeFalsy();
-  });
-  it('check if inside polygone should return true if click is inside polygone', () => {
-    const X_MOUSE = 523;
-    const Y_MOUSE = 315;
-    const path: SVGPathElement = {} as SVGPathElement;
-    path.getAttribute = jasmine.createSpy().and.returnValue(POLYGONE_PATH);
-    const isInside = service[CHECK_IF_INSIDE_POLYGON]([X_MOUSE, Y_MOUSE], path);
-    expect(isInside).toBeTruthy();
-  });
-  it('check if inside polygone should return true if click is inside last triangle', () => {
-    const X_MOUSE = 687;
-    const Y_MOUSE = 251;
-    const path: SVGPathElement = {} as SVGPathElement;
-    path.getAttribute = jasmine.createSpy().and.returnValue(POLYGONE_PATH);
-    const isInside = service[CHECK_IF_INSIDE_POLYGON]([X_MOUSE, Y_MOUSE], path);
-    expect(isInside).toBeTruthy();
-  });
-  it('check if inside polygone should return false if path is null', () => {
-    const path: SVGPathElement = {} as SVGPathElement;
-    path.getAttribute = jasmine.createSpy().and.returnValue(null);
-    const xPos = 20;
-    const yPos = 50;
-    const isInside = service[CHECK_IF_INSIDE_POLYGON]([xPos, yPos], path);
-    expect(isInside).toBeFalsy();
-  });
-  it('checkIfInsideTriangle should return true if the mousePose is inside the triangle or else return false', () => {
-    const xMouseInside = 15; const yMouseInside = 45;
-    const isInside = service[CHECK_IF_INSIDE_TRIANGLE]([xMouseInside, yMouseInside], DOMPOINT_A, DOMPOINT_B, DOMPOINT_C);
-    expect(isInside).toBeTruthy();
-    const xMouseOutside = 300;
-    const yMouseOutside = 350;
-    const isNotInside = service[CHECK_IF_INSIDE_TRIANGLE]([xMouseOutside, yMouseOutside], DOMPOINT_A, DOMPOINT_B, DOMPOINT_C);
-    expect(isNotInside).toBeFalsy();
-  });
   it('expect coordsToDomPoint to return a domPoint', () => {
     const x = 10;
     const y = 35;
@@ -604,18 +452,6 @@ describe('EraserServiceService', () => {
     const EXPECTED_VALUE = 300;
     const area = service[AREA_TRIANGLE](DOMPOINT_A, DOMPOINT_B, DOMPOINT_C);
     expect(area).toBe(EXPECTED_VALUE);
-  });
-  it('checkFilledForm should return false if undefined', () => {
-    const path: SVGPathElement = {} as SVGPathElement;
-    const xPos = 0;
-    const yPos = 0;
-    path.getAttribute = jasmine.createSpy().and.returnValue('polygone');
-    spyOn(service[FILLED_PATH_TO_CHECK], 'find').and.returnValue([path, DOMPOINT_A]);
-    // We disable this lint so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    const spyOnMethod = spyOn<any>(service, CHECK_IF_INSIDE_POLYGON);
-    service[CHECK_FILLED_FORM]([xPos, yPos], path);
-    expect(spyOnMethod).toHaveBeenCalled();
   });
   it('refresh transform should find the path and add the new transform', () => {
     const path: SVGPathElement = {} as SVGPathElement;
@@ -648,14 +484,6 @@ describe('EraserServiceService', () => {
     service[FILLED_PATH_TO_CHECK] = [[path, DOMPOINT_A]];
     const GET_TRANSLATE_OF_FILLED_PATH = 'getTranlateOfFilledPath';
     expect(service[GET_TRANSLATE_OF_FILLED_PATH](path)).toBe(DOMPOINT_A);
-  });
-  it('addMPoints should add the M points of d attribut', () => {
-    const ADD_M_POINTS = 'addMPoints';
-    const path: SVGPathElement = {} as SVGPathElement;
-    const unshiftspy = spyOn(service[POINTS_FROM_PATHS], 'unshift');
-    path.getAttribute = jasmine.createSpy().and.returnValue(RECTANGLE_PATH);
-    service[ADD_M_POINTS](path, path, DOMPOINT_A);
-    expect(unshiftspy).toHaveBeenCalled();
   });
   it('addMPoints should add the M points of d attribut', () => {
     const ADD_M_POINTS = 'addMPoints';
