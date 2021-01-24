@@ -144,15 +144,6 @@ describe('a toolbar component', () => {
     expect(selectedButton).toEqual(mockToolButton);
   });
 
-  // rectangleToolShortcut
-  it('rectangleToolShortcut should call onSelect', () => {
-    // We disable this any so we can spy on a private function
-    // tslint:disable-next-line: no-any
-    spyOn<any>(component, 'selectButton');
-    component.rectangleToolShortcut();
-    expect(component[SELECT_BUTTON]).toHaveBeenCalled();
-  });
-
   it('selectButton should call onSelect if there is no openDialog', () => {
     spyOn(component[DIALOG_SERVICE], 'hasOpenDialog').and.returnValue(false);
     spyOn(component, 'onSelect');

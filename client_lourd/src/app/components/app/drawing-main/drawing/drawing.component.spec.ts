@@ -11,12 +11,10 @@ import { DrawingSizeService } from 'src/app/services/drawing/drawing-size.servic
 import { GallerieDrawingService } from 'src/app/services/gallerie-services/gallerie-drawing/gallerie-drawing.service';
 import { SvgService } from 'src/app/services/svg-service/svg.service';
 import { PathDrawingService } from 'src/app/services/tools/path-drawing/path-drawing.service';
-import { RectangleService } from 'src/app/services/tools/rectangle-service/rectangle.service';
 import { CommandInvokerService } from '../../../../services/drawing/command-invoker.service';
 import { EraserService } from '../../../../services/tools/eraser-service/eraser.service';
 import { AbstractTool } from '../../tools/abstract-tool';
 import { SelectionToolComponent } from '../../tools/selection-tool/selection-tool.component';
-import { RectangleToolComponent } from '../../tools/shapeTools/rectangle-tool/rectangle-tool.component';
 import { DrawingComponent } from './drawing.component';
 
 const LEFT_BUTTON = 0;
@@ -41,9 +39,6 @@ describe('a drawing component', () => {
   const path: SVGPathElement = {} as SVGPathElement;
   const mockContinueDrawing = new ContinueDrawingService(
     new GallerieDrawingService(), new DrawingSizeService(), new SelectedColorsService(), new SvgService());
-  const rectangleTool =
-    new RectangleToolComponent(new RectangleService(new PathDrawingService(), new CommandInvokerService(mockContinueDrawing),
-    new EraserService(new PathDrawingService(), new CommandInvokerService(mockContinueDrawing), mockContinueDrawing), mockContinueDrawing));
   let dialogDismissService: DialogDismissService;
   let commandInvoker: CommandInvokerService;
   let selectionToolMock: SelectionToolComponent;
@@ -59,7 +54,6 @@ describe('a drawing component', () => {
     fixture = TestBed.createComponent(DrawingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    component.tool = rectangleTool;
     dialogDismissService = TestBed.get(DialogDismissService);
     commandInvoker = TestBed.get(CommandInvokerService);
     selectionToolMock = TestBed.get(SelectionToolComponent);

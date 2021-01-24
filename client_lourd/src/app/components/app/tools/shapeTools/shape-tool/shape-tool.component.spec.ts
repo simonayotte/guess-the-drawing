@@ -11,7 +11,6 @@ import { DrawingSizeService } from 'src/app/services/drawing/drawing-size.servic
 import { GallerieDrawingService } from 'src/app/services/gallerie-services/gallerie-drawing/gallerie-drawing.service';
 import { SvgService } from 'src/app/services/svg-service/svg.service';
 import { PathDrawingService } from 'src/app/services/tools/path-drawing/path-drawing.service';
-import { RectangleService } from 'src/app/services/tools/rectangle-service/rectangle.service';
 import { CommandInvokerService } from '../../../../../services/drawing/command-invoker.service';
 import { EraserService } from '../../../../../services/tools/eraser-service/eraser.service';
 import { RectangleToolComponent } from '../rectangle-tool/rectangle-tool.component';

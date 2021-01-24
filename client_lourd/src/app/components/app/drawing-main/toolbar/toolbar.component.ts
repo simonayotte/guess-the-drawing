@@ -11,13 +11,11 @@ import {
 } from '@angular/core';
 import { DialogService } from '../../../../../../src/app/services/Dialog/dialog.service';
 import { DialogIsOpenError } from '../../../../errors/dialog-is-open';
-import { ClipBoardService } from '../../../../services/clipboard/clip-board.service';
 import { SelectedColorsService } from '../../../../services/color-picker/selected-colors.service';
 import { CommandInvokerService } from '../../../../services/drawing/command-invoker.service';
 import { GridService } from '../../../../services/grid-service/grid.service';
 import { SelectedToolService } from '../../../../services/selected-tool/selected-tool.service';
 import { AerosolComponent } from '../../tools/aerosol-tool/aerosol/aerosol.component';
-import { ColorApplicatorComponent } from '../../tools/color-applicator/color-applicator.component';
 import { Color } from '../../tools/color-picker/color';
 import { PaintBrushComponent } from '../../tools/drawingTools/paint-brush/paint-brush.component';
 import { PencilComponent } from '../../tools/drawingTools/pencil/pencil.component';
@@ -26,10 +24,8 @@ import { GridAttributesComponent } from '../../tools/grid-attributes/grid-attrib
 import { LineToolComponent } from '../../tools/line-tool/line-tool.component';
 import { PaintBucketComponent } from '../../tools/paint-bucket/paint-bucket.component';
 import { PipetteComponent } from '../../tools/pipette/pipette.component';
-import { SelectionToolComponent } from '../../tools/selection-tool/selection-tool.component';
 import { EllipseComponent } from '../../tools/shapeTools/ellipse/ellipse/ellipse.component';
 import { PolygoneComponent } from '../../tools/shapeTools/polygone/polygone/polygone.component';
-import { RectangleToolComponent } from '../../tools/shapeTools/rectangle-tool/rectangle-tool.component';
 import { ToolButton } from '../../tools/tool-button';
 
 const PENCIL = 0;
@@ -37,12 +33,9 @@ const BRUSH = 1;
 const AEROSOL = 2;
 const ERASER = 3;
 const LINE = 4;
-const RECTANGLE = 5;
 const POLYGONE = 6;
 const ELLIPSE = 7;
-const SELECTION = 8;
 const PIPETTE = 9;
-const COLOR_APPLICATOR = 10;
 const PAINT_BUCKET = 12;
 const BACKGROUND_COLOR = 2;
 
@@ -76,25 +69,21 @@ export class ToolbarComponent implements AfterViewInit {
   @ViewChild('sliderSec', {static: true}) sliderSec: ElementRef;
 
   constructor(private dialogService: DialogService, lineToolComponent: LineToolComponent, paintBrushComponent: PaintBrushComponent,
-              pencilComponent: PencilComponent, rectangleToolComponent: RectangleToolComponent,
-              selectionToolComponent: SelectionToolComponent, private selectedToolService: SelectedToolService, private renderer: Renderer2,
+              pencilComponent: PencilComponent, private selectedToolService: SelectedToolService, private renderer: Renderer2,
               private selectedColorService: SelectedColorsService, private commandInvoker: CommandInvokerService,
               aerosol: AerosolComponent, eraser: EraserComponent, polygoneComponent: PolygoneComponent,
-              ellipseComponent: EllipseComponent, pipetteComponent: PipetteComponent, colorApplicator: ColorApplicatorComponent,
+              ellipseComponent: EllipseComponent, pipetteComponent: PipetteComponent,
               gridAttributesComponent: GridAttributesComponent, private ref: ChangeDetectorRef, private gridService: GridService,
-              paintBucketComponent: PaintBucketComponent, clipBoardService: ClipBoardService) {
+              paintBucketComponent: PaintBucketComponent) {
       this.buttons = [
         {name: 'Crayon', tool: pencilComponent, iconName: 'pencil', category: 'drawingTool'},
         {name: 'Pinceau', tool: paintBrushComponent, iconName: 'brush', category: 'drawingTool'},
         {name: 'Aérosol', tool : aerosol, iconName: 'aerosol', category: 'drawingTool'},
         {name: 'Efface', tool : eraser, iconName: 'eraser', category: 'drawingTool'},
         {name: 'Ligne', tool: lineToolComponent, iconName: 'line', category: 'shapeTool'},
-        {name: 'Rectangle', tool: rectangleToolComponent, iconName: 'rectangle', category: 'shapeTool'},
         {name: 'Polygone', tool : polygoneComponent, iconName: 'polygon', category: 'shapeTool'},
         {name: 'Ellipse', tool : ellipseComponent, iconName: 'ellipse', category: 'shapeTool'},
-        {name: 'Selection', tool : selectionToolComponent, iconName: 'selection', category: 'otherTool'},
         {name: 'Pipette', tool : pipetteComponent, iconName: 'pipette', category: 'otherTool'},
-        {name: 'Applicateur couleur', tool : colorApplicator, iconName: 'palet', category: 'otherTool'},
         {name: 'Grille', tool : gridAttributesComponent, iconName: 'grid', category: 'otherTool'},
         {name: 'Sceau de peinture', tool : paintBucketComponent, iconName: 'bucket', category: 'otherTool'}
       ];
@@ -109,7 +98,6 @@ export class ToolbarComponent implements AfterViewInit {
           // However, we dont need to print in the console which tool use it or not, so we dont have to do anything
           // in this catch block
         }
-        clipBoardService.initializeRenderer(this.renderer);
       }
 
       this.selectedColorService.primaryColorBS.subscribe((result) => {
@@ -172,20 +160,12 @@ export class ToolbarComponent implements AfterViewInit {
     }
   }
 
-  @HostListener('document:keyup.1', ['$event']) rectangleToolShortcut(): void {
-    this.selectButton(RECTANGLE);
-  }
-
   @HostListener('document:keyup.a', ['$event']) aerosolToolShortcut(): void {
     this.selectButton(AEROSOL);
   }
 
   @HostListener('document:keyup.w', ['$event']) brushToolShortcut(): void {
     this.selectButton(BRUSH);
-  }
-
-  @HostListener('document:keyup.r', ['$event']) colorApplicatorShortcut(): void {
-    this.selectButton(COLOR_APPLICATOR);
   }
 
   @HostListener('document:keyup.c', ['$event']) pencilToolShortcut(): void {
@@ -198,10 +178,6 @@ export class ToolbarComponent implements AfterViewInit {
 
   @HostListener('document:keyup.i', ['$event']) pipetteShortcut(): void {
     this.selectButton(PIPETTE);
-  }
-
-  @HostListener('document:keyup.s', ['$event']) selectionToolShortcut(): void {
-    this.selectButton(SELECTION);
   }
 
   @HostListener('document:keyup.e', ['$event']) eraserShortcut(): void {
@@ -228,24 +204,6 @@ export class ToolbarComponent implements AfterViewInit {
   @HostListener('window:keydown.control.e', ['$event']) onCtrlE(event: KeyboardEvent): void {
     event.preventDefault();
     this.openExportDialog();
-  }
-
-  @HostListener('window:keydown', ['$event']) onKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'Alt') {
-      this.buttons[SELECTION].tool.onAltDown();
-    } else if (event.key === 'Shift') {
-      this.buttons[SELECTION].tool.onShiftDown();
-    }
-  }
-
-  @HostListener('window:keyup', ['$event']) onKeyUp(event: KeyboardEvent): void {
-    if (event.key === 'Alt') {
-      event.preventDefault();
-      this.buttons[SELECTION].tool.onAltUp();
-    } else if (event.key === 'Shift') {
-      event.preventDefault();
-      this.buttons[SELECTION].tool.onShiftUp();
-    }
   }
 
   openNewDrawingDialog(): void {
@@ -289,12 +247,10 @@ export class ToolbarComponent implements AfterViewInit {
   }
 
   undo(): void {
-    this.clearSelectionRectangle();
     this.commandInvoker.undo();
   }
 
   redo(): void {
-    this.clearSelectionRectangle();
     this.commandInvoker.redo();
   }
 
@@ -303,12 +259,6 @@ export class ToolbarComponent implements AfterViewInit {
       this.onSelect(this.buttons[toolIndex]);
     } else {
       throw(new DialogIsOpenError('une fenetre est deja ouverte'));
-    }
-  }
-
-  private clearSelectionRectangle(): void {
-    if (this.selectedButton === this.buttons[SELECTION]) {
-      (this.selectedButton.tool as SelectionToolComponent).clearSelection();
     }
   }
 }

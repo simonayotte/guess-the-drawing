@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ContinueDrawingService } from 'src/app/services/continue-drawing/continue-drawing.service';
 import { GallerieDrawingService } from 'src/app/services/gallerie-services/gallerie-drawing/gallerie-drawing.service';
-import { ClipBoardService } from '../../../../services/clipboard/clip-board.service';
 import { SelectedColorsService } from '../../../../services/color-picker/selected-colors.service';
 import { DialogDismissService } from '../../../../services/Dialog/dialog-dismiss.service';
 import { CommandInvokerService } from '../../../../services/drawing/command-invoker.service';
@@ -14,11 +13,9 @@ import { EraserService } from '../../../../services/tools/eraser-service/eraser.
 import { AbstractTool } from '../../tools/abstract-tool';
 import { Color } from '../../tools/color-picker/color';
 import { SvgManager } from '../../tools/graphics/svg-manager';
-import { SelectionToolComponent } from '../../tools/selection-tool/selection-tool.component';
 
 const LEFT_BUTTON = 0;
 const NUMBER_CHILD_NOT_TO_DELETE = 5;
-const SELECTION_TOOL = 'Outil de Sélection';
 const PIPETTE = 'pipette';
 const TOOL_BAR_WIDTH = 120;
 const TYPES_OF_ELEMENT = ['path', 'g', 'svg'];
@@ -44,9 +41,7 @@ export class DrawingComponent implements AfterViewInit, OnInit {
   constructor(private renderer: Renderer2, private drawingSizeService: DrawingSizeService, private selectedToolService: SelectedToolService,
               private currentDrawingService: CurrentDrawingDataService, private selectedColors: SelectedColorsService,
               private dismissService: DialogDismissService, private svgService: SvgService, private commandInvoker: CommandInvokerService,
-              private eraserService: EraserService, private gallerieDrawing: GallerieDrawingService, private gridService: GridService,
-              private clipboardService: ClipBoardService, private continueDrawingService: ContinueDrawingService) {
-    this.clipboardService.setDeleteCallback(this.removeSelectionPath.bind(this));
+              private eraserService: EraserService, private gallerieDrawing: GallerieDrawingService, private gridService: GridService, private continueDrawingService: ContinueDrawingService) {
     this.drawingSizeService.widthBS.subscribe( (result: number) => {this.width = result; this.initializeSvgAttribute(); }  );
     this.drawingSizeService.heightBS.subscribe(  (result: number) => {this.height = result; this.initializeSvgAttribute(); });
     this.selectedColors.primaryColorBS.subscribe((result: Color) => {this.primaryColor = result; });
@@ -58,7 +53,6 @@ export class DrawingComponent implements AfterViewInit, OnInit {
     });
     this.eraserService.setRemoveCallBack(this.removePathOfElement.bind(this));
     this.selectedToolService.selectedToolBS.subscribe( (result: AbstractTool) => {
-      this.removeSelectionPath();
       this.currentPath = undefined;
       this.tool = result;
     });
@@ -117,7 +111,7 @@ export class DrawingComponent implements AfterViewInit, OnInit {
     }
   }
   @HostListener('contextmenu', ['$event']) onContextMenu(event: MouseEvent): void {
-    if (this.tool.name === SELECTION_TOOL || this.tool.name === PIPETTE) {
+    if (this.tool.name === PIPETTE) {
       event.preventDefault();
     }
   }
@@ -232,42 +226,22 @@ export class DrawingComponent implements AfterViewInit, OnInit {
   @HostListener('document:keydown.control.a', ['$event']) onControlA(event: KeyboardEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    if (this.tool.name === SELECTION_TOOL) {
-      this.appendPathToRootElement((this.tool as unknown as SelectionToolComponent).selectAll());
-    }
   }
   @HostListener('document:keydown.control.c', ['$event']) onControlC(event: KeyboardEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    if (this.tool.name === SELECTION_TOOL) {
-      this.tool.onCtrlC();
-    }
   }
   @HostListener('document:keydown.control.v', ['$event']) onControlV(event: KeyboardEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    if (this.tool.name === SELECTION_TOOL) {
-      this.tool.onCtrlV();
-    }
   }
   @HostListener('document:keydown.control.x', ['$event']) onControlX(event: KeyboardEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    if (this.tool.name === SELECTION_TOOL) {
-      this.tool.onCtrlX();
-    }
   }
   @HostListener('document:keydown.control.d', ['$event']) onCtrlD(event: KeyboardEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    if (this.tool.name === SELECTION_TOOL) {
-      this.tool.onCtrlD();
-    }
-  }
-  @HostListener('document:keydown.delete', ['$event']) onDelete(event: KeyboardEvent): void {
-    if (this.tool.name === SELECTION_TOOL) {
-      this.tool.onDelete();
-    }
   }
   @HostListener('window:popstate') onPopState(): void {
     this.clearDrawing();
@@ -280,12 +254,10 @@ export class DrawingComponent implements AfterViewInit, OnInit {
   }
   @HostListener('window:keydown.control.z', ['$event']) undo(event: KeyboardEvent): void {
     this.commandInvoker.undo();
-    this.removeSelectionPath();
     event.stopImmediatePropagation();
   }
   @HostListener('window:keydown.control.shift.z', ['$event']) redo(event: KeyboardEvent): void {
     this.commandInvoker.redo();
-    this.removeSelectionPath();
     event.stopImmediatePropagation();
   }
   @HostListener('document:keydown', ['$event']) onKeyDown(event: KeyboardEvent): void {
@@ -326,11 +298,5 @@ export class DrawingComponent implements AfterViewInit, OnInit {
       (this.svg.nativeElement as HTMLElement).removeChild((this.svg.nativeElement as HTMLElement).lastChild as Node);
     }
     this.svgService.svgSubject.next(this.svg.nativeElement);
-  }
-  private removeSelectionPath(): void {
-    if (this.tool !== undefined && this.tool.name === SELECTION_TOOL) {
-      this.removePathOfElement(this.currentPath as SVGPathElement);
-      (this.tool as SelectionToolComponent).clearSelection();
-    }
   }
 }

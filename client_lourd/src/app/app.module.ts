@@ -18,7 +18,6 @@ import { LastSelectedColorsComponent } from './components/app/interface/last-sel
 import { SaveDrawingComponent } from './components/app/interface/save-drawing/save-drawing/save-drawing.component';
 import { PageNotFoundComponent } from './components/app/page-not-found/page-not-found.component';
 import { AerosolComponent } from './components/app/tools/aerosol-tool/aerosol/aerosol.component';
-import { ColorApplicatorComponent } from './components/app/tools/color-applicator/color-applicator.component';
 import { ColorPaletteComponent } from './components/app/tools/color-picker/color-palette/color-palette.component';
 import { ColorPickerComponent } from './components/app/tools/color-picker/color-picker.component';
 import { ColorSliderComponent } from './components/app/tools/color-picker/color-slider/color-slider.component';
@@ -30,10 +29,8 @@ import { GridAttributesComponent } from './components/app/tools/grid-attributes/
 import { LineToolComponent } from './components/app/tools/line-tool/line-tool.component';
 import { PaintBucketComponent } from './components/app/tools/paint-bucket/paint-bucket.component';
 import { PipetteComponent } from './components/app/tools/pipette/pipette.component';
-import { SelectionToolComponent } from './components/app/tools/selection-tool/selection-tool.component';
 import { EllipseComponent } from './components/app/tools/shapeTools/ellipse/ellipse/ellipse.component';
 import { PolygoneComponent } from './components/app/tools/shapeTools/polygone/polygone/polygone.component';
-import { RectangleToolComponent } from './components/app/tools/shapeTools/rectangle-tool/rectangle-tool.component';
 import { ShapeToolComponent } from './components/app/tools/shapeTools/shape-tool/shape-tool.component';
 import { ToolButtonsComponent } from './components/app/tools/tool-buttons/tool-buttons.component';
 import { MenuTreeComponent } from './components/app/user-guide/menu-tree/menu-tree.component';
@@ -50,7 +47,6 @@ import { PaintBrushService } from './services/tools/paintbrush-service/paint-bru
 import { PathDrawingService } from './services/tools/path-drawing/path-drawing.service';
 import { PencilService } from './services/tools/pencil-service/pencil.service';
 import { PolygoneService } from './services/tools/polygone-service/polygone.service';
-import { RectangleService } from './services/tools/rectangle-service/rectangle.service';
 import { UserGuideService } from './services/user-guide/user-guide.service';
 
 @NgModule({
@@ -70,7 +66,6 @@ import { UserGuideService } from './services/user-guide/user-guide.service';
       PaintBrushComponent,
       SaveDrawingComponent,
       ShapeToolComponent,
-      RectangleToolComponent,
       PolygoneComponent,
       EllipseComponent,
       LineToolComponent,
@@ -80,23 +75,19 @@ import { UserGuideService } from './services/user-guide/user-guide.service';
       DialogDismissDrawingComponent,
       LastSelectedColorsComponent,
       ExporterComponent,
-      SelectionToolComponent,
       GallerieComponent,
       EraserComponent,
       AerosolComponent,
       GridComponent,
       PaintBucketComponent,
       PipetteComponent,
-      ColorApplicatorComponent,
       GridAttributesComponent
     ],
     entryComponents: [
       DialogNewDrawingComponent,
       UserGuideComponent,
       PencilComponent,
-      SelectionToolComponent,
       PaintBrushComponent,
-      RectangleToolComponent,
       PolygoneComponent,
       EllipseComponent,
       LineToolComponent,
@@ -109,7 +100,6 @@ import { UserGuideService } from './services/user-guide/user-guide.service';
       AerosolComponent,
       PaintBucketComponent,
       PipetteComponent,
-      ColorApplicatorComponent,
       GridAttributesComponent,
       GridComponent
     ],
@@ -131,11 +121,8 @@ import { UserGuideService } from './services/user-guide/user-guide.service';
       UserGuideService,
       PencilService,
       PaintBrushService,
-      RectangleService,
       PencilComponent,
       PaintBrushComponent,
-      RectangleToolComponent,
-      SelectionToolComponent,
       LineToolComponent,
       PathDrawingService,
       LineService,
@@ -148,7 +135,6 @@ import { UserGuideService } from './services/user-guide/user-guide.service';
       AerosolComponent,
       PaintBucketComponent,
       PipetteComponent,
-      ColorApplicatorComponent,
       GridAttributesComponent,
       GridComponent
     ],
