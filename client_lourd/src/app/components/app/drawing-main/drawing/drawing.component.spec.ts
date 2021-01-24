@@ -6,7 +6,7 @@ import { AppModule } from 'src/app/app.module';
 import { MaterialModule } from 'src/app/material/material.module';
 import { DialogDismissService } from 'src/app/services/Dialog/dialog-dismiss.service';
 import { DrawingComponent } from './drawing.component';
-
+import { PencilComponent } from '../../tools/drawingTools/pencil/pencil.component'
 const LEFT_BUTTON = 0;
 const RIGHT_BUTTON = 1;
 const RENDERER = 'renderer';
@@ -37,6 +37,7 @@ describe('a drawing component', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DrawingComponent);
     component = fixture.componentInstance;
+    component.tool = TestBed.get(PencilComponent);
     fixture.detectChanges();
     dialogDismissService = TestBed.get(DialogDismissService);
     dialogDismissService.dismissDecision(true);
@@ -241,6 +242,7 @@ describe('a drawing component', () => {
 
   // onMouseUp
   it('onMouseUp should call onMouseUp function', () => {
+    component.tool = TestBed.get(PencilComponent);
     const mockEvent = new MouseEvent('mouseup');
     spyOn(component.tool, 'onMouseUp').and.returnValue(path);
     const appendPathSpy = spyOn(component, 'appendPathToRootElement');
@@ -301,6 +303,7 @@ describe('a drawing component', () => {
 
   // onMouseEnter
   it('onMouseEnter should call onMouseEnter function', () => {
+    component.tool = TestBed.get(PencilComponent);
     const mockEvent = new MouseEvent('mouseenter');
     spyOn(component.tool, 'onMouseEnter').and.returnValue(path);
     const appendPathSpy = spyOn(component, 'appendPathToRootElement');
@@ -348,6 +351,7 @@ describe('a drawing component', () => {
   });
 
   it('onShiftDown should call appendPathToRootElement if the returned element of onShiftDown is not null', () => {
+    component.tool = TestBed.get(PencilComponent);
     const mockEvent = new KeyboardEvent('shiftdown');
     spyOn(component.tool, 'onShiftDown').and.returnValue(path);
     spyOn(component, 'appendPathToRootElement');
@@ -410,6 +414,7 @@ describe('a drawing component', () => {
 
   // onEscapeClick
   it('onEscapeClick should call onBackSpaceDown function ', () => {
+    component.tool = TestBed.get(PencilComponent);
     const mockEvent = new KeyboardEvent('escapeclick');
     spyOn(component.tool, 'onEscapeClick').and.returnValue(path);
     const appendPathSpy = spyOn(component, 'appendPathToRootElement');

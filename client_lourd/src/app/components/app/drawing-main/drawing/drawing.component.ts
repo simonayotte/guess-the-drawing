@@ -133,12 +133,12 @@ export class DrawingComponent implements AfterViewInit, OnInit {
       if (buttonClicked === LEFT_BUTTON) {
         const returnElement = this.tool.onMouseDown(event, this.primaryColor, this.secondaryColor);
         if (returnElement !== null) {
-        this.appendPathToRootElement(returnElement);
+          this.appendPathToRootElement(returnElement);
         }
       } else {
         const returnElement = this.tool.onRightClickDown(event);
         if (returnElement !== null) {
-        this.appendPathToRootElement(returnElement);
+          this.appendPathToRootElement(returnElement);
         }
       }
     } catch (error) {
