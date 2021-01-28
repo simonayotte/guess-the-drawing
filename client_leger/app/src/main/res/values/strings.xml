@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">client_leger</string>
+    <string name="modes_de_jeux">Modes de jeux</string>
+    <string name="leaderboard">Leaderboard</string>
 </resources>
