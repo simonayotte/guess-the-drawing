@@ -1,7 +1,9 @@
 package com.example.client_leger
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -15,6 +17,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         println(someClass.printSomething())
+        val disconnectButton = findViewById<Button>(R.id.mainDisconnectButton)
+        disconnectButton.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
+            // start your next activity
+            startActivity(intent)
+        }
     }
 }
 
