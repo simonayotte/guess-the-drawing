@@ -7,27 +7,20 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
 
-class Login : AppCompatActivity() {
+class SignUp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_sign_up)
 
-        val background = findViewById<ConstraintLayout>(R.id.loginColorChange)
+        val background = findViewById<ConstraintLayout>(R.id.signupColorChange)
         val frameAnimation = background.background as AnimationDrawable
         frameAnimation.setEnterFadeDuration(2000)
         frameAnimation.setExitFadeDuration(4000)
         frameAnimation.start()
 
-        val loginButton = findViewById<Button>(R.id.loginButton)
+        val loginButton = findViewById<Button>(R.id.signupLoginButton)
         loginButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            // start your next activity
-            startActivity(intent)
-        }
-
-        val signupButton = findViewById<Button>(R.id.loginSignUpButton)
-        signupButton.setOnClickListener {
-            val intent = Intent(this, SignUp::class.java)
+            val intent = Intent(this, Login::class.java)
             // start your next activity
             startActivity(intent)
         }
