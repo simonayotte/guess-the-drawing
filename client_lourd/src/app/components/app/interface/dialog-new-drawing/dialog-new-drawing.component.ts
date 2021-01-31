@@ -20,8 +20,8 @@ export class DialogNewDrawingComponent implements AfterViewInit {
   heightIsValid: boolean;
   colorIsConfirmed: boolean;
 
-  @ViewChild('height', {static: false}) heightInput: ElementRef;
-  @ViewChild('width', {static: false}) widthInput: ElementRef;
+  @ViewChild('height') heightInput: ElementRef;
+  @ViewChild('width') widthInput: ElementRef;
 
   constructor(public drawingSizeService: DrawingSizeService, public dialog: MatDialog, private commandInvoker: CommandInvokerService ) {
     this.widthIsValid = true;

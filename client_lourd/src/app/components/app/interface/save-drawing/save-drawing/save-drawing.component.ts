@@ -21,10 +21,10 @@ export class SaveDrawingComponent implements OnInit {
   private svgElement: SVGElement;
   tags: string[];
 
-  @ViewChild('btnAddTag', {static: false}) btnAdd: MatButton;
-  @ViewChild('btnSaveDrawing', {static: false}) btnSave: MatButton;
-  @ViewChild('name', {static: false}) nameInput: ElementRef;
-  @ViewChild('tag', {static: false}) tagInput: ElementRef;
+  @ViewChild('btnAddTag') btnAdd: MatButton;
+  @ViewChild('btnSaveDrawing') btnSave: MatButton;
+  @ViewChild('name') nameInput: ElementRef;
+  @ViewChild('tag') tagInput: ElementRef;
 
   @ViewChild('canvas', {static: true})
   canvas: ElementRef<HTMLCanvasElement>;

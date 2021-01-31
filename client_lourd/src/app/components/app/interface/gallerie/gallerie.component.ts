@@ -20,8 +20,8 @@ export class GallerieComponent implements OnInit {
   tempMetaDataDB: MetaDataDB[];
   loading: boolean;
 
-  @ViewChild('btnAddTag', {static: false}) btnAdd: MatButton;
-  @ViewChild('tag', {static: false}) tagInput: ElementRef;
+  @ViewChild('btnAddTag') btnAdd: MatButton;
+  @ViewChild('tag') tagInput: ElementRef;
 
   constructor(private gallerieService: GallerieService, private saveDrawingService: SaveDrawingService, public dialog: MatDialog,
               private cdref: ChangeDetectorRef) {

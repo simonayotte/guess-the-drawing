@@ -18,7 +18,7 @@ export class DrawingToolComponent extends AbstractTool {
   @Input() size: number;
   @Input() drawingTool: DrawingToolComponent;
 
-  @ViewChild('sizeInput', {static: false}) sizeInput: ElementRef;
+  @ViewChild('sizeInput') sizeInput: ElementRef;
   constructor() {
     super();
     this.size = DEFAULT_SIZE;

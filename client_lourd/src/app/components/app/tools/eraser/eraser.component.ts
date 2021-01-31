@@ -15,7 +15,7 @@ const DEFAULT_BACKGROUND = '#ffffff';
 })
 export class EraserComponent extends AbstractTool {
   @Input() size: number;
-  @ViewChild('sizeInput', {static: false}) sizeInput: ElementRef;
+  @ViewChild('sizeInput') sizeInput: ElementRef;
 
   constructor(private eraserService: EraserService) {
     super();
