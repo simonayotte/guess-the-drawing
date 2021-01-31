@@ -63,19 +63,6 @@ import { UserGuideService } from './services/user-guide/user-guide.service';
       GridComponent,
       GridAttributesComponent
     ],
-    entryComponents: [
-      DialogNewDrawingComponent,
-      UserGuideComponent,
-      PencilComponent,
-      DialogDismissDrawingComponent,
-      ColorPickerComponent,
-      ExporterComponent,
-      SaveDrawingComponent,
-      GallerieComponent,
-      EraserComponent,
-      GridAttributesComponent,
-      GridComponent
-    ],
     imports: [
       BrowserModule,
       AppRoutingModule,
