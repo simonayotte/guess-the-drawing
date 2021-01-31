@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { GallerieComponent } from 'src/app/components/app/interface/gallerie/gallerie.component';
 import { ExporterComponent } from '../../components/app/exporter/exporter.component';
 import { DialogDismissDrawingComponent } from '../../components/app/interface/dialog-dismiss-drawing/dialog-dismiss-drawing.component';

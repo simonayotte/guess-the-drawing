@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
-import { MatSliderChange } from '@angular/material';
+import { MatSliderChange } from '@angular/material/slider';
 import { EraserService } from '../../../../services/tools/eraser-service/eraser.service';
 import { AbstractTool } from '../abstract-tool';
 const MAX_SIZE = 250;

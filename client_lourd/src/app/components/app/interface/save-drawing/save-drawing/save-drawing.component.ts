@@ -1,5 +1,7 @@
 import { Component, ElementRef, Injectable, OnInit, ViewChild } from '@angular/core';
-import { MatButton, MatDialog, MatSnackBar } from '@angular/material';
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ExporterService } from 'src/app/services/exporter-service/exporter.service';
 import { SvgService } from 'src/app/services/svg-service/svg.service';
 import { SaveDrawingService } from '../../../../../services/drawing/save-drawing.service';

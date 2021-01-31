@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatButton, MatDialog } from '@angular/material';
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MetaDataDB } from 'src/app/models/meta-data-bd';
 import { SaveDrawingService } from 'src/app/services/drawing/save-drawing.service';
 import { GallerieService } from 'src/app/services/gallerie-services/gallerie/gallerie.service';

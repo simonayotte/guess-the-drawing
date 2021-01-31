@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Injectable, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { CommandInvokerService } from 'src/app/services/drawing/command-invoker.service';
 import { DrawingSizeService } from '../../../../services/drawing/drawing-size.service';
 
