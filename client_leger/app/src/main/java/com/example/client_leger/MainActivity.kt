@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         println(someClass.printSomething())
         val disconnectButton = findViewById<Button>(R.id.mainDisconnectButton)
         disconnectButton.setOnClickListener {
-            val intent = Intent(this, Login::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             // start your next activity
             startActivity(intent)
         }
