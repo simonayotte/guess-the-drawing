@@ -1,5 +1,7 @@
 import { Component, ElementRef, Injectable, OnInit, ViewChild } from '@angular/core';
-import { MatButton, MatDialog, MatSnackBar } from '@angular/material';
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ExporterService } from 'src/app/services/exporter-service/exporter.service';
 import { SvgService } from 'src/app/services/svg-service/svg.service';
 import { SaveDrawingService } from '../../../../../services/drawing/save-drawing.service';
@@ -21,10 +23,10 @@ export class SaveDrawingComponent implements OnInit {
   private svgElement: SVGElement;
   tags: string[];
 
-  @ViewChild('btnAddTag', {static: false}) btnAdd: MatButton;
-  @ViewChild('btnSaveDrawing', {static: false}) btnSave: MatButton;
-  @ViewChild('name', {static: false}) nameInput: ElementRef;
-  @ViewChild('tag', {static: false}) tagInput: ElementRef;
+  @ViewChild('btnAddTag') btnAdd: MatButton;
+  @ViewChild('btnSaveDrawing') btnSave: MatButton;
+  @ViewChild('name') nameInput: ElementRef;
+  @ViewChild('tag') tagInput: ElementRef;
 
   @ViewChild('canvas', {static: true})
   canvas: ElementRef<HTMLCanvasElement>;

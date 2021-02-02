@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatButton, MatDialog } from '@angular/material';
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MetaDataDB } from 'src/app/models/meta-data-bd';
 import { SaveDrawingService } from 'src/app/services/drawing/save-drawing.service';
 import { GallerieService } from 'src/app/services/gallerie-services/gallerie/gallerie.service';
@@ -20,8 +21,8 @@ export class GallerieComponent implements OnInit {
   tempMetaDataDB: MetaDataDB[];
   loading: boolean;
 
-  @ViewChild('btnAddTag', {static: false}) btnAdd: MatButton;
-  @ViewChild('tag', {static: false}) tagInput: ElementRef;
+  @ViewChild('btnAddTag') btnAdd: MatButton;
+  @ViewChild('tag') tagInput: ElementRef;
 
   constructor(private gallerieService: GallerieService, private saveDrawingService: SaveDrawingService, public dialog: MatDialog,
               private cdref: ChangeDetectorRef) {

@@ -16,6 +16,10 @@
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="landscape">
+        <activity
+            android:name=".view.GameActivity"
+            android:exported="true" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
