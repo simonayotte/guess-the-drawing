@@ -1,5 +1,13 @@
 <resources>
-    <string name="app_name">client_leger</string>
+    <string name="app_name">Fais-moi un dessin</string>
     <string name="modes_de_jeux">Modes de jeux</string>
     <string name="leaderboard">Leaderboard</string>
+    <string name="login">Connexion</string>
+    <string name="login_button">Se connecter</string>
+    <string name="signup">Inscription</string>
+    <string name="signup_button">S\'inscrire</string>
+    <string name="username">Pseudo</string>
+    <string name="password">Mot de passe</string>
+    <string name="email">Adresse courriel</string>
+    <string name="disconnect">Se déconnecter</string>
 </resources>
