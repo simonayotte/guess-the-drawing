@@ -10,7 +10,9 @@
     "coverage": "ng test --code-coverage --sourceMap=true",
     "postinstall": "ngcc",
     "start:electron": "ng build --base-href ./ && electron .",
-    "build:electron": "ng build --prod && electron-packager .  --asar=true --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite --out=./build --electron-version=11.2.1"
+    "build:electron": "ng build --prod && electron-packager .  --asar=true --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite --out=./build --electron-version=11.2.1",
+    "build:electron-linux": "ng build --prod && electron-packager . client-linux --asar=true --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite --out=./build --electron-version=11.2.1 --prune=true plateform=linux --arch=x64",
+    "build:electron-mac": "ng build --prod && electron-packager . client-mac --asar=true --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite --out=./build --electron-version=11.2.1 --prune=true plateform=darwin --arch=x64"
   },
   "private": true,
   "dependencies": {
