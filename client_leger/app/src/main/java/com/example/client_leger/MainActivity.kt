@@ -17,12 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         println(someClass.printSomething())
-        val disconnectButton = findViewById<Button>(R.id.mainDisconnectButton)
-        disconnectButton.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            // start your next activity
-            startActivity(intent)
-        }
     }
 }
 
