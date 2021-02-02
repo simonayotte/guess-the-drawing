@@ -1,4 +1,4 @@
-import {Input, Renderer2} from '@angular/core';
+import { Input, Renderer2, Directive } from '@angular/core';
 import { AltDownNotImplementedError } from '../../../errors/alt-down-not-implemented';
 import { AltUpNotImplementedError } from '../../../errors/alt-up-not-implemented';
 import { ArrowsChangeNotImplementedError } from '../../../errors/arrows-change-not-implemented';
@@ -23,6 +23,7 @@ import { ShiftUpNotImplementedError } from '../../../errors/shift-up-not-impleme
 import { ShortCutNotImplemented } from '../../../errors/short-cut-not-implemented';
 import { Color } from './color-picker/color';
 
+@Directive()
 export abstract class AbstractTool {
     @Input() tool: AbstractTool;
     name: string;

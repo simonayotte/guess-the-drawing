@@ -54,7 +54,6 @@ describe('ColorPickerComponent', () => {
   // ngOnInit()
   it('should intantiate color if undefined', () => {
     component.color = null as unknown as Color;
-    delete component.color;
     const fakeColor = new Color(Color.MAX_COLOR, Color.MAX_COLOR, Color.MAX_COLOR, Color.MAX_ALPHA);
     component[COLOR_PICKER_SERVICE].density.next(fakeColor);
     expect(component.color).toBe(fakeColor);

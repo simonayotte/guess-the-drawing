@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Injectable, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { CommandInvokerService } from 'src/app/services/drawing/command-invoker.service';
 import { DrawingSizeService } from '../../../../services/drawing/drawing-size.service';
 
@@ -20,8 +20,8 @@ export class DialogNewDrawingComponent implements AfterViewInit {
   heightIsValid: boolean;
   colorIsConfirmed: boolean;
 
-  @ViewChild('height', {static: false}) heightInput: ElementRef;
-  @ViewChild('width', {static: false}) widthInput: ElementRef;
+  @ViewChild('height') heightInput: ElementRef;
+  @ViewChild('width') widthInput: ElementRef;
 
   constructor(public drawingSizeService: DrawingSizeService, public dialog: MatDialog, private commandInvoker: CommandInvokerService ) {
     this.widthIsValid = true;

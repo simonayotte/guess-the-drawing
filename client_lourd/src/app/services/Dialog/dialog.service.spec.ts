@@ -1,6 +1,6 @@
 
 import { async, TestBed } from '@angular/core/testing';
-import { MatDialog, MatDialogModule } from '@angular/material';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { SelectedColorsService } from '../color-picker/selected-colors.service';
 import { CurrentDrawingDataService } from '../drawing/current-drawing-data.service';
