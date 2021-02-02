@@ -25,3 +25,18 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## To be able to run electron
+npm install electron@11.2.1 --save-dev
+npm install electron@11.2.1 -g
+npm install --save-dev electron-packager
+npm install -g electron-packager
+npm install hammerjs --save
+npm install @types/hammerjs --save-dev
+
+## Commands with electron
+
+npm run start:electron --> to open electron app
+npm run build:electron --> to create windows application
+npm run build:electron-linux --> to create linux application
+npm run build:electron-mac --> to create mac application
