@@ -96,6 +96,33 @@
   //border-bottom: 5px solid white;
 }
 
+h3 {
+  color: white;
+  height: 30px;
+  font-size: large;
+}
+
+mat-label {
+  color:white;
+}
+
+mat-form-field-underline {
+  color: white;
+}
+
+.login-box {
+  display: flex;
+  width: 300px;
+  height: 500px;
+  background: #000000CC;
+  display: flex;
+  color:#fff;
+  position: fixed;
+  text-align: center;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
 #content {
   display: flex;
   justify-content: center;
@@ -135,8 +162,8 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: black;
   border: none;
   padding: 20px;
   text-align: center;
@@ -144,14 +171,14 @@ button {
   font-weight: bolder;
   border-radius: 5px;
   width: 250px;
-  height: 250px;
+  height: 30px;
   margin: 20px !important;
   transition: 0.3s;
 }
 
 button:hover:not(:disabled){
-  background-color: #f5f5f5;
-  color: #000;
+  background-color: #0c0c0c;
+  color: white;
 }
 
 button:active{
@@ -174,3 +201,6 @@ button:active{
   height: 125px;
 }
 
+.hidden {
+  display: none;
+}

@@ -1,38 +1,44 @@
 <mat-card class="animated-background accelerated">
   <div style="width: 100%; height: 100%" class="fade-in accelerated">
     <div class="row">
-      <p id="title">POLYDESSIN</p>
+      <p id="title">Fais-moi un dessin</p>
     </div>
     <div id="content" class="row">
-      <mat-card-actions class="button-position">
-        <button mat-button (click) = "openNewDrawingDialogs()">
-          <mat-icon class="icon">add</mat-icon>
-          <br>
-          NOUVEAU DESSIN
-        </button>
-      </mat-card-actions>
-      <mat-card-actions class="button-position">
-        <button mat-button (click) = "openUserGuideDialog()">
-          <mat-icon class="icon">book</mat-icon>
-          <br>
-          GUIDE D'UTILISATION
-        </button>
-      </mat-card-actions>
-      <mat-card-actions class="button-position">
-        <button mat-button (click) = "openGallerie()">
-          <mat-icon class="icon">collections</mat-icon>
-          <br>
-          GALLERIE DESSIN
-        </button>
-      </mat-card-actions>
-      <div *ngIf = isDrawingInLocalStorage()>
-        <mat-card-actions class="button-position">
-          <button #btnContinue mat-button (click) = "continueDrawing()" routerLink = "/draw">
-            <mat-icon class="icon">arrow_forward_ios</mat-icon>
-            <br>
-            CONTINUER
-          </button>
-        </mat-card-actions>
+      <div class="login-box">
+        <div class="button-position">
+          <h3  style="height:100px" > Connexion </h3>
+          <div>
+            <form class="form">
+              <mat-form-field [style.width.px]=250 class ="full-width">
+                <mat-label >Pseudo</mat-label>
+                <input matInput placeholder="xX_Patricia69_Xx" value="" #username>
+              </mat-form-field>
+            </form>
+
+            <form [className]="isLoggingIn ? 'hidden': 'form'">
+              <mat-form-field [style.width.px]=250 class ="full-width">
+                <mat-label> Adresse courriel</mat-label>
+                <input matInput placeholder="Ex. exemple@polymtl.ca" value="" #email>
+              </mat-form-field>
+            </form>
+            
+            <form class="form">
+              <mat-form-field [style.width.px]=250 class ="full-width">
+                <mat-label>Mot de passe</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" value="" #password>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+            </form>
+            
+            <button mat-button (click)="isLoggingIn ? login(username.value, password.value): signup(username.value, email.value, password.value)"> {{loginText}} </button> 
+
+
+            <button mat-button (click)="toggleDisplay()"> {{loginOption}} </button>
+
+          </div>
+        </div>
       </div>
 
     </div>
