@@ -1,20 +1,38 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppRoutingModule } from 'src/app/app-routing.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { throwError, of } from 'rxjs';
 import { AppModule } from 'src/app/app.module';
 import { MaterialModule } from 'src/app/material/material.module';
+import { UserModel } from 'src/app/models/user';
+import { LoginService } from 'src/app/services/login/login.service';
 import { HomeComponent } from './home.component';
-
-const DIALOG_SERVICE = 'dialogService';
-const CONTINUE_DRAWING_SERVICE = 'continueDrawingService';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  let mockLoginService: LoginService;
+  let mockDialog: MatDialog;
+  let router: Router;
+  let navigateSpy: jasmine.Spy;
 
-  beforeEach(async(() => {
+  const validUser: UserModel = {
+    username: 'user',
+    email: 'random@mail.com',
+    avatar: 'avatar.jpg'
+  };
+
+  const validPassword = 'pass';
+  const signUpMessage = 'Votre compte a été créé avec succès!';
+
+  beforeEach((() => {
+    mockLoginService = jasmine.createSpyObj('loginService', ['signIn', 'signUp']);
+
     TestBed.configureTestingModule({
       declarations: [],
-      imports: [MaterialModule, AppRoutingModule, AppModule]
+      imports: [MaterialModule, AppModule, MatDialogModule, RouterTestingModule.withRoutes([])],
+      providers: [{provide: LoginService, useValue: mockLoginService}]
     })
     .compileComponents();
   }));
@@ -23,62 +41,118 @@ describe('HomeComponent', () => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    mockLoginService = TestBed.inject(LoginService);
+    mockLoginService.signIn = jasmine.createSpy().and.returnValue(of(validUser));
+    mockLoginService.signUp = jasmine.createSpy().and.returnValue(of(signUpMessage));
+    mockDialog = TestBed.inject(MatDialog);
+    mockDialog.open = jasmine.createSpy();
+
+    router = TestBed.inject(Router);
+    navigateSpy = spyOn(router, 'navigate');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // onCtrlO()
-  it('onCtrlO should call preventDefault and openNewDrawingDialogs', () => {
-    const mockCtrlO = new KeyboardEvent('ctrlO');
-    spyOn(component, 'openNewDrawingDialogs').and.returnValue();
-    spyOn(mockCtrlO, 'preventDefault').and.returnValue();
+  it('empty values should be invalid and prevent signing in', () => {
+    component.loginForm.controls.username.setValue('');
+    component.loginForm.controls.email.setValue('');
+    component.loginForm.controls.password.setValue('');
+    component.submit();
 
-    component.onCtrlO(mockCtrlO);
-    expect(mockCtrlO.preventDefault).toHaveBeenCalled();
-    expect(component.openNewDrawingDialogs).toHaveBeenCalled();
+    expect(component.loginForm.valid).toBeFalsy();
+    expect(component.loginForm.controls.username.valid).toBeFalsy();
+    expect(component.loginForm.controls.email.valid).toBeFalsy();
+    expect(component.loginForm.controls.password.valid).toBeFalsy();
+    expect(component.getErrorMessage(component.loginForm.controls.username)).toBe('Le champ ne doit pas être vide');
+    expect(mockLoginService.signIn).not.toHaveBeenCalled();
   });
 
-  // openNewDrawingDialogs()
-  it('openNewDrawingDialogs should call openNewDrawingDialogs from service', () => {
-    spyOn(component[DIALOG_SERVICE], 'openNewDrawingDialogs').and.returnValue();
+  it('wrong email format should be invalid and prevent signing up', () => {
+    component.loginForm.controls.username.setValue(validUser.username);
+    component.loginForm.controls.email.setValue('mail');
+    component.loginForm.controls.password.setValue(validPassword);
+    component.isLoggingIn = false;
+    component.submit();
 
-    component.openNewDrawingDialogs();
-    expect(component.dialogService.openNewDrawingDialogs).toHaveBeenCalled();
+    expect(component.loginForm.valid).toBeFalsy();
+    expect(component.loginForm.controls.username.valid).toBeTruthy();
+    expect(component.loginForm.controls.email.valid).toBeFalsy();
+    expect(component.loginForm.controls.password.valid).toBeTruthy();
+    expect(component.getErrorMessage(component.loginForm.controls.email)).toBe('L\'adresse entrée n\'est pas valide');
+    expect(mockLoginService.signIn).not.toHaveBeenCalled();
   });
 
-   // openUserGuideDialog()
-  it('openUserGuideDialog should call openUserGuideDialog from service', () => {
-    spyOn(component[DIALOG_SERVICE], 'openUserGuideDialog').and.returnValue();
+  it('non-empty values should be valid', () => {
+    component.loginForm.controls.username.setValue(validUser.username);
+    component.loginForm.controls.email.setValue(validUser.email);
+    component.loginForm.controls.password.setValue(validPassword);
 
-    component.openUserGuideDialog();
-    expect(component.dialogService.openUserGuideDialog).toHaveBeenCalled();
+    expect(component.loginForm.valid).toBeTruthy();
+    expect(component.loginForm.controls.username.valid).toBeTruthy();
+    expect(component.loginForm.controls.email.valid).toBeTruthy();
+    expect(component.loginForm.controls.password.valid).toBeTruthy();
   });
 
-  // openGallerie()
-  it('openGallerie should call openGallerie from service', () => {
-    spyOn(component[DIALOG_SERVICE], 'openGallerie').and.returnValue();
+  it('submitting the form while signing in should call the service with the right values', () => {
+    component.loginForm.controls.username.setValue(validUser.username);
+    component.loginForm.controls.password.setValue(validPassword);
 
-    component.openGallerie();
-    expect(component.dialogService.openGallerie).toHaveBeenCalled();
+    component.submit();
+
+    expect(mockLoginService.signIn).toHaveBeenCalledTimes(1);
+    expect(mockLoginService.signIn).toHaveBeenCalledWith(validUser.username, validPassword);
+    // todo: replace /draw once we have a main menu
+    expect(navigateSpy).toHaveBeenCalledWith(['/draw'], { queryParams: { user: validUser } });
   });
 
-  // onCtrlG()
-  it('onCtrlG should call preventDefault and openNewDrawingDialogs', () => {
-    const onCtrlG = new KeyboardEvent('onCtrlG');
-    spyOn(component, 'openGallerie').and.returnValue();
-    spyOn(onCtrlG, 'preventDefault').and.returnValue();
+  it('submitting the form while signing up should call the service with the right values', () => {
+    component.loginForm.controls.username.setValue(validUser.username);
+    component.loginForm.controls.email.setValue(validUser.email);
+    component.loginForm.controls.password.setValue(validPassword);
+    component.isLoggingIn = false;
+    component.submit();
 
-    component.onCtrlG(onCtrlG);
-    expect(onCtrlG.preventDefault).toHaveBeenCalled();
-    expect(component.openGallerie).toHaveBeenCalled();
+    expect(mockLoginService.signUp).toHaveBeenCalledTimes(1);
+    expect(mockLoginService.signUp).toHaveBeenCalledWith(validUser.username, validUser.email, validPassword);
+    expect(mockDialog.open).toHaveBeenCalledWith(jasmine.any(Function), { data: {message: signUpMessage}});
   });
 
-  // continueDrawing
-  it('continueDrawing should call open of continue drawing', () => {
-    spyOn(component[CONTINUE_DRAWING_SERVICE], 'open');
-    component.continueDrawing();
-    expect(component[CONTINUE_DRAWING_SERVICE].open).toHaveBeenCalled();
+  it('receiving a sign in error from the service should show it in a dialog', () => {
+    const errorMessage = "some error message";
+    mockLoginService.signIn = jasmine.createSpy().and.returnValue(throwError(errorMessage));
+    component.loginForm.controls.username.setValue(validUser.username);
+    component.loginForm.controls.password.setValue(validPassword);
+
+    component.submit();
+
+    expect(mockDialog.open).toHaveBeenCalledWith(jasmine.any(Function), { data: {message: errorMessage}});
+    expect(navigateSpy).not.toHaveBeenCalled();
   });
+
+  it('receiving a sign up error from the service should show it in a dialog', () => {
+    const errorMessage = "some error message";
+    mockLoginService.signUp = jasmine.createSpy().and.returnValue(throwError(errorMessage));
+    component.loginForm.controls.username.setValue(validUser.username);
+    component.loginForm.controls.email.setValue(validUser.email);
+    component.loginForm.controls.password.setValue(validPassword);
+    component.isLoggingIn = false;
+
+    component.submit();
+
+    expect(mockDialog.open).toHaveBeenCalledWith(jasmine.any(Function), { data: {message: errorMessage}});
+    expect(navigateSpy).not.toHaveBeenCalled();
+  });
+
+  it('toggleDisplay should switch between signing in and signing up', () => {
+    expect(component.isLoggingIn).toBeTruthy();
+
+    component.toggleDisplay();
+    expect(component.isLoggingIn).toBeFalsy();
+
+    component.toggleDisplay();
+    expect(component.isLoggingIn).toBeTruthy();
+  });
+
 });

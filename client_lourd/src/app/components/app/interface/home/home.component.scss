@@ -201,6 +201,8 @@ button:active{
   height: 125px;
 }
 
-.hidden {
-  display: none;
+form {
+  mat-form-field {
+    width: 250px;
+  }
 }

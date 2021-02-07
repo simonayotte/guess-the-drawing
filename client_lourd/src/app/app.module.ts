@@ -36,6 +36,7 @@ import { SvgService } from './services/svg-service/svg.service';
 import { PathDrawingService } from './services/tools/path-drawing/path-drawing.service';
 import { PencilService } from './services/tools/pencil-service/pencil.service';
 import { UserGuideService } from './services/user-guide/user-guide.service';
+import { BasicDialogComponent } from './components/app/interface/basic-dialog/basic-dialog.component';
 
 @NgModule({
     declarations: [
@@ -61,7 +62,8 @@ import { UserGuideService } from './services/user-guide/user-guide.service';
       GallerieComponent,
       EraserComponent,
       GridComponent,
-      GridAttributesComponent
+      GridAttributesComponent,
+      BasicDialogComponent
     ],
     imports: [
       BrowserModule,

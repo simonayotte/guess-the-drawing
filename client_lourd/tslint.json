@@ -1,5 +1,5 @@
 {
-    "extends": "../common/tslint.json",
+    "extends": "tslint:recommended",
     "rulesDirectory": ["codelyzer"],
     "rules": {
         "deprecation": {
@@ -15,6 +15,8 @@
         "use-lifecycle-interface": true,
         "use-pipe-transform-interface": true,
         "component-class-suffix": true,
-        "directive-class-suffix": true
+        "directive-class-suffix": true,
+        "semicolon": [true, "always"],
+        "no-any": [true, {"ignore-rest-args": true}]
     }
 }

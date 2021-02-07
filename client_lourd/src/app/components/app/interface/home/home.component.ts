@@ -1,65 +1,79 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ContinueDrawingService } from 'src/app/services/continue-drawing/continue-drawing.service';
-import { DialogService } from '../../../../services/Dialog/dialog.service';
+import { LoginService } from 'src/app/services/login/login.service';
+import { BasicDialogComponent } from '../basic-dialog/basic-dialog.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-
-  public hide: boolean = true;
+export class HomeComponent implements OnInit {
+  public hidePassword: boolean = true;
   public isLoggingIn: boolean = true;
-  public loginText: string = "Se connecter";
-  public loginOption: string = "S'inscrire";
-  counter: number;
+  readonly signInText: string = "Se connecter";
+  readonly signUpText: string = "S'inscrire";
 
-  constructor(public dialogService: DialogService, private continueDrawingService: ContinueDrawingService, private router: Router) {
-    this.counter = 0;
+  public loginForm : FormGroup;
+
+  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router, private dialog: MatDialog) {
   }
 
-  @HostListener('window:keydown.control.o', ['$event']) onCtrlO(event: KeyboardEvent): void {
-    event.preventDefault();
-    this.openNewDrawingDialogs();
-  }
-
-  openNewDrawingDialogs(): void {
-    this.dialogService.openNewDrawingDialogs();
-  }
-
-  openUserGuideDialog(): void {
-    this.dialogService.openUserGuideDialog();
-  }
-  openGallerie(): void {
-    this.dialogService.openGallerie();
-  }
-
-  isDrawingInLocalStorage(): boolean {
-    return this.continueDrawingService.isDrawingInLocalStorage();
-  }
-
-  continueDrawing(): void {
-    this.continueDrawingService.open();
+  ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      username: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required])
+    })
   }
 
   public toggleDisplay() {
-    this.isLoggingIn ? this.loginText = "S'inscrire" : this.loginText = "Se connecter";
-    this.isLoggingIn ? this.loginOption = "Se connecter" : this.loginOption = "S'inscrire";
     this.isLoggingIn = !this.isLoggingIn;
   }
 
-  public login(username: string, password: string): void {
-    this.router.navigate(['/draw']);
+  public getErrorMessage(control: AbstractControl): string {
+    if(control.hasError('required'))
+      return 'Le champ ne doit pas être vide';
+    else if(control.hasError('email'))
+      return 'L\'adresse entrée n\'est pas valide';
+
+    return '';
   }
 
-  public signup(username: string, email:string, password: string): void {
-    
+  public submit(): void {
+    if(this.isLoggingIn)
+      this.signIn();
+    else
+      this.signUp();
   }
 
-  @HostListener('document:keydown.control.g', ['$event']) onCtrlG(event: KeyboardEvent): void {
-    event.preventDefault();
-    this.openGallerie();
+  private signIn(): void {
+    if(this.loginForm.controls.username.valid && this.loginForm.controls.password.valid) {
+      this.loginService.signIn(this.loginForm.controls.username.value,
+        this.loginForm.controls.password.value).subscribe(
+          // 'draw' will be replaced with the main menu. 'user' param will be accessible from the menu
+          res => this.router.navigate(['/draw'], { queryParams: { user: res } }),
+          err => this.showDialog(err)
+      );
+
+    }
+  }
+
+  private signUp(): void {
+    if(this.loginForm.valid) {
+      this.loginService.signUp(this.loginForm.controls.username.value,
+        this.loginForm.controls.email.value,
+        this.loginForm.controls.password.value).subscribe(
+          res => this.showDialog(res).afterClosed().subscribe(
+            () => this.isLoggingIn = true), //sign up successful, going back to sign in
+          err => this.showDialog(err)
+      );
+    }
+  }
+
+  private showDialog(message: string): MatDialogRef<BasicDialogComponent, {data: {message: string}}> {
+    return this.dialog.open(BasicDialogComponent, { data: {message: message}})
   }
 }
