@@ -1,16 +1,20 @@
+-- Pas d'héritage avec les FK: https://stackoverflow.com/questions/58541643/postgres-inheritance-and-foreign-keys-or-alternative
 SET search_path = LOG3900DB;
 
 DROP SCHEMA IF EXISTS LOG3900DB CASCADE;
 CREATE SCHEMA LOG3900DB;
 
 CREATE TABLE IF NOT EXISTS Player(
-    idPlayer         	SERIAL 			NOT NULL,
+	idPlayer         	SERIAL 			NOT NULL,
 	username            VARCHAR(30)     NOT NULL,
+	isVirtualPlayer		BOOLEAN			DEFAULT 'false',
 	
 	PRIMARY KEY (idPlayer)
 );
 
 CREATE TABLE IF NOT EXISTS Person(
+	idPlayer         	INT				NOT NULL,
+	password         	VARCHAR(30)		NOT NULL,
     email               VARCHAR(30)     DEFAULT '',
     firstName           VARCHAR(30)     DEFAULT '',
     lastName            VARCHAR(30)     DEFAULT '',
@@ -22,8 +26,10 @@ CREATE TABLE IF NOT EXISTS Person(
     bestScoreSprintSolo INT             DEFAULT 0,
     likes               INT             DEFAULT 0, -- number of
     dislikes            INT             DEFAULT 0, -- number of
-    isConnected         BOOLEAN        	DEFAULT '1' -- true if connected, false if disconnected
-)INHERITS(Player);
+    isConnected         BOOLEAN        	DEFAULT '1', -- true if connected, false if disconnected
+	
+	FOREIGN KEY (idPlayer) REFERENCES Player(idPlayer) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 CREATE TABLE IF NOT EXISTS Personnality(
     idPersonnality      SERIAL 			NOT NULL,
@@ -33,10 +39,12 @@ CREATE TABLE IF NOT EXISTS Personnality(
 );
 
 CREATE TABLE IF NOT EXISTS VirtualPlayer(
+	idPlayer         	INT 			NOT NULL,
     idPersonnality      INT             NOT NULL,
-
+	
+	FOREIGN KEY (idPlayer) REFERENCES Player(idPlayer) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idPersonnality) REFERENCES Personnality(idPersonnality) ON DELETE CASCADE ON UPDATE CASCADE
-)INHERITS(Player);
+);
 
 CREATE TABLE IF NOT EXISTS Expression(
     idExpression        SERIAL 			NOT NULL,
@@ -50,7 +58,7 @@ CREATE TABLE IF NOT EXISTS Expression(
 CREATE TABLE IF NOT EXISTS Game(
     idGame              SERIAL 			NOT NULL,
     gameDate           	TIMESTAMP		WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    gameModeId          INT             NOT NULL,  
+    gameModeId          INT             DEFAULT 0,  
 	difficultyLevel		INT				DEFAULT 0,
 
 	PRIMARY KEY (idGame)
@@ -77,12 +85,12 @@ CREATE TABLE IF NOT EXISTS TeamPlayer(
 
 CREATE TABLE IF NOT EXISTS Friendship(
     idFriendship        SERIAL 			NOT NULL,
-	idFriend1           INT     		NOT NULL,
-    idFriend2      		INT     		NOT NULL,
+	idPlayer1           INT     		NOT NULL,
+    idPlayer2      		INT     		NOT NULL,
 
 	PRIMARY KEY (idFriendship),
-	FOREIGN KEY (idFriend1) REFERENCES Player(idPlayer) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (idFriend2) REFERENCES Player(idPlayer) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY (idPlayer1) REFERENCES Player(idPlayer) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (idPlayer2) REFERENCES Player(idPlayer) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Login(
