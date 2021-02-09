@@ -10,4 +10,5 @@
     <string name="password">Mot de passe</string>
     <string name="email">Adresse courriel</string>
     <string name="disconnect">Se déconnecter</string>
+    <string name="veuillez_r_essayer_de_nouveau">Veuillez réessayer de nouveau</string>
 </resources>
