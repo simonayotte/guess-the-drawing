@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AbsCommand } from '../../components/app/command/abs-command';
-import { ContinueDrawingService } from '../continue-drawing/continue-drawing.service';
 
 const APPEND_CHILD_CALLBACK = 'appendChildFunction';
 const REMOVE_CHILD_CALLBACK = 'removeChildFunction';
@@ -21,7 +20,7 @@ export class CommandInvokerService {
   callBackMap: IHash = {};
   displayStatusUndoRedoBtn: BehaviorSubject<[boolean, boolean]>;
 
-  constructor(private continueDrawingService: ContinueDrawingService) {
+  constructor() {
     this.displayStatusUndoRedoBtn = new BehaviorSubject([false, false]);
   }
   // I disable the no-any rule since we are passing callback, which can have zero or multiple parameters, as parameters of the functions
@@ -49,7 +48,6 @@ export class CommandInvokerService {
       }
       this.refreshDisplayButtonValues();
     }
-    this.continueDrawingService.autoSaveDrawing();
   }
   redo(): void {
     if (this.commandUndoneStack.length !== 0) {
@@ -60,7 +58,6 @@ export class CommandInvokerService {
       }
       this.refreshDisplayButtonValues();
     }
-    this.continueDrawingService.autoSaveDrawing();
   }
   addCommand(cmd: AbsCommand): void {
     this.commandDoneStack.push(cmd);

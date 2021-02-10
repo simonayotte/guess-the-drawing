@@ -2,12 +2,7 @@ import { Renderer2 } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { Color } from 'src/app/components/app/tools/color-picker/color';
 import { PencilComponent } from 'src/app/components/app/tools/drawingTools/pencil/pencil.component';
-import { SelectedColorsService } from '../../color-picker/selected-colors.service';
-import { ContinueDrawingService } from '../../continue-drawing/continue-drawing.service';
 import { CommandInvokerService } from '../../drawing/command-invoker.service';
-import { DrawingSizeService } from '../../drawing/drawing-size.service';
-import { GallerieDrawingService } from '../../gallerie-services/gallerie-drawing/gallerie-drawing.service';
-import { SvgService } from '../../svg-service/svg.service';
 import { EraserService } from '../eraser-service/eraser.service';
 import { PathDrawingService } from '../path-drawing/path-drawing.service';
 import { PencilService } from './pencil.service';
@@ -16,7 +11,6 @@ const DRAW_LINE = 'drawLine';
 const LEFT_BUTTON = 1;
 const eraserService = 'eraserService';
 const ADD_PATH = 'addPath';
-const CONTINUE_DRAWING_SERVICE = 'continueDrawingService';
 
 class MockRenderer2 {
   appendChild(): void {
@@ -33,12 +27,8 @@ class MockRenderer2 {
 describe('PencilService', () => {
 
   let service: PencilService;
-  const mockContinueDrawing = new ContinueDrawingService(
-    new GallerieDrawingService(), new DrawingSizeService(), new SelectedColorsService(), new SvgService());
 
-  const mockComponent = new PencilComponent(new PencilService(new PathDrawingService(), new CommandInvokerService(mockContinueDrawing),
-                        new EraserService(new PathDrawingService(),
-                                          new CommandInvokerService(mockContinueDrawing), mockContinueDrawing), mockContinueDrawing));
+  const mockComponent = new PencilComponent(new PencilService(new PathDrawingService(), new CommandInvokerService(), new EraserService(new PathDrawingService(), new CommandInvokerService())));
   const pathDrawingService = 'pathDrawingService';
   const mockMouseEvent = new MouseEvent('mouseEvent');
 
@@ -62,7 +52,6 @@ describe('PencilService', () => {
     // We disable this lint so we can spy on a private function
     // tslint:disable-next-line: no-any
     spyOn<any>(service, DRAW_LINE);
-    spyOn(service[CONTINUE_DRAWING_SERVICE], 'autoSaveDrawing');
     service.isDrawing = true;
     // We disable this lint so we can spy on a private function
     // tslint:disable-next-line: no-any
@@ -70,7 +59,6 @@ describe('PencilService', () => {
     service.onMouseUp(mockMouseEvent);
     expect(service.isDrawing).toBe(false);
     expect(service[DRAW_LINE]).toHaveBeenCalledTimes(1);
-    expect(service[CONTINUE_DRAWING_SERVICE].autoSaveDrawing).toHaveBeenCalled();
   });
 
   // initializeRenderer(Renderer2)

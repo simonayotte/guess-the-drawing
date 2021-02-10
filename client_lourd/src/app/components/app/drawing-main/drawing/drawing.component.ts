@@ -1,6 +1,4 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { ContinueDrawingService } from 'src/app/services/continue-drawing/continue-drawing.service';
-import { GallerieDrawingService } from 'src/app/services/gallerie-services/gallerie-drawing/gallerie-drawing.service';
 import { SelectedColorsService } from '../../../../services/color-picker/selected-colors.service';
 import { DialogDismissService } from '../../../../services/Dialog/dialog-dismiss.service';
 import { CommandInvokerService } from '../../../../services/drawing/command-invoker.service';
@@ -12,12 +10,10 @@ import { SvgService } from '../../../../services/svg-service/svg.service';
 import { EraserService } from '../../../../services/tools/eraser-service/eraser.service';
 import { AbstractTool } from '../../tools/abstract-tool';
 import { Color } from '../../tools/color-picker/color';
-import { SvgManager } from '../../tools/graphics/svg-manager';
 
 const LEFT_BUTTON = 0;
 const NUMBER_CHILD_NOT_TO_DELETE = 5;
 const TOOL_BAR_WIDTH = 120;
-const TYPES_OF_ELEMENT = ['path', 'g', 'svg'];
 
 @Component({
   selector: './drawing',
@@ -40,7 +36,7 @@ export class DrawingComponent implements AfterViewInit, OnInit {
   constructor(private renderer: Renderer2, private drawingSizeService: DrawingSizeService, private selectedToolService: SelectedToolService,
               private currentDrawingService: CurrentDrawingDataService, private selectedColors: SelectedColorsService,
               private dismissService: DialogDismissService, private svgService: SvgService, private commandInvoker: CommandInvokerService,
-              private eraserService: EraserService, private gallerieDrawing: GallerieDrawingService, private gridService: GridService, private continueDrawingService: ContinueDrawingService) {
+              private eraserService: EraserService, private gridService: GridService) {
     this.drawingSizeService.widthBS.subscribe( (result: number) => {this.width = result; this.initializeSvgAttribute(); }  );
     this.drawingSizeService.heightBS.subscribe(  (result: number) => {this.height = result; this.initializeSvgAttribute(); });
     this.selectedColors.primaryColorBS.subscribe((result: Color) => {this.primaryColor = result; });
@@ -60,24 +56,13 @@ export class DrawingComponent implements AfterViewInit, OnInit {
     this.arrowKeysDown = new Map([['ArrowUp', false], ['ArrowRight', false], ['ArrowDown', false], ['ArrowLeft', false]]);
   }
   ngOnInit(): void {
-    this.continueDrawingService.open();
     this.eraserService.setRemoveCallBack(this.removePathOfElement.bind(this));
     this.drawingSizeService.newDrawing();
-    this.gallerieDrawing.svgStringBS.subscribe( (svgString) => {
-      const svg: SVGElement = SvgManager.fromString(svgString);
-      let array: Element[];
-      array = Array.prototype.slice.call(svg.children).filter((element: SVGPathElement) => TYPES_OF_ELEMENT.includes(element.tagName));
-      this.clearDrawing();
-      this.commandInvoker.newDrawing();
-      for (const elem of array) {
-        this.addPathToElement(elem as SVGPathElement);
-      }
-    });
+
   }
   ngAfterViewInit(): void {
     this.initializeSvgAttribute();
     this.commandInvoker.defineCallBackFunction(this.addPathToElement.bind(this), this.removePathOfElement.bind(this));
-    this.continueDrawingService.autoSaveDrawing();
   }
   initializeSvgAttribute(): void {
     const colorBackgroundAttribut = 'background-color:' + this.backgroundColor;

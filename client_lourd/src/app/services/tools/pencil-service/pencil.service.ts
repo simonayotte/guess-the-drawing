@@ -3,7 +3,6 @@ import { PencilComponent } from 'src/app/components/app/tools/drawingTools/penci
 import { DrawCommand } from '../../../components/app/command/draw-command';
 import { Color } from '../../../components/app/tools/color-picker/color';
 import { DrawingNotStartedError } from '../../../errors/drawing-not-started';
-import { ContinueDrawingService } from '../../continue-drawing/continue-drawing.service';
 import { CommandInvokerService } from '../../drawing/command-invoker.service';
 import { EraserService } from '../eraser-service/eraser.service';
 import { PathDrawingService } from '../path-drawing/path-drawing.service';
@@ -21,7 +20,7 @@ export class PencilService {
   path: SVGPathElement;
 
   constructor(private pathDrawingService: PathDrawingService, private commandInvoker: CommandInvokerService,
-              private eraserService: EraserService, private continueDrawingService: ContinueDrawingService) {
+              private eraserService: EraserService) {
     this.isDrawing = false;
   }
 
@@ -54,7 +53,6 @@ export class PencilService {
 
   onMouseUp(event: MouseEvent): SVGPathElement {
     this.drawLine(event);
-    this.continueDrawingService.autoSaveDrawing();
     this.isDrawing = false;
     const cmd = new DrawCommand(this.path);
     this.commandInvoker.addCommand(cmd);
