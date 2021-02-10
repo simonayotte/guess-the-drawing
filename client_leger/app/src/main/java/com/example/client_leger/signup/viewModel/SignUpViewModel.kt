@@ -26,7 +26,6 @@ class SignUpViewModel @Inject constructor(
 
     fun onClickSignUp() {
         //TODO: send request to create an account
-        //username, email and pw are already bind
         viewModelScope.launch {
             when (signUpRepository.makeSignUpRequest(
                     userNameToValidate.value!!,
