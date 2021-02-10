@@ -1,26 +1,26 @@
 <div class="toolbar">
     <button *ngIf="toolSelected" mat-fab class="material" title='Fermer menu' id="attributeButton" (click)='toolSelected = !toolSelected'>
-      <img class="icon" width="24" height="24" src="/assets/iconPictures/closeMenu.svg">
+      <img class="icon" width="24" height="24" src="assets/iconPictures/closeMenu.svg">
     </button>
     <button *ngIf="!toolSelected" mat-fab class="material" title='Ouvrir menu' id="attributeButton" (click)='toolSelected = !toolSelected'>
-      <img class="icon" width="24" height="24" src="/assets/iconPictures/openMenu.svg">
+      <img class="icon" width="24" height="24" src="assets/iconPictures/openMenu.svg">
     </button>
 
     <div class="inner top">
         <button  mat-fab class="material" [disabled] = "!undoAvailable" title='Annuler'[ngClass]="'undoRedo'" (click) = 'undo()'>
-          <img class="icon" width="24" height="24" aria-hidden="false" aria-label="Example home icon" src="/assets/iconPictures/undo.svg">
+          <img class="icon" width="24" height="24" aria-hidden="false" aria-label="Example home icon" src="assets/iconPictures/undo.svg">
         </button>
         <button  mat-fab class="material" [disabled] = "!redoAvailable" title='Refaire' [ngClass]="'undoRedo'" (click) = 'redo()'>
-          <img class="icon" width="24" height="24" aria-hidden="false" aria-label="Example home icon" src="/assets/iconPictures/redo.svg">
+          <img class="icon" width="24" height="24" aria-hidden="false" aria-label="Example home icon" src="assets/iconPictures/redo.svg">
         </button>
         <div *ngFor= "let button of buttons">
             <button  mat-fab class="material" (click)='onSelect(button)' title={{button.name}} [ngClass]="button === selectedButton ? 'selected' : button.category">
-                <img class="icon" width="24" height="24" aria-hidden="false" aria-label="Example home icon" src="/assets/iconPictures/{{button.iconName}}.svg">
+                <img class="icon" width="24" height="24" aria-hidden="false" aria-label="Example home icon" src="assets/iconPictures/{{button.iconName}}.svg">
             </button>
         </div>
 
         <button mat-fab class="material" title="Page d'accueil" routerLink="/home" [ngClass]="'navigationButton'">
-          <img class="icon" width="24" height="24" src="/assets/iconPictures/home.svg">
+          <img class="icon" width="24" height="24" src="assets/iconPictures/home.svg">
         </button>
     </div>
 </div>
