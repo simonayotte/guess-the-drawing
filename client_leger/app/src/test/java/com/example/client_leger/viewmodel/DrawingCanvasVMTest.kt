@@ -1,5 +1,6 @@
 package com.example.client_leger.viewmodel
 
+import com.example.client_leger.drawing.viewmodel.DrawingCanvasVM
 import com.example.client_leger.model.DrawingPath
 import org.junit.Assert.*
 import org.junit.Test

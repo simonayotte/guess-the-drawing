@@ -7,14 +7,14 @@
         <import type="android.view.View"/>
         <variable
             name="viewmodel"
-            type="com.example.client_leger.SignInViewModel"/>
+            type="com.example.client_leger.signin.viewModel.SignInViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/loginColorChange"
         android:background="@drawable/gradient_list"
-        tools:context=".SiginInActivity">
+        tools:context=".signin.activity.SiginInActivity">
 
         <TextView
             android:id="@+id/loginAppName"

@@ -1,4 +1,4 @@
-package com.example.client_leger
+package com.example.client_leger.utils
 
 sealed class Result<out R> {
     data class Success<out T>(val data: T) : Result<T>()

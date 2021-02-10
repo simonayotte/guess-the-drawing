@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.example.client_leger.SignUpViewModel" />
+            type="com.example.client_leger.signup.viewModel.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:id="@+id/signupColorChange"
         android:background="@drawable/gradient_list"
-        tools:context=".SignUpActivity">
+        tools:context=".signup.activity.SignUpActivity">
 
         <TextView
             android:id="@+id/signupAppName"

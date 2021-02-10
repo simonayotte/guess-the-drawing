@@ -1,7 +1,7 @@
-package com.example.client_leger
+package com.example.client_leger.signin.api
 
-import com.example.client_leger.loginModel.SignInRequestModel
-import com.example.client_leger.loginModel.SignInResponseModel
+import com.example.client_leger.signin.model.SignInRequestModel
+import com.example.client_leger.signin.model.SignInResponseModel
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST

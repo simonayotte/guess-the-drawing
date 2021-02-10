@@ -1,7 +1,7 @@
-package com.example.client_leger
+package com.example.client_leger.signin.model
 
-import com.example.client_leger.loginModel.SignInRequestModel
-import com.example.client_leger.loginModel.SignInResponseModel
+import com.example.client_leger.utils.Result
+import com.example.client_leger.signin.api.ConnectionApi
 import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

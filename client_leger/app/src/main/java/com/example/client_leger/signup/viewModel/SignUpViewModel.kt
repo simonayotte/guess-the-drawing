@@ -1,4 +1,4 @@
-package com.example.client_leger
+package com.example.client_leger.signup.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

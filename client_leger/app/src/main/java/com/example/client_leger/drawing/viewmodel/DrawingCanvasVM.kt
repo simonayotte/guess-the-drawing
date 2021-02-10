@@ -1,4 +1,4 @@
-package com.example.client_leger.viewmodel
+package com.example.client_leger.drawing.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.client_leger.model.DrawingPath

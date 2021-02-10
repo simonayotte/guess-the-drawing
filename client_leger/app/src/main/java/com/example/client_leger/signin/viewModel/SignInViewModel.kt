@@ -1,9 +1,11 @@
-package com.example.client_leger
+package com.example.client_leger.signin.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.client_leger.loginModel.SignInResponseModel
+import com.example.client_leger.utils.Result
+import com.example.client_leger.signin.model.SignInRepository
+import com.example.client_leger.signin.model.SignInResponseModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

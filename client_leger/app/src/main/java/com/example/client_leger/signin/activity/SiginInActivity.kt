@@ -1,4 +1,4 @@
-package com.example.client_leger
+package com.example.client_leger.signin.activity
 
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
@@ -8,7 +8,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.example.client_leger.MainActivity
+import com.example.client_leger.R
+import com.example.client_leger.signup.activity.SignUpActivity
 import com.example.client_leger.databinding.ActivitySignInBinding
+import com.example.client_leger.signin.viewModel.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

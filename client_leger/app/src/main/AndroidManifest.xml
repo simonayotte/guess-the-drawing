@@ -14,11 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Client_leger">
-        <activity android:name=".SignUpActivity"
+        <activity android:name=".signup.activity.SignUpActivity"
             android:screenOrientation="landscape"
-            android:parentActivityName=".SiginInActivity"/>
+            android:parentActivityName=".signin.activity.SiginInActivity"/>
         <activity
-            android:name=".SiginInActivity"
+            android:name=".signin.activity.SiginInActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.GameActivity"
+            android:name=".drawing.view.GameActivity"
             android:exported="true" />
         <activity android:name=".MainActivity">
 

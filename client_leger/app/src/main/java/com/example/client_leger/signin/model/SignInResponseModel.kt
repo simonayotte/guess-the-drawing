@@ -1,4 +1,4 @@
-package com.example.client_leger.loginModel
+package com.example.client_leger.signin.model
 
 import com.google.gson.annotations.SerializedName
 
