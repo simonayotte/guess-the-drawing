@@ -27,7 +27,6 @@ const STR_HEX = 'strFormatHex';
 const R_ATTRIBUTE = 'r';
 const G_ATTRIBUTE = 'g';
 const B_ATTRIBUTE = 'b';
-const CONTINUE_DRAWING_SERVICE = 'continueDrawingService';
 
 describe('ColorPickerComponent', () => {
   let component: ColorPickerComponent;
@@ -220,14 +219,10 @@ describe('ColorPickerComponent', () => {
 
     component.selectedColorsService.selectColorChangeBS.next(BACKGROUND_COLOR_NOT_CLOSE);
     spyOn(component.selectedColorsService, 'setColor');
-    spyOn(component[CONTINUE_DRAWING_SERVICE], 'autoSaveDrawing');
-    spyOn(component[CONTINUE_DRAWING_SERVICE], 'isDrawingInLocalStorage').and.returnValue(true);
 
     component.selectedValue();
 
     expect(component.selectedColorsService.setColor).toHaveBeenCalled();
-    expect(component[CONTINUE_DRAWING_SERVICE].autoSaveDrawing).toHaveBeenCalled();
-    expect(component[CONTINUE_DRAWING_SERVICE].isDrawingInLocalStorage).toHaveBeenCalled();
 
     component.selectedColorsService.selectColorChangeBS.next(PRIMARY_COLOR);
 
@@ -239,14 +234,10 @@ describe('ColorPickerComponent', () => {
 
     component.selectedColorsService.selectColorChangeBS.next(BACKGROUND_COLOR_NOT_CLOSE);
     spyOn(component.selectedColorsService, 'setColor');
-    spyOn(component[CONTINUE_DRAWING_SERVICE], 'autoSaveDrawing');
-    spyOn(component[CONTINUE_DRAWING_SERVICE], 'isDrawingInLocalStorage').and.returnValue(false);
 
     component.selectedValue();
 
     expect(component.selectedColorsService.setColor).toHaveBeenCalled();
-    expect(component[CONTINUE_DRAWING_SERVICE].autoSaveDrawing).toHaveBeenCalledTimes(0);
-    expect(component[CONTINUE_DRAWING_SERVICE].isDrawingInLocalStorage).toHaveBeenCalled();
   });
 
   // validateColor()

@@ -1,6 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
-import { SaveDrawingComponent } from 'src/app/components/app/interface/save-drawing/save-drawing/save-drawing.component';
 import { SvgManager } from 'src/app/components/app/tools/graphics/svg-manager';
 import { SaveDrawingService } from './save-drawing.service';
 
@@ -19,7 +18,6 @@ describe('Service: SaveDrawing', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [SaveDrawingComponent]
     });
     injector = getTestBed();
     service = injector.get(SaveDrawingService);

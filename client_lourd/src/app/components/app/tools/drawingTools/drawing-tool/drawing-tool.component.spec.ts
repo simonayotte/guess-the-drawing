@@ -5,11 +5,6 @@ import { By } from '@angular/platform-browser';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppModule } from 'src/app/app.module';
 import { MaterialModule } from 'src/app/material/material.module';
-import { SelectedColorsService } from 'src/app/services/color-picker/selected-colors.service';
-import { ContinueDrawingService } from 'src/app/services/continue-drawing/continue-drawing.service';
-import { DrawingSizeService } from 'src/app/services/drawing/drawing-size.service';
-import { GallerieDrawingService } from 'src/app/services/gallerie-services/gallerie-drawing/gallerie-drawing.service';
-import { SvgService } from 'src/app/services/svg-service/svg.service';
 import { PathDrawingService } from 'src/app/services/tools/path-drawing/path-drawing.service';
 import { PencilService } from 'src/app/services/tools/pencil-service/pencil.service';
 import { CommandInvokerService } from '../../../../../services/drawing/command-invoker.service';
@@ -30,11 +25,9 @@ describe('DrawingToolComponent', () => {
   let component: DrawingToolComponent;
   let debugElement: DebugElement;
   let fixture: ComponentFixture<DrawingToolComponent>;
-  const mockContinueDrawing = new ContinueDrawingService(
-    new GallerieDrawingService(), new DrawingSizeService(), new SelectedColorsService(), new SvgService());
 
-  const pencilTool = new PencilComponent(new PencilService(new PathDrawingService(), new CommandInvokerService(mockContinueDrawing),
-    new EraserService(new PathDrawingService(), new CommandInvokerService(mockContinueDrawing), mockContinueDrawing), mockContinueDrawing));
+  const pencilTool = new PencilComponent(new PencilService(new PathDrawingService(), new CommandInvokerService(),
+    new EraserService(new PathDrawingService(), new CommandInvokerService())));
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

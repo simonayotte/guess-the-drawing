@@ -3,8 +3,6 @@ import { async, TestBed } from '@angular/core/testing';
 import { EraserService } from './eraser.service';
 import { TranslateReader } from './translate-reader';
 
-const CONTINUE_DRAWING_SERVICE = 'continueDrawingService';
-
 class MockRenderer2 {
   appendChild(): void {
     return;
@@ -138,7 +136,6 @@ describe('EraserServiceService', () => {
     }).toThrowError('The eraser is not in the drawing');
   });
   it('onMouseLeave should remove eraser path and set mouseIsDrawing false', () => {
-    spyOn(service[CONTINUE_DRAWING_SERVICE], 'autoSaveDrawing');
     service[CONSTRUCT_ERASER_PATH] = jasmine.createSpy().and.callFake(() => {return; });
     service.onMouseUp = jasmine.createSpy().and.callFake(() => {return; });
     service[CALL_BACK_FUNCTION] = (() => {return; });
@@ -150,7 +147,6 @@ describe('EraserServiceService', () => {
       expect(service[CALL_BACK_FUNCTION]).toHaveBeenCalled();
       expect(service.onMouseUp).toHaveBeenCalled();
       expect(service[MOUSE_IS_IN_DRAWING]).toBeFalsy();
-      expect(service[CONTINUE_DRAWING_SERVICE].autoSaveDrawing).toHaveBeenCalled();
     }
   });
   it('onMouseEnter should construct eraser path and set mouseIsDrawing true', () => {
