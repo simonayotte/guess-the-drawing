@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import { EraserCommand } from '../../../components/app/command/eraser-command';
 import { MouseOutOfBoundsError } from '../../../errors/mouse-out-of-bounds';
 import { Position } from '../../../models/position';
-import { ContinueDrawingService } from '../../continue-drawing/continue-drawing.service';
 import { CommandInvokerService } from '../../drawing/command-invoker.service';
 import { PathDrawingService } from '../path-drawing/path-drawing.service';
 import { TranslateReader } from './translate-reader';
@@ -29,8 +28,7 @@ export class EraserService {
   // tslint:disable-next-line: no-any // We disabed this rule since this is a callback function
   private callBackFunctionToRemoveEraser: any;
   private filledPathToCheck: [SVGPathElement, DOMPoint][] = [];
-  constructor(private pathDrawingService: PathDrawingService, private commandInvoker: CommandInvokerService,
-              private continueDrawingService: ContinueDrawingService) {
+  constructor(private pathDrawingService: PathDrawingService, private commandInvoker: CommandInvokerService) {
     this.eraserSize = new BehaviorSubject(DEAFULT_SIZE);
     this.isErasing = false;
     this.redPath = [this.path, '', '0'];
@@ -92,7 +90,6 @@ export class EraserService {
   onMouseLeave(event: MouseEvent): SVGPathElement {
     this.onMouseUp(event);
     this.callBackFunctionToRemoveEraser(this.path);
-    this.continueDrawingService.autoSaveDrawing();
     this.mouseIsInDrawing = false;
     throw new MouseOutOfBoundsError('Eraser is out of bound');
   }

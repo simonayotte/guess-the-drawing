@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SvgManager } from 'src/app/components/app/tools/graphics/svg-manager';
-import { MetaData } from '../../../../../server/app/models/meta-data';
+import { MetaData } from '../../models/meta-data';
 import { LOWER_A_CHARCODE,
   LOWER_Z_CHARCODE, NINE_CHARCODE,
   UPPER_A_CHARCODE, UPPER_Z_CHARCODE, ZERO_CHARCODE } from '../../components/app/tools/color-picker/constants';

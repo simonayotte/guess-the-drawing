@@ -7,6 +7,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { DialogDismissService } from 'src/app/services/Dialog/dialog-dismiss.service';
 import { DrawingComponent } from './drawing.component';
 import { PencilComponent } from '../../tools/drawingTools/pencil/pencil.component'
+
 const LEFT_BUTTON = 0;
 const RIGHT_BUTTON = 1;
 const RENDERER = 'renderer';
@@ -16,7 +17,6 @@ const NUMBER_CHILD_NOT_TO_DELETE = 5;
 const NUMBER_CHILD_NOT_TO_DELETE_OVER = 6;
 const DISMISSERVICE  = 'dismissService';
 const eraserService = 'eraserService';
-const gallerieDrawing = 'gallerieDrawing';
 const ADD_PATH = 'addPath';
 const CALLED_FOUR_TIMES = 4;
 const PIPETTE = 'pipette';
@@ -63,17 +63,6 @@ describe('a drawing component', () => {
     spyOn(component, 'clearDrawing').and.callFake(() => { return; });
     component[DISMISSERVICE].dismissChanges.next(false);
     expect(component.clearDrawing).not.toHaveBeenCalled();
-  });
-
-  // ngOnInit
-  it('should call add path to element ing svgStringBS subscribe', () => {
-    // tslint:disable-next-line: max-line-length --> Disable if not, it would take to many lines
-    const SVG_STRING = '<svg xmlns="http://www.w3.org/2000/svg" _ngcontent-rve-c16="" height="200" stroke-width="0px" style="background-color:rgba(255, 255, 255, 1)" width="1000"><filter _ngcontent-rve-c16="" color-interpolation-filters="linearRGB" filterUnits="userSpaceOnUse" height="140%" id="texture1" primitiveUnits="userSpaceOnUse" width="140%" x="-20%" y="-20%"><feGaussianBlur _ngcontent-rve-c16="" edgeMode="none" height="100%" in="SourceGraphic" result="blur1" stdDeviation="5 5" width="100%" x="0%" y="0%"/></filter><filter _ngcontent-rve-c16="" color-interpolation-filters="linearRGB" filterUnits="userSpaceOnUse" height="140%" id="texture2" primitiveUnits="userSpaceOnUse" width="140%" x="-20%" y="-20%"><feTurbulence _ngcontent-rve-c16="" baseFrequency="0.05" height="100%" numOctaves="2" result="turbulence" seed="1" stitchTiles="stitch" type="turbulence" width="100%" x="0%" y="0%"/><feDisplacementMap _ngcontent-rve-c16="" height="100%" in="SourceGraphic" in2="turbulence" result="displacementMap" scale="50" width="100%" x="0%" xChannelSelector="R" y="0%" yChannelSelector="B"/></filter><filter _ngcontent-rve-c16="" color-interpolation-filters="linearRGB" filterUnits="userSpaceOnUse" height="140%" id="texture3" primitiveUnits="userSpaceOnUse" width="140%" x="-20%" y="-20%"><feTurbulence _ngcontent-rve-c16="" baseFrequency="0.5" height="100%" numOctaves="2" result="turbulence" seed="1" stitchTiles="stitch" type="fractalNoise" width="100%" x="0%" y="0%"/><feDisplacementMap _ngcontent-rve-c16="" height="100%" in="SourceGraphic" in2="turbulence" result="displacementMap" scale="50" width="100%" x="0%" xChannelSelector="R" y="0%" yChannelSelector="B"/></filter><filter _ngcontent-rve-c16="" color-interpolation-filters="linearRGB" filterUnits="userSpaceOnUse" height="140%" id="texture4" primitiveUnits="userSpaceOnUse" width="140%" x="-20%" y="-20%"><feTurbulence _ngcontent-rve-c16="" baseFrequency="0.5" height="100%" numOctaves="2" result="turbulence" seed="1" stitchTiles="stitch" type="turbulence" width="100%" x="0%" y="0%"/><feDisplacementMap _ngcontent-rve-c16="" height="100%" in="SourceGraphic" in2="turbulence" result="displacementMap" scale="10" width="100%" x="0%" xChannelSelector="R" y="0%" yChannelSelector="B"/></filter><filter _ngcontent-rve-c16="" color-interpolation-filters="linearRGB" filterUnits="userSpaceOnUse" height="140%" id="texture5" primitiveUnits="userSpaceOnUse" width="140%" x="-20%" y="-20%"><feTurbulence _ngcontent-rve-c16="" baseFrequency="0 0.25" height="100%" numOctaves="2" result="turbulence" seed="1" stitchTiles="stitch" type="turbulence" width="100%" x="0%" y="0%"/><feDisplacementMap _ngcontent-rve-c16="" height="100%" in="SourceGraphic" in2="turbulence" result="displacementMap" scale="50" width="100%" x="0%" xChannelSelector="R" y="0%" yChannelSelector="B"/></filter><path _ngcontent-rve-c15="" stroke-width="25" stroke="rgba(46, 49, 49, 1)" fill="none" stroke-linecap="round" stroke-linejoin="round" d="M 145 77 L 145 77 L 147 77 L 149 77 L 181 89 L 205 97 L 245 107 L 269 111 L 313 115 L 325 116 L 339 116 L 341 116 L 341 116 L 341 116 "/></svg>';
-
-    spyOn(component, 'addPathToElement');
-    component[gallerieDrawing].svgStringBS.next(SVG_STRING);
-
-    expect(component.addPathToElement).toHaveBeenCalled();
   });
 
   // initializeSvgAttribute

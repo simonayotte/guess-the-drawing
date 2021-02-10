@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { MetaData } from '../../../../../server/app/models/meta-data';
+import { MetaData } from '../../models/meta-data';
 import { CanvasManager } from '../../components/app/tools/graphics/canvas-manager';
 import { CANVAS_DEFAULT_DIMENSIONS } from '../../components/app/tools/graphics/graphics-constants';
 import { DATATYPES } from '../../components/app/tools/graphics/graphics-factory/datatype-factory';

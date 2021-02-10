@@ -55,6 +55,8 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
+<<<<<<< HEAD
+=======
   it('empty values should be invalid and prevent signing in', () => {
     component.loginForm.controls.username.setValue('');
     component.loginForm.controls.email.setValue('');
@@ -155,4 +157,5 @@ describe('HomeComponent', () => {
     expect(component.isLoggingIn).toBeTruthy();
   });
 
+>>>>>>> dev
 });

@@ -62,36 +62,12 @@ describe('a toolbar component', () => {
 
   });
 
-  it('onCtrlS should prevent default and call openSaveDrawingDialog', () => {
-    const mockCtrlS = new KeyboardEvent('ctrlS');
-    spyOn(component, 'openSaveDrawingDialog');
-    spyOn(mockCtrlS, 'preventDefault');
-    component.onCtrlS(mockCtrlS);
-    expect(component.openSaveDrawingDialog).toHaveBeenCalled();
-    expect(mockCtrlS.preventDefault).toHaveBeenCalled();
-  });
-
-  it('onCtrle should prevent default and call openExportDialog', () => {
-    const mockCtrlE = new KeyboardEvent('ctrlE');
-    spyOn(component, 'openExportDialog');
-    spyOn(mockCtrlE, 'preventDefault');
-    component.onCtrlE(mockCtrlE);
-    expect(component.openExportDialog).toHaveBeenCalled();
-    expect(mockCtrlE.preventDefault).toHaveBeenCalled();
-  });
-
   it('onSelectShould set toolSelected to true if the clicked button is selected one and ', () => {
     const mockToolButton = new ToolButton();
     component.toolSelected = false;
     component[SELECTED_BUTTON] = mockToolButton;
     component.onSelect(mockToolButton);
     expect(component.toolSelected).toBe(true);
-  });
-
-  it('openSaveDrawingDialog should call openSaveDrawingDialog of dialogService', () => {
-    spyOn(component[DIALOG_SERVICE], 'openSaveDrawingDialog');
-    component.openSaveDrawingDialog();
-    expect(component[DIALOG_SERVICE].openSaveDrawingDialog).toHaveBeenCalled();
   });
 
   // openColorPicker
@@ -161,29 +137,6 @@ describe('a toolbar component', () => {
     spyOn<any>(component, 'selectButton');
     component.pencilToolShortcut();
     expect(component[SELECT_BUTTON]).toHaveBeenCalled();
-  });
-
-  // openUserGuideDialog
-  it('openUserGuideDialog should call openUserGuideDialog', () => {
-    spyOn(component[DIALOG_SERVICE], 'openUserGuideDialog');
-
-    component.openUserGuideDialog();
-    expect(component[DIALOG_SERVICE].openUserGuideDialog).toHaveBeenCalled();
-  });
-
-  it('openNewDrawingDialog should call openNewDrawingDialogs of dialogService', () => {
-    spyOn(component[DIALOG_SERVICE], 'openNewDrawingDialogs');
-
-    component.openNewDrawingDialog();
-    expect(component[DIALOG_SERVICE].openNewDrawingDialogs).toHaveBeenCalled();
-  });
-
-  // openExportDialog
-  it('openExportDialog should call openExportDialog', () => {
-    spyOn(component[DIALOG_SERVICE], 'openExportDialog');
-
-    component.openExportDialog();
-    expect(component[DIALOG_SERVICE].openExportDialog).toHaveBeenCalled();
   });
 
   // changeBackgroundColor
