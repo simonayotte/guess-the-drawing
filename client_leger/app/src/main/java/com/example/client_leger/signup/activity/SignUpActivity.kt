@@ -13,7 +13,9 @@ import com.example.client_leger.R
 import com.example.client_leger.databinding.ActivitySignUpBinding
 import com.example.client_leger.signin.activity.SiginInActivity
 import com.example.client_leger.signup.viewModel.SignUpViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

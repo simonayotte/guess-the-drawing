@@ -27,10 +27,10 @@ class SignInViewModel @Inject constructor(
 
     fun onClickLogIn() {
         viewModelScope.launch {
-            val result = signInRepository.makeLoginRequest(userName.value!!, password.value!!)
-            when (result) {
+            when (signInRepository.makeLoginRequest(userName.value!!, password.value!!)) {
                 is Result.Success<SignInResponseModel> -> {
                     successfulLogin.value = true
+                    //TODO: setter les credentials de la session ici. Par exemple loader l'avatar, save le id, etc
                 }
                 else -> {
                     successfulLogin.value = false

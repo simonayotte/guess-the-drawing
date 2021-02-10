@@ -1,30 +1,29 @@
-package com.example.client_leger.signin.model
+package com.example.client_leger.signup.model
 
+import com.example.client_leger.signup.api.SignUpApi
 import com.example.client_leger.utils.Result
-import com.example.client_leger.signin.api.SignInApi
 import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
 import javax.inject.Inject
 
-
 @ViewModelScoped
-class SignInRepository @Inject constructor() {
+class SignUpRepository @Inject constructor() {
     private val loginUrlw = "https://9921eac1-255e-452c-85a4-f989e66e505e.mock.pstmn.io"
     private val api = Retrofit
             .Builder()
             .baseUrl(loginUrlw)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(SignInApi::class.java)
+            .create(SignUpApi::class.java)
 
-    suspend fun makeLoginRequest(userName: String, password: String) : Result<SignInResponseModel>? {
+    suspend fun makeSignUpRequest(userName: String, email: String, password: String) : Result<SignUpResponseModel>? {
         return try {
-            val body = SignInRequestModel(userName, password)
-            val reponse = api.signIn(body)
+            val body = SignUpRequestModel(userName, email, password)
+            val reponse = api.signUp(body)
             Result.Success(reponse)
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             Result.Error(Exception("There was an error with the server"))
         }
     }

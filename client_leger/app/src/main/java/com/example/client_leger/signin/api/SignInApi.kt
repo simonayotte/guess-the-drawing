@@ -6,7 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
-interface ConnectionApi {
+interface SignInApi {
 
     @Headers("Content-Type: application/json")
     @POST("signin") //TODO: Mettre le bon endpoint ici
