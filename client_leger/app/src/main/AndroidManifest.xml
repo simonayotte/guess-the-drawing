@@ -16,9 +16,9 @@
         android:theme="@style/Theme.Client_leger">
         <activity android:name=".SignUpActivity"
             android:screenOrientation="landscape"
-            android:parentActivityName=".LoginActivity"/>
+            android:parentActivityName=".SiginInActivity"/>
         <activity
-            android:name=".LoginActivity"
+            android:name=".SiginInActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

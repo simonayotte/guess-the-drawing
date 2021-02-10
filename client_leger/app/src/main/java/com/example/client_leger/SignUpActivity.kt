@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -30,7 +29,7 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(intent)
         })
         viewModel.showSignIn.observe(this, Observer {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, SiginInActivity::class.java)
             startActivity(intent)
         })
     }

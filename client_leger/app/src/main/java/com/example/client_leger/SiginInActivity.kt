@@ -8,17 +8,15 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.get
-import com.example.client_leger.databinding.ActivityLoginBinding
+import com.example.client_leger.databinding.ActivitySignInBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class SiginInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-        val viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        val binding: ActivitySignInBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_in)
+        val viewModel = ViewModelProvider(this).get(SignInViewModel::class.java)
 
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this

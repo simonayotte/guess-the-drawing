@@ -1,19 +1,16 @@
 package com.example.client_leger
 
-import androidx.hilt.lifecycle.R
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.client_leger.model.LoginRepository
-import com.example.client_leger.model.LoginResponse
+import com.example.client_leger.loginModel.SignInResponseModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val loginRepository: LoginRepository
+class SignInViewModel @Inject constructor(
+    private val signInRepository: SignInRepository
 ) : ViewModel() {
 
     val successfulLogin: MutableLiveData<Boolean> = MutableLiveData()
@@ -28,9 +25,9 @@ class LoginViewModel @Inject constructor(
 
     fun onClickLogIn() {
         viewModelScope.launch {
-            val result = loginRepository.makeLoginRequest(userName.value!!, password.value!!)
+            val result = signInRepository.makeLoginRequest(userName.value!!, password.value!!)
             when (result) {
-                is Result.Success<LoginResponse> -> {
+                is Result.Success<SignInResponseModel> -> {
                     successfulLogin.value = true
                 }
                 else -> {
