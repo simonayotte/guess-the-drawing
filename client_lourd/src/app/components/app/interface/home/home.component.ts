@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login/login.service';
 import { BasicDialogComponent } from '../basic-dialog/basic-dialog.component';
 
@@ -18,7 +17,7 @@ export class HomeComponent implements OnInit {
 
   public loginForm : FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router, private dialog: MatDialog) {
+  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -26,7 +25,7 @@ export class HomeComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
-    })
+    });
   }
 
   public toggleDisplay() {
@@ -42,38 +41,33 @@ export class HomeComponent implements OnInit {
     return '';
   }
 
-  public submit(): void {
+  public async submit(): Promise<void> {
     if(this.isLoggingIn)
-      this.signIn();
+      return this.signIn();
     else
-      this.signUp();
+      return this.signUp();
   }
 
-  private signIn(): void {
+  private async signIn(): Promise<void> {
     if(this.loginForm.controls.username.valid && this.loginForm.controls.password.valid) {
-      this.loginService.signIn(this.loginForm.controls.username.value,
-        this.loginForm.controls.password.value).subscribe(
-          // 'draw' will be replaced with the main menu. 'user' param will be accessible from the menu
-          res => this.router.navigate(['/draw'], { queryParams: { user: res } }),
-          err => this.showDialog(err)
-      );
-
+      await this.loginService.signIn(this.loginForm.controls.username.value,
+      this.loginForm.controls.password.value).catch(err => {
+        this.showDialog(err);
+      });
     }
   }
 
-  private signUp(): void {
+  private async signUp(): Promise<void> {
     if(this.loginForm.valid) {
-      this.loginService.signUp(this.loginForm.controls.username.value,
+      await this.loginService.signUp(this.loginForm.controls.username.value,
         this.loginForm.controls.email.value,
-        this.loginForm.controls.password.value).subscribe(
-          res => this.showDialog(res).afterClosed().subscribe(
-            () => this.isLoggingIn = true), //sign up successful, going back to sign in
-          err => this.showDialog(err)
-      );
+        this.loginForm.controls.password.value).catch(err => {
+          this.showDialog(err);
+        });
     }
   }
 
   private showDialog(message: string): MatDialogRef<BasicDialogComponent, {data: {message: string}}> {
-    return this.dialog.open(BasicDialogComponent, { data: {message: message}})
+    return this.dialog.open(BasicDialogComponent, { data: {message}});
   }
 }

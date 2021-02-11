@@ -1,0 +1,33 @@
+@import '/src/styles.scss';
+
+#header {
+  display: flex;
+  justify-content: space-between;
+  height: 56px;
+  width: 100%;
+  background-color: mat-color($client-primary);
+  color: white;
+  align-items: center;
+  padding-right: 10px;
+
+  #title {
+    font-family: "Julius Sans One", sans-serif;
+    font-weight: 400;
+    font-size: 36px;
+    margin-left: 72px;
+  }
+
+  button {
+    margin-right: 10px;
+    height: 38px;
+    width: 38px;
+    line-height: 38px;
+
+    mat-icon {
+      height: 32px;
+      width: 32px;
+      font-size: 32px;
+      line-height: 32px;
+    }
+  }
+}
