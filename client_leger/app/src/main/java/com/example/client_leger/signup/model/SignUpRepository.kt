@@ -22,7 +22,6 @@ class SignUpRepository @Inject constructor() {
         return try {
             val body = SignUpRequestModel(userName, email, password)
             val reponse = api.signUp(body)
-            println(reponse.signInIsSuccessFull)
             Result.Success(reponse)
         } catch (e: Exception) {
             Result.Error(Exception("There was an error with the server"))

@@ -19,22 +19,32 @@ class SignUpViewModel @Inject constructor(
     val userNameToValidate = MutableLiveData<String>()
     val passwordToValidate = MutableLiveData<String>()
     val emailToValidate = MutableLiveData<String>()
-
+    val textErrorIsVisible = MutableLiveData<Boolean>(false)
     fun onClickLogIn() {
         showSignIn.value = true
     }
 
     fun onClickSignUp() {
         //TODO: send request to create an account
-        viewModelScope.launch {
-            when (signUpRepository.makeSignUpRequest(
+
+        if(!userNameToValidate.value.isNullOrEmpty() && !passwordToValidate.value.isNullOrEmpty()
+                && !emailToValidate.value.isNullOrEmpty()
+        ) {
+            viewModelScope.launch {
+
+                when (val response = signUpRepository.makeSignUpRequest(
                     userNameToValidate.value!!,
                     emailToValidate.value!!,
-                    passwordToValidate.value!!
-            )) {
-                is Result<SignUpResponseModel> -> successfulSignUp.value = true
-                else -> successfulSignUp.value = false
+                    passwordToValidate.value!!)
+                ) {
+                    is Result<SignUpResponseModel> -> {
+                        successfulSignUp.value = (response as Result.Success<SignUpResponseModel>).data.signInIsSuccessFull
+                        textErrorIsVisible.value = !successfulSignUp.value!!
+                    }
+                }
             }
+        } else {
+            textErrorIsVisible.value = true
         }
     }
 
