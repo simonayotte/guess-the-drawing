@@ -13,13 +13,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Client_leger">
+        android:theme="@style/Theme.Client_leger"
+        android:screenOrientation="sensorLandscape">
         <activity android:name=".signup.activity.SignUpActivity"
-            android:screenOrientation="landscape"
             android:parentActivityName=".signin.activity.SiginInActivity"/>
         <activity
-            android:name=".signin.activity.SiginInActivity"
-            android:screenOrientation="landscape">
+            android:name=".signin.activity.SiginInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

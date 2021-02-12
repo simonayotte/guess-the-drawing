@@ -18,7 +18,7 @@ class SignUpRepository @Inject constructor() {
             .build()
             .create(SignUpApi::class.java)
 
-    suspend fun makeSignUpRequest(userName: String, email: String, password: String) : Result<SignUpResponseModel>? {
+    suspend fun makeSignUpRequest(userName: String, email: String, password: String) : Result<SignUpResponseModel> {
         return try {
             val body = SignUpRequestModel(userName, email, password)
             val reponse = api.signUp(body)

@@ -37,9 +37,12 @@ class SignUpViewModel @Inject constructor(
                     emailToValidate.value!!,
                     passwordToValidate.value!!)
                 ) {
-                    is Result<SignUpResponseModel> -> {
-                        successfulSignUp.value = (response as Result.Success<SignUpResponseModel>).data.signInIsSuccessFull
+                    is Result.Success<SignUpResponseModel> -> {
+                        successfulSignUp.value = response.data.signInIsSuccessFull
                         textErrorIsVisible.value = !successfulSignUp.value!!
+                    }
+                    else -> {
+                        textErrorIsVisible.value = true
                     }
                 }
             }

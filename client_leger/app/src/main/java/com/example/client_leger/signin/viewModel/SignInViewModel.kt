@@ -33,6 +33,8 @@ class SignInViewModel @Inject constructor(
                         successfulLogin.value = response.data.loginIsSuccessFull
                         textErrorIsVisible.value = !response.data.loginIsSuccessFull
                         //TODO: setter les credentials de la session ici. Par exemple loader l'avatar, save le id, etc
+                    } else -> {
+                        textErrorIsVisible.value = true
                     }
                 }
             }

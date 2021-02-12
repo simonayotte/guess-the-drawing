@@ -19,11 +19,11 @@ class SignInRepository @Inject constructor() {
             .build()
             .create(SignInApi::class.java)
 
-    suspend fun makeLoginRequest(userName: String, password: String) : Result<SignInResponseModel>? {
+    suspend fun makeLoginRequest(userName: String, password: String) : Result<SignInResponseModel> {
         return try {
             val body = SignInRequestModel(userName, password)
-            val reponse = api.signIn(body)
-            Result.Success(reponse)
+            val response = api.signIn(body)
+            Result.Success(response)
         } catch (e:Exception) {
             Result.Error(Exception("There was an error with the server"))
         }
