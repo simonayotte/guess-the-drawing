@@ -1,5 +1,4 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { ContinueDrawingService } from 'src/app/services/continue-drawing/continue-drawing.service';
 import { ColorPickerService } from '../../../../services/color-picker/color-picker.service';
 import { SelectedColorsService } from '../../../../services/color-picker/selected-colors.service';
 import { Color } from './color';
@@ -40,7 +39,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
   constructor(private colorPickerService: ColorPickerService,
               public selectedColorsService: SelectedColorsService,
-              private ref: ChangeDetectorRef, private continueDrawingService: ContinueDrawingService) {
+              private ref: ChangeDetectorRef) {
                 this.drawingCanBeCreated = new EventEmitter<boolean>();
               }
 
@@ -117,9 +116,6 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
   selectedValue(): void {
     this.selectedColorsService.setColor(this.color);
-    if (this.continueDrawingService.isDrawingInLocalStorage()) {
-      this.continueDrawingService.autoSaveDrawing();
-    }
     this.drawingCanBeCreated.emit(true);
   }
 

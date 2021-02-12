@@ -47,7 +47,7 @@ const {
   })
   
   app.on('activate', function () {
-    if (win === null) {
+    if (appWindow === null) {
       initWindow()
     }
   })

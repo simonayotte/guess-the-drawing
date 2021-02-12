@@ -144,34 +144,6 @@ export class ToolbarComponent implements AfterViewInit {
     this.selectButton(ERASER);
   }
 
-  @HostListener('window:keydown.control.s', ['$event']) onCtrlS(event: KeyboardEvent): void {
-    event.preventDefault();
-    this.openSaveDrawingDialog();
-  }
-
-  @HostListener('window:keydown.control.e', ['$event']) onCtrlE(event: KeyboardEvent): void {
-    event.preventDefault();
-    this.openExportDialog();
-  }
-
-  openNewDrawingDialog(): void {
-    this.dialogService.openNewDrawingDialogs();
-  }
-
-  openUserGuideDialog(): void {
-    this.dialogService.openUserGuideDialog();
-  }
-
-  openExportDialog(): void {
-    this.selectedToolService.selectedToolBS.next(this.selectedButton.tool);
-    this.dialogService.openExportDialog();
-  }
-
-  openSaveDrawingDialog(): void {
-    this.selectedToolService.selectedToolBS.next(this.selectedButton.tool);
-    this.dialogService.openSaveDrawingDialog();
-  }
-
   changeBackgroundColor(): void {
     this.dialogService.openColorPicker(BACKGROUND_COLOR);
   }

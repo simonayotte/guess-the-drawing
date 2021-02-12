@@ -12,7 +12,7 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$client-primary: mat-palette($mat-indigo);
+$client-primary: mat-palette($mat-cyan, 800);
 $client-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
@@ -25,6 +25,8 @@ $client-theme: mat-light-theme($client-primary, $client-accent, $client-warn);
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($client-theme);
+
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap');
 
 /* You can add global styles to this file, and also import other style files */
 
