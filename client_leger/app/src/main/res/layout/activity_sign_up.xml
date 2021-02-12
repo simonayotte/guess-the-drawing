@@ -74,6 +74,7 @@
             app:layout_constraintStart_toStartOf="@+id/signupView"
             app:layout_constraintTop_toTopOf="@+id/signupView"
             app:layout_constraintVertical_bias="0.19"
+            android:singleLine="true"
             android:text="@={viewmodel.userNameToValidate}"/>
 
         <EditText

@@ -92,6 +92,7 @@
             app:layout_constraintStart_toStartOf="@+id/loginView"
             app:layout_constraintTop_toTopOf="@+id/loginView"
             app:layout_constraintVertical_bias="0.32"
+            android:singleLine="true"
             android:text="@={viewmodel.userName}"/>
 
         <EditText
