@@ -1,7 +1,6 @@
 import {APP_BASE_HREF} from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { DrawingMainComponent } from './components/app/drawing-main/drawing-main.component';
 import { ConversationComponent } from './components/app/interface/conversation/conversation.component';
 import { HomeComponent } from './components/app/interface/home/home.component';

@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Client_leger"
+        android:usesCleartextTraffic="true"
         android:screenOrientation="sensorLandscape">
         <activity android:name=".signup.activity.SignUpActivity"
             android:parentActivityName=".signin.activity.SiginInActivity"/>

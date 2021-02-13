@@ -50,7 +50,8 @@ import { MainMenuComponent } from './components/app/interface/main-menu/main-men
       GridComponent,
       GridAttributesComponent,
       BasicDialogComponent,
-      MainMenuComponent
+      MainMenuComponent,
+      BasicDialogComponent
     ],
     imports: [
       BrowserModule,
