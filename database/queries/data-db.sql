@@ -3,6 +3,7 @@ SET search_path = LOG3900DB;
 INSERT INTO Player(username) VALUES ('failix');
 INSERT INTO Player(username) VALUES ('sammypoush');
 INSERT INTO Player(username) VALUES ('yves420');
+INSERT INTO Player(username) VALUES ('jaykot');
 
 INSERT INTO Person(idPlayer, password, email, firstName, lastName)
 	SELECT idPlayer, '123','fd@polymtl.ca', 'felix', 'dumont'
@@ -16,6 +17,10 @@ INSERT INTO Person(idPlayer,password, email, firstName, lastName)
 	SELECT idPlayer, '123','yb@polymtl.ca', 'yves', 'boudreault'
 	FROM Player
 	WHERE username = 'yves420';
+INSERT INTO Person(idPlayer,password, email, firstName, lastName)
+	SELECT idPlayer, '123','jk@polymtl.ca', 'jerome', 'kotlin'
+	FROM Player
+	WHERE username = 'jaykot';
 
 INSERT INTO Personnality(personnalityName) VALUES ('cocky');
 INSERT INTO Personnality(personnalityName) VALUES ('impatient');
