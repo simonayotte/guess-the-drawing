@@ -64,10 +64,15 @@ function databaseQuery() {
         });
 }
 
+var cors = require('cors');
+var corsOptions = {
+  origin: '*',
+}
+app.use(cors(corsOptions));
 
 import { Server } from 'socket.io';
 
-const io = new Server(server, { cors: {credentials: true, origin: 'http://localhost:4200' } });
+const io = new Server(server, { cors: {credentials: true, origin: '*' } });
 
 io.on('connection', (socket) => {
     console.log('client has connected');
