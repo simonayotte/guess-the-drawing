@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/5127e700-40c8-437e-a1af-7a380b6730b9/resourceGroups/Ressource/providers/Microsoft.Web/sites/log3900-back-end",
+    "appService.deploySubpath": "server"
+}

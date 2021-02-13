@@ -1,5 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MessageModel } from 'src/app/models/message';
+import { WebSocketServiceService } from 'src/app/services/web-socket/web-socket.service';
 
 @Component({
   selector: 'app-conversation',
@@ -46,9 +47,19 @@ export class ConversationComponent implements OnInit, AfterViewChecked{
     },
   ];
 
-  constructor() { }
+  constructor(private webSocketService: WebSocketServiceService) { }
 
   ngOnInit() {
+    this.webSocketService.listen('chatMessage').subscribe((data : string) => {
+      let text:MessageModel = {
+        messageId: "5",
+        text: data,
+        hour: "14:55:30",
+        writerId: "server"
+      }
+
+      this.messages.push(text);
+    });
   }
 
   ngAfterViewChecked() {        
@@ -68,8 +79,10 @@ export class ConversationComponent implements OnInit, AfterViewChecked{
     }
     // use push to add a new message
     this.messages.push(text);
+    this.webSocketService.emit('chatMessage', this.message);
     this.message = "";
     //get container element
+
   }
 
   scrollToBottom(): void {
