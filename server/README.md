@@ -17,3 +17,23 @@ Contains the JavaScript files in `src` that were transpiled from TypeScript to J
 
 ### Routes
 [Basic Routing](https://expressjs.com/en/guide/routing.html)
+
+### commande deployer le serveur
+downloader heroku
+
+heroku login
+email -> webersadler.mark@gmail.com
+password -> projet3-LOG3900
+heroku git:clone -a log3900-server
+cd log3900-server
+
+puis 2 options:
+1: envoie message commmit de  "" (rien)
+npm run deploy 
+2: message commit custom
+git add .
+git commit -am "make it better"
+git push heroku master
+
+Pour avoir le lien internet
+heroku open
