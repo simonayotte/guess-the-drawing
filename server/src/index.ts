@@ -2,6 +2,8 @@
 import express from 'express';
 import passport from 'passport';
 import bodyParser from 'body-parser';
+var cors = require('cors');
+import { Server } from 'socket.io';
 
 // files imports
 import { PORT } from './config/constants';
@@ -15,6 +17,10 @@ const db = require('./database/database');
 const app = express();
 
 // CORS policy
+var corsOptions = {
+  origin: '*',
+}
+app.use(cors(corsOptions));
 app.all('', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "");
     res.header('Access-Control-Allow-Methods: GET, POST');
@@ -71,13 +77,8 @@ function databaseQuery() {
             console.log(err);
         });
 }
-var cors = require('cors');
-var corsOptions = {
-  origin: '*',
-}
-app.use(cors(corsOptions));
 
-import { Server } from 'socket.io';
+
 
 const io = new Server(server, { cors: {credentials: true, origin: '*' } });
 
