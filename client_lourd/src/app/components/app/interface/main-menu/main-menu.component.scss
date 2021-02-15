@@ -31,3 +31,17 @@
     }
   }
 }
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  min-height: calc(100% - 56px);
+}
+
+.chat {
+  height: auto;
+}
+
+app-conversation {
+  height: 100vh;
+}
