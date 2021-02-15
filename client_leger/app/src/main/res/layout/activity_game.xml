@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/teal_700"
-    tools:context=".view.GameActivity">
+    tools:context=".drawing.view.GameActivity">
 
-    <com.example.client_leger.view.DrawingCanvas
+    <com.example.client_leger.drawing.view.DrawingCanvas
         android:id="@+id/drawingCanvas"
         android:layout_width="800dp"
         android:layout_height="600dp"

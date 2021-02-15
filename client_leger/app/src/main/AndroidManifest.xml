@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.client_leger">
+    <!--Liste des permission -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".ClientLeger"
@@ -9,13 +13,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Client_leger">
-        <activity android:name=".SignUpActivity"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".LoginActivity"/>
+        android:theme="@style/Theme.Client_leger"
+        android:usesCleartextTraffic="true"
+        android:screenOrientation="sensorLandscape">
+        <activity android:name=".signup.activity.SignUpActivity"
+            android:parentActivityName=".signin.activity.SiginInActivity"/>
         <activity
-            android:name=".LoginActivity"
-            android:screenOrientation="landscape">
+            android:name=".signin.activity.SiginInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.GameActivity"
+            android:name=".drawing.view.GameActivity"
             android:exported="true" />
         <activity android:name=".MainActivity">
 

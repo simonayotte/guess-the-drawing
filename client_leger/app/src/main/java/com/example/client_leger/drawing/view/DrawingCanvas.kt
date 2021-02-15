@@ -1,4 +1,4 @@
-package com.example.client_leger.view
+package com.example.client_leger.drawing.view
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,7 +8,7 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.example.client_leger.viewmodel.DrawingCanvasVM
+import com.example.client_leger.drawing.viewmodel.DrawingCanvasVM
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

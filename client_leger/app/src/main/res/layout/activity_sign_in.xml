@@ -4,17 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewmodel"
-            type="com.example.client_leger.LoginViewModel"/>
+            type="com.example.client_leger.signin.viewModel.SignInViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/loginColorChange"
         android:background="@drawable/gradient_list"
-        tools:context=".LoginActivity">
+        tools:context=".signin.activity.SiginInActivity">
 
         <TextView
             android:id="@+id/loginAppName"
@@ -31,6 +31,25 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:fontFamily="@font/julius_sans_one"
+            android:text="@string/veuillez_r_essayer_de_nouveau"
+            android:textAlignment="center"
+            android:textColor="#FF0000"
+            android:textSize="14sp"
+            android:visibility="@{viewmodel.textErrorIsVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/loginView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.879" />
 
         <View
             android:id="@+id/loginView"
@@ -73,25 +92,26 @@
             app:layout_constraintStart_toStartOf="@+id/loginView"
             app:layout_constraintTop_toTopOf="@+id/loginView"
             app:layout_constraintVertical_bias="0.32"
+            android:singleLine="true"
             android:text="@={viewmodel.userName}"/>
 
         <EditText
             android:id="@+id/loginPassword"
             android:layout_width="218dp"
             android:layout_height="44dp"
+            android:autofillHints="@string/password"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:autofillHints="@string/password"
             android:hint="@string/password"
             android:inputType="textPassword"
+            android:text="@={viewmodel.password}"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="@+id/loginView"
             app:layout_constraintEnd_toEndOf="@+id/loginView"
             app:layout_constraintStart_toStartOf="@+id/loginView"
             app:layout_constraintTop_toTopOf="@+id/loginText"
-            app:layout_constraintVertical_bias="0.57"
-            android:text="@={viewmodel.password}"/>
+            app:layout_constraintVertical_bias="0.675" />
 
         <Button
             android:id="@+id/loginButton"

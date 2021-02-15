@@ -1,4 +1,4 @@
-package com.example.client_leger.view
+package com.example.client_leger.drawing.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

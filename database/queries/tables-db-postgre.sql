@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS Player(
 
 CREATE TABLE IF NOT EXISTS Person(
 	idPlayer         	INT				NOT NULL,
+	idSocket			VARCHAR(30)		DEFAULT '',
 	password         	VARCHAR(30)		NOT NULL,
     email               VARCHAR(30)     DEFAULT '',
     firstName           VARCHAR(30)     DEFAULT '',

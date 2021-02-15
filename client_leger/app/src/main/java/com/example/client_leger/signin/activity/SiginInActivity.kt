@@ -1,4 +1,4 @@
-package com.example.client_leger
+package com.example.client_leger.signin.activity
 
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
@@ -8,13 +8,20 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.example.client_leger.databinding.ActivityLoginBinding
+import com.example.client_leger.MainActivity
+import com.example.client_leger.R
+import com.example.client_leger.signup.activity.SignUpActivity
+import com.example.client_leger.databinding.ActivitySignInBinding
+import com.example.client_leger.signin.viewModel.SignInViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class LoginActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class SiginInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-        val viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        val binding: ActivitySignInBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_in)
+        val viewModel = ViewModelProvider(this).get(SignInViewModel::class.java)
+
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         val background = findViewById<ConstraintLayout>(R.id.loginColorChange)
@@ -24,8 +31,10 @@ class LoginActivity : AppCompatActivity() {
         frameAnimation.start()
 
         viewModel.successfulLogin.observe(this, Observer {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            if(it) {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
         })
 
         viewModel.showSignUp.observe(this, Observer {

@@ -1,8 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { throwError, of } from 'rxjs';
 import { AppModule } from 'src/app/app.module';
 import { MaterialModule } from 'src/app/material/material.module';
 import { UserModel } from 'src/app/models/user';
@@ -14,24 +11,22 @@ describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let mockLoginService: LoginService;
   let mockDialog: MatDialog;
-  let router: Router;
-  let navigateSpy: jasmine.Spy;
 
-  const validUser: UserModel = {
+  const response: UserModel = {
+    playerid: 42
+  };
+  const validUser = {
     username: 'user',
+    password: 'pass',
     email: 'random@mail.com',
-    avatar: 'avatar.jpg'
   };
 
-  const validPassword = 'pass';
-  const signUpMessage = 'Votre compte a été créé avec succès!';
-
   beforeEach((() => {
-    mockLoginService = jasmine.createSpyObj('loginService', ['signIn', 'signUp']);
+    mockLoginService = jasmine.createSpyObj('loginService', ['signIn', 'signUp', 'signOut']);
 
     TestBed.configureTestingModule({
       declarations: [],
-      imports: [MaterialModule, AppModule, MatDialogModule, RouterTestingModule.withRoutes([])],
+      imports: [MaterialModule, AppModule, MatDialogModule],
       providers: [{provide: LoginService, useValue: mockLoginService}]
     })
     .compileComponents();
@@ -42,21 +37,17 @@ describe('HomeComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     mockLoginService = TestBed.inject(LoginService);
-    mockLoginService.signIn = jasmine.createSpy().and.returnValue(of(validUser));
-    mockLoginService.signUp = jasmine.createSpy().and.returnValue(of(signUpMessage));
+    mockLoginService.signIn = jasmine.createSpy().and.returnValue(Promise.resolve(response));
+    mockLoginService.signUp = jasmine.createSpy().and.returnValue(Promise.resolve(response));
+    mockLoginService.signOut = jasmine.createSpy().and.returnValue(Promise.resolve());
     mockDialog = TestBed.inject(MatDialog);
     mockDialog.open = jasmine.createSpy();
-
-    router = TestBed.inject(Router);
-    navigateSpy = spyOn(router, 'navigate');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-<<<<<<< HEAD
-=======
   it('empty values should be invalid and prevent signing in', () => {
     component.loginForm.controls.username.setValue('');
     component.loginForm.controls.email.setValue('');
@@ -73,8 +64,8 @@ describe('HomeComponent', () => {
 
   it('wrong email format should be invalid and prevent signing up', () => {
     component.loginForm.controls.username.setValue(validUser.username);
-    component.loginForm.controls.email.setValue('mail');
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.email.setValue('wrongEmailFormat');
+    component.loginForm.controls.password.setValue(validUser.password);
     component.isLoggingIn = false;
     component.submit();
 
@@ -89,7 +80,7 @@ describe('HomeComponent', () => {
   it('non-empty values should be valid', () => {
     component.loginForm.controls.username.setValue(validUser.username);
     component.loginForm.controls.email.setValue(validUser.email);
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.password.setValue(validUser.password);
 
     expect(component.loginForm.valid).toBeTruthy();
     expect(component.loginForm.controls.username.valid).toBeTruthy();
@@ -97,54 +88,49 @@ describe('HomeComponent', () => {
     expect(component.loginForm.controls.password.valid).toBeTruthy();
   });
 
-  it('submitting the form while signing in should call the service with the right values', () => {
+  it('submitting the form to sign in should call the service with the right values', () => {
     component.loginForm.controls.username.setValue(validUser.username);
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.password.setValue(validUser.password);
 
     component.submit();
 
     expect(mockLoginService.signIn).toHaveBeenCalledTimes(1);
-    expect(mockLoginService.signIn).toHaveBeenCalledWith(validUser.username, validPassword);
-    // todo: replace /draw once we have a main menu
-    expect(navigateSpy).toHaveBeenCalledWith(['/draw'], { queryParams: { user: validUser } });
+    expect(mockLoginService.signIn).toHaveBeenCalledWith(validUser.username, validUser.password);
   });
 
-  it('submitting the form while signing up should call the service with the right values', () => {
+  it('submitting the form to sign up should call the service with the right values', () => {
     component.loginForm.controls.username.setValue(validUser.username);
     component.loginForm.controls.email.setValue(validUser.email);
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.password.setValue(validUser.password);
     component.isLoggingIn = false;
     component.submit();
 
     expect(mockLoginService.signUp).toHaveBeenCalledTimes(1);
-    expect(mockLoginService.signUp).toHaveBeenCalledWith(validUser.username, validUser.email, validPassword);
-    expect(mockDialog.open).toHaveBeenCalledWith(jasmine.any(Function), { data: {message: signUpMessage}});
+    expect(mockLoginService.signUp).toHaveBeenCalledWith(validUser.username, validUser.email, validUser.password);
   });
 
   it('receiving a sign in error from the service should show it in a dialog', () => {
     const errorMessage = "some error message";
-    mockLoginService.signIn = jasmine.createSpy().and.returnValue(throwError(errorMessage));
+    mockLoginService.signIn = jasmine.createSpy().and.returnValue(Promise.reject(errorMessage));
     component.loginForm.controls.username.setValue(validUser.username);
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.password.setValue(validUser.password);
 
-    component.submit();
-
-    expect(mockDialog.open).toHaveBeenCalledWith(jasmine.any(Function), { data: {message: errorMessage}});
-    expect(navigateSpy).not.toHaveBeenCalled();
+    return component.submit().then(() =>
+      expect(mockDialog.open).toHaveBeenCalledWith(jasmine.any(Function), { data: {message: errorMessage}})
+    );
   });
 
   it('receiving a sign up error from the service should show it in a dialog', () => {
     const errorMessage = "some error message";
-    mockLoginService.signUp = jasmine.createSpy().and.returnValue(throwError(errorMessage));
+    mockLoginService.signUp = jasmine.createSpy().and.returnValue(Promise.reject(errorMessage));
     component.loginForm.controls.username.setValue(validUser.username);
     component.loginForm.controls.email.setValue(validUser.email);
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.password.setValue(validUser.password);
     component.isLoggingIn = false;
 
-    component.submit();
-
-    expect(mockDialog.open).toHaveBeenCalledWith(jasmine.any(Function), { data: {message: errorMessage}});
-    expect(navigateSpy).not.toHaveBeenCalled();
+    return component.submit().then(() =>
+      expect(mockDialog.open).toHaveBeenCalledWith(jasmine.any(Function), { data: {message: errorMessage}})
+    );
   });
 
   it('toggleDisplay should switch between signing in and signing up', () => {
@@ -157,5 +143,4 @@ describe('HomeComponent', () => {
     expect(component.isLoggingIn).toBeTruthy();
   });
 
->>>>>>> dev
 });

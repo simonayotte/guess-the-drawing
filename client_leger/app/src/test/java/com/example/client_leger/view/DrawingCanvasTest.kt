@@ -3,7 +3,8 @@ package com.example.client_leger.view
 import android.content.Context
 import android.view.InputDevice
 import android.view.MotionEvent
-import com.example.client_leger.viewmodel.DrawingCanvasVM
+import com.example.client_leger.drawing.view.DrawingCanvas
+import com.example.client_leger.drawing.viewmodel.DrawingCanvasVM
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK

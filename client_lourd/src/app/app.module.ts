@@ -28,11 +28,14 @@ import { SvgService } from './services/svg-service/svg.service';
 import { PathDrawingService } from './services/tools/path-drawing/path-drawing.service';
 import { PencilService } from './services/tools/pencil-service/pencil.service';
 import { BasicDialogComponent } from './components/app/interface/basic-dialog/basic-dialog.component';
+import { ConversationComponent } from './components/app/interface/conversation/conversation.component';
+import { MainMenuComponent } from './components/app/interface/main-menu/main-menu.component';
 
 @NgModule({
     declarations: [
       AppComponent,
       HomeComponent,
+      ConversationComponent,
       DrawingMainComponent,
       ToolbarComponent,
       DrawingComponent,
@@ -46,6 +49,8 @@ import { BasicDialogComponent } from './components/app/interface/basic-dialog/ba
       EraserComponent,
       GridComponent,
       GridAttributesComponent,
+      BasicDialogComponent,
+      MainMenuComponent,
       BasicDialogComponent
     ],
     imports: [

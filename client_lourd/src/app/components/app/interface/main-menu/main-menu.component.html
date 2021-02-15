@@ -1,0 +1,22 @@
+<div id="header">
+  <h3 id="title">FAIS-MOI UN DESSIN</h3>
+  <div>
+    <button mat-icon-button aria-label="Options">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <button mat-icon-button (click)="SignOutClick()" aria-label="Se déconnecter">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+<div class="content">
+  <div class="lobbys">
+    Lobbys
+  </div>
+  <div class="current-lobby">
+    Lobby
+  </div>
+  <div class="chat">
+    <app-conversation></app-conversation>
+  </div>
+</div>

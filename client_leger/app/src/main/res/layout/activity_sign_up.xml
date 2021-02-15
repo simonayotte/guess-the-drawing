@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewmodel"
-            type="com.example.client_leger.SignUpViewModel" />
+            type="com.example.client_leger.signup.viewModel.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +15,7 @@
         android:layout_height="match_parent"
         android:id="@+id/signupColorChange"
         android:background="@drawable/gradient_list"
-        tools:context=".SignUpActivity">
+        tools:context=".signup.activity.SignUpActivity">
 
         <TextView
             android:id="@+id/signupAppName"
@@ -73,6 +74,7 @@
             app:layout_constraintStart_toStartOf="@+id/signupView"
             app:layout_constraintTop_toTopOf="@+id/signupView"
             app:layout_constraintVertical_bias="0.19"
+            android:singleLine="true"
             android:text="@={viewmodel.userNameToValidate}"/>
 
         <EditText
@@ -133,6 +135,24 @@
             app:layout_constraintStart_toStartOf="@+id/signupView"
             app:layout_constraintTop_toBottomOf="@+id/signupUsername"
             android:text="@={viewmodel.emailToValidate}"/>
+
+        <TextView
+            android:id="@+id/error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:fontFamily="@font/julius_sans_one"
+            android:text="@string/veuillez_r_essayer_de_nouveau"
+            android:textAlignment="center"
+            android:textColor="#FF0000"
+            android:textSize="14sp"
+            android:visibility="@{viewmodel.textErrorIsVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/signupView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.879" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

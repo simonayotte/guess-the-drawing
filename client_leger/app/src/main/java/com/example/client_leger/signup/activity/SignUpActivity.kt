@@ -1,16 +1,21 @@
-package com.example.client_leger
+package com.example.client_leger.signup.activity
 
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.client_leger.MainActivity
+import com.example.client_leger.R
 import com.example.client_leger.databinding.ActivitySignUpBinding
+import com.example.client_leger.signin.activity.SiginInActivity
+import com.example.client_leger.signup.viewModel.SignUpViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +35,7 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(intent)
         })
         viewModel.showSignIn.observe(this, Observer {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, SiginInActivity::class.java)
             startActivity(intent)
         })
     }
