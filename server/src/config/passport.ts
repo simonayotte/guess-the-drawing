@@ -34,11 +34,11 @@ passport.use("local", new LocalStrategy((username: String, password: String, don
             const user = results.rows[0];
             if (user.password === password) {
                 console.log("User authentification succesful");
-                return done(null, user);
-            } return done(null, false, { message : "Password is incorrect"});
+                return done(null, user.idplayer, { message : "Success"}); // Retourne le idplayer quand c'est successful
+            } return done(null, false, { message : "Le mot de passe fournie est incorrect."});
 
         } else { // No user with the name in the database
-            return done(null, false, { message : "No user with the name was found in the database"});
+            return done(null, false, { message : "Il n'existe pas d'utilisateur avec ce pseudonyme dans la BD."});
         }
     })
 }));
