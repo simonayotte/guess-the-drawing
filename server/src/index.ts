@@ -82,7 +82,7 @@ function databaseQuery() {
 
 const io = new Server(server, { cors: {credentials: true, origin: '*' } });
 
-io.on('connection', (socket) => {
+io.on('connection', (socket: any) => {
     console.log('client has connected');
     
     
