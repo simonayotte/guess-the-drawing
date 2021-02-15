@@ -5,7 +5,9 @@ import io.socket.client.IO
 import io.socket.client.Socket
 import java.net.URISyntaxException
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class SocketConnectionService @Inject constructor() {
     val url = "http://192.168.1.106:4000" // adresse ip locale: ipconfig dans votre terminal -> ip.v4
     lateinit var mSocket: Socket
