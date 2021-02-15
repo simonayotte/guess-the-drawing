@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Person(
     bestScoreSprintSolo INT             DEFAULT 0,
     likes               INT             DEFAULT 0, -- number of
     dislikes            INT             DEFAULT 0, -- number of
-    isConnected         BOOLEAN        	DEFAULT '1', -- true if connected, false if disconnected
+    isConnected         BOOLEAN        	DEFAULT '0', -- true if connected, false if disconnected
 	
 	FOREIGN KEY (idPlayer) REFERENCES Player(idPlayer) ON DELETE CASCADE ON UPDATE CASCADE
 );
