@@ -3,7 +3,6 @@ import express from 'express';
 import passport from 'passport';
 import bodyParser from 'body-parser';
 
-
 // files imports
 import { PORT } from './config/constants';
 
@@ -14,6 +13,14 @@ import { testRouter, loginRouter } from './routes/routes';
 const db = require('./database/database');
 
 const app = express();
+
+// CORS policy
+app.all('', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "");
+    res.header('Access-Control-Allow-Methods: GET, POST');
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+});
 
 // Middlewares
 app.use(bodyParser.json());
@@ -35,6 +42,7 @@ app.get('/', (req, res) => {
 
 app.use('/test', testRouter); 
 app.use('/login', loginRouter);
+
 
 const server = app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
@@ -63,7 +71,6 @@ function databaseQuery() {
             console.log(err);
         });
 }
-
 var cors = require('cors');
 var corsOptions = {
   origin: '*',

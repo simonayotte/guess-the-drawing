@@ -16,7 +16,7 @@ const pool = new Pool(dbConfig);
 //         console.log('Connection with log-3900 Azure database');
 //     }
 // });
-    
+
 // Here we specify the functions we expose in exporting  
 module.exports = {
     query: (text: string, params: any, callback: (err: Error, result: pg.QueryResult<any>) => void) => {
