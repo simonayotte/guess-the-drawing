@@ -12,14 +12,14 @@ describe('HomeComponent', () => {
   let mockLoginService: LoginService;
   let mockDialog: MatDialog;
 
-  const validUser: UserModel = {
-    username: 'user',
-    email: 'random@mail.com',
-    avatar: 'avatar.jpg'
+  const response: UserModel = {
+    playerid: 42
   };
-
-  const validPassword = 'pass';
-  const signUpMessage = 'Votre compte a été créé avec succès!';
+  const validUser = {
+    username: 'user',
+    password: 'pass',
+    email: 'random@mail.com',
+  };
 
   beforeEach((() => {
     mockLoginService = jasmine.createSpyObj('loginService', ['signIn', 'signUp', 'signOut']);
@@ -37,8 +37,8 @@ describe('HomeComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     mockLoginService = TestBed.inject(LoginService);
-    mockLoginService.signIn = jasmine.createSpy().and.returnValue(Promise.resolve(validUser));
-    mockLoginService.signUp = jasmine.createSpy().and.returnValue(Promise.resolve(signUpMessage));
+    mockLoginService.signIn = jasmine.createSpy().and.returnValue(Promise.resolve(response));
+    mockLoginService.signUp = jasmine.createSpy().and.returnValue(Promise.resolve(response));
     mockLoginService.signOut = jasmine.createSpy().and.returnValue(Promise.resolve());
     mockDialog = TestBed.inject(MatDialog);
     mockDialog.open = jasmine.createSpy();
@@ -64,8 +64,8 @@ describe('HomeComponent', () => {
 
   it('wrong email format should be invalid and prevent signing up', () => {
     component.loginForm.controls.username.setValue(validUser.username);
-    component.loginForm.controls.email.setValue('mail');
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.email.setValue('wrongEmailFormat');
+    component.loginForm.controls.password.setValue(validUser.password);
     component.isLoggingIn = false;
     component.submit();
 
@@ -80,7 +80,7 @@ describe('HomeComponent', () => {
   it('non-empty values should be valid', () => {
     component.loginForm.controls.username.setValue(validUser.username);
     component.loginForm.controls.email.setValue(validUser.email);
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.password.setValue(validUser.password);
 
     expect(component.loginForm.valid).toBeTruthy();
     expect(component.loginForm.controls.username.valid).toBeTruthy();
@@ -90,30 +90,30 @@ describe('HomeComponent', () => {
 
   it('submitting the form to sign in should call the service with the right values', () => {
     component.loginForm.controls.username.setValue(validUser.username);
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.password.setValue(validUser.password);
 
     component.submit();
 
     expect(mockLoginService.signIn).toHaveBeenCalledTimes(1);
-    expect(mockLoginService.signIn).toHaveBeenCalledWith(validUser.username, validPassword);
+    expect(mockLoginService.signIn).toHaveBeenCalledWith(validUser.username, validUser.password);
   });
 
   it('submitting the form to sign up should call the service with the right values', () => {
     component.loginForm.controls.username.setValue(validUser.username);
     component.loginForm.controls.email.setValue(validUser.email);
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.password.setValue(validUser.password);
     component.isLoggingIn = false;
     component.submit();
 
     expect(mockLoginService.signUp).toHaveBeenCalledTimes(1);
-    expect(mockLoginService.signUp).toHaveBeenCalledWith(validUser.username, validUser.email, validPassword);
+    expect(mockLoginService.signUp).toHaveBeenCalledWith(validUser.username, validUser.email, validUser.password);
   });
 
   it('receiving a sign in error from the service should show it in a dialog', () => {
     const errorMessage = "some error message";
     mockLoginService.signIn = jasmine.createSpy().and.returnValue(Promise.reject(errorMessage));
     component.loginForm.controls.username.setValue(validUser.username);
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.password.setValue(validUser.password);
 
     return component.submit().then(() =>
       expect(mockDialog.open).toHaveBeenCalledWith(jasmine.any(Function), { data: {message: errorMessage}})
@@ -125,7 +125,7 @@ describe('HomeComponent', () => {
     mockLoginService.signUp = jasmine.createSpy().and.returnValue(Promise.reject(errorMessage));
     component.loginForm.controls.username.setValue(validUser.username);
     component.loginForm.controls.email.setValue(validUser.email);
-    component.loginForm.controls.password.setValue(validPassword);
+    component.loginForm.controls.password.setValue(validUser.password);
     component.isLoggingIn = false;
 
     return component.submit().then(() =>

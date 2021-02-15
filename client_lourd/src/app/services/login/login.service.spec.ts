@@ -11,12 +11,14 @@ describe('LoginService', () => {
   let httpMock: HttpTestingController;
   let router: Router;
   let navigateSpy: jasmine.Spy;
-  const randomUser: UserModel = {
-    username: 'user',
-    email: 'random@mail.com',
-    avatar: 'avatar.jpg'
+  const response: UserModel = {
+    playerid: 42
   };
-  const randomPassword = 'password';
+  const randomUser = {
+    username: 'user',
+    password: 'pass',
+    email: 'random@mail.com',
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -35,38 +37,38 @@ describe('LoginService', () => {
   });
 
   it('signIn should make GET request with the username and password', (done) => {
-    service.signIn(randomUser.username, randomPassword).then((user) => {
-      expect(user).toEqual(randomUser);
+    service.signIn(randomUser.username, randomUser.password).then((user) => {
+      expect(user).toEqual(response);
       expect(service.isUserSignedIn()).toEqual(true);
-      expect(service.getCurrentUser()).toEqual(randomUser);
+      expect(service.getCurrentUser()).toEqual(response);
       done();
     });
 
     const req = httpMock.expectOne(`${SERVER_BASE}${SIGN_IN_ENDPOINT}`);
     expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual({username: randomUser.username, password: randomPassword});
-    req.flush(randomUser);
+    expect(req.request.body).toEqual({username: randomUser.username, password: randomUser.password});
+    req.flush(response);
     httpMock.verify();
   });
 
   it('signUp should make POST request with the username, email and password', (done) => {
-    service.signUp(randomUser.username, randomUser.email, randomPassword).then((user) => {
-      expect(user).toEqual(randomUser);
+    service.signUp(randomUser.username, randomUser.email, randomUser.password).then((user) => {
+      expect(user).toEqual(response);
       expect(service.isUserSignedIn()).toEqual(true);
-      expect(service.getCurrentUser()).toEqual(randomUser);
+      expect(service.getCurrentUser()).toEqual(response);
       done();
     });
 
     const req = httpMock.expectOne(`${SERVER_BASE}${SIGN_UP_ENDPOINT}`);
     expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual({username: randomUser.username, email: randomUser.email, password: randomPassword});
-    req.flush(randomUser);
+    expect(req.request.body).toEqual({username: randomUser.username, email: randomUser.email, password: randomUser.password});
+    req.flush(response);
     httpMock.verify();
   });
 
   it('signOut should make POST request with the username', (done) => {
-    service.signIn(randomUser.username, randomPassword).then((user) => {
-      expect(service.getCurrentUser()).toEqual(randomUser);
+    service.signIn(randomUser.username, randomUser.password).then((user) => {
+      expect(service.getCurrentUser()).toEqual(response);
       service.signOut().then(() => {
         expect(service.isUserSignedIn()).toEqual(false);
         expect(service.getCurrentUser()).toBeNull();
@@ -74,38 +76,38 @@ describe('LoginService', () => {
       });
       const signOutReq = httpMock.expectOne(`${SERVER_BASE}${SIGN_OUT_ENDPOINT}`);
       expect(signOutReq.request.method).toEqual('POST');
-      expect(signOutReq.request.body).toEqual({username: randomUser.username});
+      expect(signOutReq.request.body).toEqual({playerid: response.playerid});
       signOutReq.flush({});
       httpMock.verify();
     });
     const signInReq = httpMock.expectOne(`${SERVER_BASE}${SIGN_IN_ENDPOINT}`);
-    signInReq.flush(randomUser);
+    signInReq.flush(response);
     httpMock.verify();
   });
 
   it('signIn should redirect to the main menu', (done) => {
-    service.signIn(randomUser.username, randomPassword).then((user) => {
+    service.signIn(randomUser.username, randomUser.password).then((user) => {
       expect(navigateSpy).toHaveBeenCalledWith(['/menu']);
       done();
     });
     const req = httpMock.expectOne(`${SERVER_BASE}${SIGN_IN_ENDPOINT}`);
-    req.flush(randomUser);
+    req.flush(response);
     httpMock.verify();
   });
 
   it('signUp should redirect to the main menu', (done) => {
-    service.signUp(randomUser.username, randomUser.email, randomPassword).then((user) => {
+    service.signUp(randomUser.username, randomUser.email, randomUser.password).then((user) => {
       expect(navigateSpy).toHaveBeenCalledWith(['/menu']);
       done();
     });
 
     const req = httpMock.expectOne(`${SERVER_BASE}${SIGN_UP_ENDPOINT}`);
-    req.flush(randomUser);
+    req.flush(response);
     httpMock.verify();
   });
 
   it('signOut should redirect to the home (login) page', (done) => {
-    service.signIn(randomUser.username, randomPassword).then((user) => {
+    service.signIn(randomUser.username, randomUser.password).then((user) => {
       service.signOut().then(() => {
         expect(navigateSpy).toHaveBeenCalledWith(['/home']);
         done();
@@ -115,7 +117,7 @@ describe('LoginService', () => {
       httpMock.verify();
     });
     const signInReq = httpMock.expectOne(`${SERVER_BASE}${SIGN_IN_ENDPOINT}`);
-    signInReq.flush(randomUser);
+    signInReq.flush(response);
     httpMock.verify();
   });
 
