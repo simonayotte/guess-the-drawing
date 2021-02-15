@@ -16,34 +16,28 @@ export class ConversationComponent implements OnInit, AfterViewChecked{
   lobbies: string[] = ["salon 1", "salon2", "failix", "weber"];
   messages: MessageModel[] = [
     {
-      messageId: "1",
-      text: "yo",
-      hour: "14:50:32",
-      writerId: "Failix",
+      messageWriter: "Failix",
+      messageIcon: "1",
+      messageTime: "14:50:32",
+      messageContent: "yo",
     },
     {
-      messageId: "2",
-      text: "hey",
-      hour: "14:51:32",
-      writerId: "Me",
+      messageWriter: "Weber",
+      messageIcon: "2",
+      messageTime: "14:50:32",
+      messageContent: "Salut",
     },
     {
-      messageId: "3",
-      text: "pret pour la game?",
-      hour: "14:53:32",
-      writerId: "Failix",
+      messageWriter: "Failix",
+      messageIcon: "1",
+      messageTime: "14:50:32",
+      messageContent: "pret?",
     },
     {
-      messageId: "3",
-      text: "pret pour la game?",
-      hour: "14:53:32",
-      writerId: "Failix",
-    },
-    {
-      messageId: "3",
-      text: "lorem ipsum et tout le blablbalbablblab fdfsd  dsfsdfsd fdsf   sdfsdfsdf sdf sdf  sdf sdfsdf ",
-      hour: "14:53:32",
-      writerId: "Failix",
+      messageWriter: "Weber",
+      messageIcon: "2",
+      messageTime: "14:50:32",
+      messageContent: "Down",
     },
   ];
 
@@ -52,10 +46,10 @@ export class ConversationComponent implements OnInit, AfterViewChecked{
   ngOnInit() {
     this.webSocketService.listen('chatMessage').subscribe((data : string) => {
       let text:MessageModel = {
-        messageId: "5",
-        text: data,
-        hour: "14:55:30",
-        writerId: "server"
+        messageWriter: "server",
+        messageIcon: "5",
+        messageTime: "14:55:30",
+        messageContent: data,
       }
 
       this.messages.push(text);
@@ -72,10 +66,10 @@ export class ConversationComponent implements OnInit, AfterViewChecked{
 
   public sendMessage(): void {
     let text:MessageModel = {
-      messageId: "4",
-      text: this.message,
-      hour: "14:55:30",
-      writerId: "Me"
+      messageWriter: "Weber",
+      messageIcon: "4",
+      messageTime: "14:55:30",
+      messageContent: this.message,
     }
     // use push to add a new message
     this.messages.push(text);

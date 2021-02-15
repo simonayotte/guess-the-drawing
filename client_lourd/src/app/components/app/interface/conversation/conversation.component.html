@@ -12,9 +12,9 @@
     </div>
     <div class=messages #scrollMe>
       <div *ngFor = "let message of messages">
-        <div class=text-info>{{message.hour}}</div>
-        <div [ngClass]="message.writerId === 'Me' ? 'my-text-container' : 'text-container'">
-          <div class=text>{{message.text}}</div>
+        <div class=text-info>{{message.messageTime}}</div>
+        <div [ngClass]="message.messageWriter === 'Weber' ? 'my-text-container' : 'text-container'">
+          <div class=text>{{message.messageContent}}</div>
         </div>
       </div>
     </div>
