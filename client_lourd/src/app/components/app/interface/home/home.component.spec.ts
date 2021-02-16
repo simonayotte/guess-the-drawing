@@ -13,7 +13,7 @@ describe('HomeComponent', () => {
   let mockDialog: MatDialog;
 
   const response: UserModel = {
-    playerid: 42
+    idplayer: 42
   };
   const validUser = {
     username: 'user',

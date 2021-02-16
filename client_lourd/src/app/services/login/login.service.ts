@@ -7,7 +7,7 @@ import { UserModel } from 'src/app/models/user';
 
 export const SERVER_BASE = "http://log3900-server.herokuapp.com/";
 export const SIGN_IN_ENDPOINT = "login";
-export const SIGN_UP_ENDPOINT = "REPLACE/WITH/SIGNUP/ENDPOINT";
+export const SIGN_UP_ENDPOINT = "signup";
 export const SIGN_OUT_ENDPOINT = "REPLACE/WITH/SIGNOUT/ENDPOINT";
 
 @Injectable({
@@ -52,10 +52,10 @@ export class LoginService {
 
   public signOut(): Promise<void> {
     if(this.currentUser != null) {
-      const postData = { playerid: this.currentUser.playerid };
+      const postData = { idplayer: this.currentUser.idplayer };
+      this.currentUser = null;
       return this.http.post<void>(SERVER_BASE + SIGN_OUT_ENDPOINT, postData).pipe(
         tap(() => {
-          this.currentUser = null;
           this.router.navigate(['/home']);
         }),
         catchError(this.handleError)

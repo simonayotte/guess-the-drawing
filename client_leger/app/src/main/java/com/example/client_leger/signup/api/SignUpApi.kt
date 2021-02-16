@@ -9,6 +9,6 @@ import retrofit2.http.POST
 interface SignUpApi {
 
     @Headers("Content-Type: application/json")
-    @POST("signup") //TODO: Mettre le bon endpoint ici
+    @POST("signup")
     suspend fun signUp(@Body signUpRequestModel: SignUpRequestModel): SignUpResponseModel
 }
