@@ -9,8 +9,8 @@ import { AuthGuardService } from './services/auth-guard/auth-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'draw', component: DrawingMainComponent},
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
+  { path: 'draw', component: DrawingMainComponent, canActivate: [AuthGuardService]},
   { path: 'chat', component: ConversationComponent},
   { path: 'menu', component: MainMenuComponent, canActivate: [AuthGuardService]},
   { path: '**', component: HomeComponent }

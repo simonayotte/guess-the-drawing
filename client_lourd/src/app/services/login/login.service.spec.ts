@@ -12,7 +12,7 @@ describe('LoginService', () => {
   let router: Router;
   let navigateSpy: jasmine.Spy;
   const response: UserModel = {
-    playerid: 42
+    idplayer: 42
   };
   const randomUser = {
     username: 'user',
@@ -76,7 +76,7 @@ describe('LoginService', () => {
       });
       const signOutReq = httpMock.expectOne(`${SERVER_BASE}${SIGN_OUT_ENDPOINT}`);
       expect(signOutReq.request.method).toEqual('POST');
-      expect(signOutReq.request.body).toEqual({playerid: response.playerid});
+      expect(signOutReq.request.body).toEqual({idplayer: response.idplayer});
       signOutReq.flush({});
       httpMock.verify();
     });

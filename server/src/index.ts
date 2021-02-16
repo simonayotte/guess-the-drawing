@@ -9,7 +9,7 @@ import { Server } from 'socket.io';
 import { PORT } from './config/constants';
 
 // routes imports
-import { testRouter, loginRouter } from './routes/routes';
+import { testRouter, loginRouter, signupRouter } from './routes/routes';
 
 // Database connection
 const db = require('./database/database');
@@ -46,8 +46,9 @@ app.get('/', (req, res) => {
     res.json({ message : "Bienvenue au backend de Fais-moi un dessin" });
 });
 
-app.use('/test', testRouter); 
+app.use('/test', testRouter);
 app.use('/login', loginRouter);
+app.use('/signup', signupRouter);
 
 
 const server = app.listen(PORT, () => {
@@ -63,7 +64,7 @@ function databaseQuery() {
     const query = 'SELECT * FROM log3900db.player;'
     db.query(`
     SELECT Person.password, Person.idplayer
-    FROM log3900db.Player 
+    FROM log3900db.Player
     INNER JOIN log3900db.Person ON log3900db.Player.idplayer = Person.idplayer
     WHERE Player.username = $1`, [username])
         .then((res: { rows: any; }) => {
@@ -84,11 +85,11 @@ const io = new Server(server, { cors: {credentials: true, origin: '*' } });
 
 io.on('connection', (socket: any) => {
     console.log('client has connected');
-    
-    
+
+
     socket.on('joinRoom', (room : any) => {
         console.log(socket.id);
-        
+
         socket.emit('message', 'Your are connected');
         socket.join(room);
         io.to(socket.id).emit('message', 'You are connected to room' + room);
@@ -98,12 +99,12 @@ io.on('connection', (socket: any) => {
         console.log(msg);
         socket.broadcast.emit('chatMessage', msg);
         // io.emit('chatMessage', msg);
-    }); 
+    });
 
     socket.on('disconnect', () => {
         console.log('client has disconnected');
-        
+
     });
 
-    
+
 });

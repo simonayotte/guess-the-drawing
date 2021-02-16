@@ -6,13 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.client_leger.signup.model.SignUpRepository
 import com.example.client_leger.signup.model.SignUpResponseModel
 import com.example.client_leger.utils.Result
+import com.example.client_leger.utils.UserInfos
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-        private val signUpRepository: SignUpRepository
+        private val signUpRepository: SignUpRepository,
+        private val userInfos: UserInfos
 ): ViewModel() {
     val successfulSignUp: MutableLiveData<Boolean> = MutableLiveData()
     val showSignIn: MutableLiveData<Boolean> = MutableLiveData()
@@ -38,8 +40,9 @@ class SignUpViewModel @Inject constructor(
                     passwordToValidate.value!!)
                 ) {
                     is Result.Success<SignUpResponseModel> -> {
-                        successfulSignUp.value = response.data.signInIsSuccessFull
-                        textErrorIsVisible.value = !successfulSignUp.value!!
+                        userInfos.idplayer.value = response.data.idplayer
+                        successfulSignUp.value = true
+                        textErrorIsVisible.value = false
                     }
                     else -> {
                         textErrorIsVisible.value = true
