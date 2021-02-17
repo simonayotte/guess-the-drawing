@@ -1,5 +1,6 @@
 package com.example.client_leger.signin.model
 
+import android.util.Log
 import com.example.client_leger.utils.Result
 import com.example.client_leger.utils.RetrofitApiProvider
 import dagger.hilt.android.scopes.ViewModelScoped

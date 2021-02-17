@@ -12,9 +12,15 @@
     </div>
     <div class=messages #scrollMe>
       <div *ngFor = "let message of messages">
-        <div class=text-info>{{message.messageTime}}</div>
-        <div [ngClass]="message.messageWriter === 'Weber' ? 'my-text-container' : 'text-container'">
-          <div class=text>{{message.messageContent}}</div>
+        <div [ngClass]="message.messageWriter === username ? 'my-message-container' : 'message-container'">
+          <img [ngClass]="{'hidden': message.messageWriter === username}" src={{message.messageIcon}} alt="Avatar">
+          <!-- <div class=text-info>{{message.messageWriter}}</div> -->
+          <div class=message>
+            <div class=text-info>{{message.messageWriter}}  {{message.messageTime}}</div>
+            <div [ngClass]="message.messageWriter === username ? 'my-text-container' : 'text-container'">
+              <div class=text>{{message.messageContent}}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

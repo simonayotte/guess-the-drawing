@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewmodel"
+            type="com.example.client_leger.lobby.viewModel.LobbyViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".lobby.activity.LobbyActivity">
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="1292dp"
+            android:layout_height="45dp"
+            android:background="@color/colorPrimary"
+            android:fontFamily="@font/julius_sans_one"
+            android:padding="10dp"
+            android:text="@string/app_name"
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="303dp"
+            android:layout_height="663dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appName"
+            android:id="@+id/lobby_recycler_view"/>
+
+        <Button
+            android:id="@+id/mainDisconnectButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/disconnect"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.499"
+            android:onClick="@{() -> viewmodel.onClickSignOut()}"/>
+
+<!--        <fragment-->
+<!--            android:id="@+id/chatFragment"-->
+<!--            android:name="com.example.client_leger.chat.fragment.Chat"-->
+<!--            android:layout_width="273dp"-->
+<!--            android:layout_height="660dp"-->
+<!--            android:layout_below="@+id/appName"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/appName" />-->
+
+        <LinearLayout
+            android:layout_width="328dp"
+            android:layout_height="672dp"
+            android:clipToPadding="false"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appName"
+            tools:context="com.example.client_leger.MainActivity">
+
+            <TextView
+                android:id="@+id/testChatName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:ems="10"
+                android:fontFamily="@font/julius_sans_one"
+                android:text="@{viewmodel.chatName}"
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="36sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/showMore"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/message_history"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button" />
+
+
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chat_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                 
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:ems="10"
+                    android:hint="Write a message"
+                    android:inputType="text"
+                    android:paddingHorizontal="10dp"
+                    android:text="@={viewmodel.message}" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/ic_send_black_24dp"
+                    android:onClick="@{() -> viewmodel.onClickSendMessage()}"
+                    android:padding="20dp"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_lobby_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewmodel.onClickAddLobby()}"
+            android:text="AddLobby"
+            app:layout_constraintBottom_toTopOf="@+id/mainDisconnectButton"
+            app:layout_constraintStart_toStartOf="@+id/mainDisconnectButton"
+            app:layout_constraintTop_toBottomOf="@+id/appName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

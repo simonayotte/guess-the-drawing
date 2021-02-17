@@ -112,7 +112,7 @@ mat-form-field-underline {
 .login-box {
   display: flex;
   width: 300px;
-  height: 500px;
+  height: 400px;
   background: #000000CC;
   display: flex;
   color:#fff;
@@ -156,7 +156,7 @@ mat-card-subtitle{
   margin-bottom: 0 !important;
 }
 
-button {
+.button-loggin {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -175,7 +175,7 @@ button {
   transition: 0.3s;
 }
 
-button:hover:not(:disabled){
+.button-loggin:hover:not(:disabled){
   background-color: #0c0c0c;
   color: white;
 }

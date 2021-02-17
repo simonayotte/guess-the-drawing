@@ -12,6 +12,7 @@ import com.example.client_leger.MainActivity
 import com.example.client_leger.R
 import com.example.client_leger.signup.activity.SignUpActivity
 import com.example.client_leger.databinding.ActivitySignInBinding
+import com.example.client_leger.lobby.activity.LobbyActivity
 import com.example.client_leger.signin.viewModel.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +33,7 @@ class SiginInActivity : AppCompatActivity() {
 
         viewModel.successfulLogin.observe(this, Observer {
             if(it) {
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, LobbyActivity::class.java)
                 startActivity(intent)
             }
         })

@@ -6,7 +6,7 @@
     <div id="content" class="row">
       <div class="login-box">
         <div class="button-position">
-          <h3 style="height:100px"> Connexion </h3>
+          <h3 style="height:30px"> Connexion </h3>
           <div>
             <form [formGroup]="loginForm" (submit)="submit()">
               <mat-form-field>
@@ -30,10 +30,10 @@
                 <mat-error *ngIf="loginForm.controls.password.invalid">{{getErrorMessage(loginForm.controls.password)}}</mat-error>
               </mat-form-field>
 
-              <button mat-button type="submit"> {{isLoggingIn ? signInText : signUpText}} </button>
+              <button mat-button class=button-loggin type="submit"> {{isLoggingIn ? signInText : signUpText}} </button>
 
             </form>
-            <button mat-button (click)="toggleDisplay()"> {{isLoggingIn ? signUpText : signInText}} </button>
+            <button mat-button class=button-loggin (click)="toggleDisplay()"> {{isLoggingIn ? signUpText : signInText}} </button>
           </div>
         </div>
       </div>

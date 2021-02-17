@@ -9,4 +9,6 @@ import javax.inject.Singleton
 class UserInfos @Inject constructor() {
     //TODO: ajouter l'avatar id ici
     val idplayer = MutableLiveData<Int>()
+    val username = MutableLiveData<String>()
+    val avatar = MutableLiveData<Int>()
 }

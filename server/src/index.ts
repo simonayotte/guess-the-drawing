@@ -2,8 +2,8 @@
 import express from 'express';
 import passport from 'passport';
 import bodyParser from 'body-parser';
-var cors = require('cors');
 import { Server } from 'socket.io';
+
 
 // files imports
 import { PORT } from './config/constants';
@@ -17,16 +17,18 @@ const db = require('./database/database');
 const app = express();
 
 // CORS policy
-var corsOptions = {
-  origin: '*',
-}
-app.use(cors(corsOptions));
 app.all('', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "");
     res.header('Access-Control-Allow-Methods: GET, POST');
     res.header("Access-Control-Allow-Headers", "*");
     next();
 });
+
+var cors = require('cors');
+var corsOptions = {
+  origin: '*',
+}
+app.use(cors(corsOptions));
 
 // Middlewares
 app.use(bodyParser.json());
@@ -56,10 +58,10 @@ const server = app.listen(PORT, () => {
 });
 
 // Exemple d'utilisation d'une query
-//databaseQuery();
+databaseQuery();
 //'SELECT * FROM log3900db.player;'
 function databaseQuery() {
-    const username = 'failix';
+    const username = 1;
     console.log('Running query to log39000-db on the player table...');
     const query = 'SELECT * FROM log3900db.player;'
     db.query(`
@@ -76,35 +78,53 @@ function databaseQuery() {
         })
         .catch((err: any) => {
             console.log(err);
-        });
+    });
+    
+    
 }
 
 
 
 const io = new Server(server, { cors: {credentials: true, origin: '*' } });
 
-io.on('connection', (socket: any) => {
-    console.log('client has connected');
-
-
-    socket.on('joinRoom', (room : any) => {
-        console.log(socket.id);
-
-        socket.emit('message', 'Your are connected');
-        socket.join(room);
-        io.to(socket.id).emit('message', 'You are connected to room' + room);
-    })
+io.on('connection', (socket) => {
+    
+    socket.on('connectSocketid', (id: any) => {
+        db.query(`
+        UPDATE LOG3900DB.Person
+        SET idSocket=$1
+        WHERE Person.idPlayer = $2`, [socket.id,id])
+        .catch((err: any) => {
+            console.log(err); 
+        });
+        db.query(`
+        SELECT Player.username, Person.avatar
+        FROM log3900db.Player
+        INNER JOIN log3900db.Person ON log3900db.Player.idplayer = Person.idplayer
+        WHERE Player.idplayer = $1`, [id])
+        .then((res: { rows: any; }) => {
+            socket.emit('playerInfo', {username : res.rows[0].username, avatar : res.rows[0].avatar});
+            
+        })
+        .catch((err: any) => {
+            console.log(err);
+    });
+    }); 
 
     socket.on('chatMessage', (msg: any) => {
-        console.log(msg);
         socket.broadcast.emit('chatMessage', msg);
-        // io.emit('chatMessage', msg);
-    });
+    }); 
 
     socket.on('disconnect', () => {
         console.log('client has disconnected');
-
+        db.query(`UPDATE log3900db.Person SET isconnected = false WHERE idSocket = $1`,
+        [socket.id],
+        (err: any, results: any) => {
+            if (err) throw err;
+        });
+        
     });
+       
 
 
 });

@@ -1,24 +1,56 @@
 SET search_path = LOG3900DB;
 
 INSERT INTO Player(username) VALUES ('failix');
+INSERT INTO Player(username) VALUES ('judesn');
+INSERT INTO Player(username) VALUES ('maweb');
+INSERT INTO Player(username) VALUES ('gucci');
+INSERT INTO Player(username) VALUES ('simon');
+INSERT INTO Player(username) VALUES ('guilhem');
 INSERT INTO Player(username) VALUES ('sammypoush');
 INSERT INTO Player(username) VALUES ('yves420');
 INSERT INTO Player(username) VALUES ('jaykot');
 
-INSERT INTO Person(idPlayer, password, email, firstName, lastName)
-	SELECT idPlayer, '123','fd@polymtl.ca', 'felix', 'dumont'
+INSERT INTO Person(idPlayer, password, email, firstName, lastName, avatar)
+	SELECT idPlayer, '123','fd@polymtl.ca', 'felix', 'dumont', 1
 	FROM Player
 	WHERE username = 'failix';
-INSERT INTO Person(idPlayer, password, email, firstName, lastName)
-	SELECT idPlayer, '123','sp@polymtl.ca', 'samuel', 'pierre'
+
+INSERT INTO Person(idPlayer, password, email, firstName, lastName, avatar)
+	SELECT idPlayer, '123','jd@polymtl.ca', 'julien', 'desalliers', 4
+	FROM Player
+	WHERE username = 'judesn';
+	
+INSERT INTO Person(idPlayer, password, email, firstName, lastName, avatar)
+	SELECT idPlayer, '123','mw@polymtl.ca', 'mark', 'weber-sadler', 3
+	FROM Player
+	WHERE username = 'maweb';
+	
+INSERT INTO Person(idPlayer, password, email, firstName, lastName, avatar)
+	SELECT idPlayer, '123','ab@polymtl.ca', 'augustin', 'bouchard', 0
+	FROM Player
+	WHERE username = 'gucci';
+	
+	
+INSERT INTO Person(idPlayer, password, email, firstName, lastName, avatar)
+	SELECT idPlayer, '123','sa@polymtl.ca', 'simon', 'ayotte', 8
+	FROM Player
+	WHERE username = 'simon';
+
+INSERT INTO Person(idPlayer, password, email, firstName, lastName, avatar)
+	SELECT idPlayer, '123','gd@polymtl.ca', 'guilhem', 'dubois', 7
+	FROM Player
+	WHERE username = 'guilhem';
+	
+INSERT INTO Person(idPlayer, password, email, firstName, lastName, avatar)
+	SELECT idPlayer, '123','sp@polymtl.ca', 'samuel', 'pierre', 2
 	FROM Player
 	WHERE username = 'sammypoush';
-INSERT INTO Person(idPlayer,password, email, firstName, lastName)
-	SELECT idPlayer, '123','yb@polymtl.ca', 'yves', 'boudreault'
+INSERT INTO Person(idPlayer,password, email, firstName, lastName, avatar)
+	SELECT idPlayer, '123','yb@polymtl.ca', 'yves', 'boudreault', 3
 	FROM Player
 	WHERE username = 'yves420';
-INSERT INTO Person(idPlayer,password, email, firstName, lastName)
-	SELECT idPlayer, '123','jk@polymtl.ca', 'jerome', 'kotlin'
+INSERT INTO Person(idPlayer,password, email, firstName, lastName, avatar)
+	SELECT idPlayer, '123','jk@polymtl.ca', 'jerome', 'kotlin', 4
 	FROM Player
 	WHERE username = 'jaykot';
 

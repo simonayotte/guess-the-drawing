@@ -60,6 +60,34 @@
     text-align: right;
 }
 
+.hidden {
+    display: none;
+}
+
+.message-container {
+    display:flex;
+    padding-left: 8px;
+    padding-top: 5px;
+}
+
+.my-message-container {
+    display:flex;
+    padding-left: 8px;
+    padding-top: 5px;
+    justify-content: flex-end;
+}
+
+.message {
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+}
+
+img {
+    border-radius: 50%;
+    height: 38px;
+}
+
 .text-container {
     margin: 12px;
     margin-top: 0;

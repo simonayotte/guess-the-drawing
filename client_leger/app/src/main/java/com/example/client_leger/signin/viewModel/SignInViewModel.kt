@@ -1,20 +1,24 @@
 package com.example.client_leger.signin.viewModel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.client_leger.utils.Result
+import android.util.Log
+import androidx.lifecycle.*
+import com.example.client_leger.SocketConnectionService
 import com.example.client_leger.signin.model.SignInRepository
 import com.example.client_leger.signin.model.SignInResponseModel
+import com.example.client_leger.utils.Result
 import com.example.client_leger.utils.UserInfos
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 import javax.inject.Inject
+
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val signInRepository: SignInRepository,
-    private val userInfos: UserInfos
+        private val signInRepository: SignInRepository,
+        private val userInfos: UserInfos,
+        private val socketConnectionService: SocketConnectionService
 ) : ViewModel() {
 
     val successfulLogin: MutableLiveData<Boolean> = MutableLiveData()
@@ -22,6 +26,14 @@ class SignInViewModel @Inject constructor(
     val userName = MutableLiveData<String>("jaykot")
     val password = MutableLiveData<String>("123")
     val textErrorIsVisible = MutableLiveData<Boolean>(false)
+
+    init {
+        socketConnectionService.mSocket.on("playerInfo") { infos ->
+            val data: String = infos[0].toString()
+            val json = JSONObject(data)
+            userInfos.avatar.postValue(json.getString("avatar").toInt())
+        }
+    }
 
     fun onClickSignUp(){
         showSignUp.value = true
@@ -33,8 +45,10 @@ class SignInViewModel @Inject constructor(
                 when (val response = signInRepository.makeLoginRequest(userName.value!!, password.value!!)) {
                     is Result.Success<SignInResponseModel> -> {
                         userInfos.idplayer.value = response.data.playerid
+                        userInfos.username.value = userName.value!!
                         successfulLogin.value = true
                         textErrorIsVisible.value = false
+                        connectToSocket()
                     } else -> {
                         textErrorIsVisible.value = true
                     }
@@ -43,5 +57,9 @@ class SignInViewModel @Inject constructor(
         } else {
             textErrorIsVisible.value = true
         }
+    }
+
+    fun connectToSocket() {
+        socketConnectionService.mSocket.emit("connectSocketid", userInfos.idplayer.value);
     }
 }
