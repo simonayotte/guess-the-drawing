@@ -12,71 +12,61 @@ export class ConversationComponent implements OnInit, AfterViewChecked{
 
   public lobbyName: string = "Salon 1";
   public message: string = "";
+  public username: string;
+  private avatar: string;
+
 
   lobbies: string[] = ["salon 1", "salon2", "failix", "weber"];
-  messages: MessageModel[] = [
-    {
-      messageWriter: "Failix",
-      messageIcon: "1",
-      messageTime: "14:50:32",
-      messageContent: "yo",
-    },
-    {
-      messageWriter: "Weber",
-      messageIcon: "2",
-      messageTime: "14:50:32",
-      messageContent: "Salut",
-    },
-    {
-      messageWriter: "Failix",
-      messageIcon: "1",
-      messageTime: "14:50:32",
-      messageContent: "pret?",
-    },
-    {
-      messageWriter: "Weber",
-      messageIcon: "2",
-      messageTime: "14:50:32",
-      messageContent: "Down",
-    },
-  ];
+  messages: MessageModel[] = [];
 
   constructor(private webSocketService: WebSocketServiceService) { }
 
   ngOnInit() {
-    this.webSocketService.listen('chatMessage').subscribe((data : string) => {
-      let text:MessageModel = {
-        messageWriter: "server",
-        messageIcon: "5",
-        messageTime: "14:55:30",
-        messageContent: data,
-      }
+    this.webSocketService.listen('playerInfo').subscribe((data:any) => {
+      this.username = data.username;
+      this.avatar = data.avatar.toString();
+    });
 
+    this.webSocketService.listen('chatMessage').subscribe((data : any) => {
+      const text:MessageModel = {
+        messageWriter: data.username,
+        messageIcon: "assets/avatars/" + data.avatar + ".jpg",
+        messageTime: data.time,
+        messageContent: data.message,
+      };
       this.messages.push(text);
     });
   }
 
-  ngAfterViewChecked() {        
-    this.scrollToBottom();        
+  ngAfterViewChecked() {
+    this.scrollToBottom();
   }
 
   public loadEntireConvo() {
-    
+
   }
 
   public sendMessage(): void {
-    let text:MessageModel = {
-      messageWriter: "Weber",
-      messageIcon: "4",
-      messageTime: "14:55:30",
-      messageContent: this.message,
-    }
-    // use push to add a new message
-    this.messages.push(text);
-    this.webSocketService.emit('chatMessage', this.message);
-    this.message = "";
-    //get container element
+    if (this.message !== "" && this.message.trim() !== "") {
+      const d = new Date();
+      const h = `${d.getHours()}`.padStart(2, '0');
+      const m = `${d.getMinutes()}`.padStart(2, '0');
+      const s = `${d.getSeconds()}`.padStart(2, '0');
+      const time = h + ":" + m + ":" + s;
 
+      const text:MessageModel = {
+        messageWriter: this.username,
+        messageIcon: this.avatar,
+        messageTime: time,
+        messageContent: this.message,
+      };
+      // use push to add a new message
+      this.messages.push(text);
+      this.webSocketService.emit('chatMessage', {message: this.message, username: this.username, avatar: this.avatar, time: time});
+      // get container element
+    }
+
+    this.message = "";
   }
 
   scrollToBottom(): void {
@@ -86,7 +76,7 @@ export class ConversationComponent implements OnInit, AfterViewChecked{
         left: 0,
         behavior: 'smooth'
       });
-    } catch(err) { }                 
+    } catch(err) {}
   }
 
 }

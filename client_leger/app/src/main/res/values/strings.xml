@@ -10,5 +10,9 @@
     <string name="password">Mot de passe</string>
     <string name="email">Adresse courriel</string>
     <string name="disconnect">Se déconnecter</string>
+    <string name="message_history">Voir l\'historique</string>
+    <string name="show">Afficher</string>
     <string name="veuillez_r_essayer_de_nouveau">Veuillez réessayer de nouveau</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
