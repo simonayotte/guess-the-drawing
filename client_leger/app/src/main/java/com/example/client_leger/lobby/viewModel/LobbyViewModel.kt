@@ -51,7 +51,7 @@ class LobbyViewModel @Inject constructor(
     }
 
     fun onClickSendMessage(){
-        if (!message.value.isNullOrEmpty()) {
+        if (!message.value.isNullOrEmpty() && !message.value.isNullOrBlank()) {
             val sdf = SimpleDateFormat("hh:mm:ss")
             val currentTime = sdf.format(Date())
             chatMessage.value = MessageModel(userInfos.username.value!!, userInfos.avatar.value.toString(), currentTime, message.value!!)
