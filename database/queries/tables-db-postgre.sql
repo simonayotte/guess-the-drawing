@@ -105,30 +105,29 @@ CREATE TABLE IF NOT EXISTS Login(
 );
 
 CREATE TABLE IF NOT EXISTS Channel(
-    idChannel           SERIAL 			NOT NULL,
-    channelName         VARCHAR(30)   	DEFAULT 'NewChannel',
+    channelName         VARCHAR(30)   	NOT NULL,
 
-	PRIMARY KEY (idChannel)
+	PRIMARY KEY (channelName)
 );
 
 CREATE TABLE IF NOT EXISTS Message(
     idMessage           SERIAL 			NOT NULL,
 	idPlayer			INT				NOT NULL,
-    idChannel           INT             NOT NULL,
+    channelName         VARCHAR(30)   	NOT NULL,
     messageContent      VARCHAR(500)    DEFAULT '',
     messageDate         TIMESTAMP		WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 
 	PRIMARY KEY (idMessage),
 	FOREIGN KEY (idPlayer) REFERENCES Player(idPlayer) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (idChannel) REFERENCES Channel(idChannel) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (channelName) REFERENCES Channel(channelName) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS ChannelConnexion(
     idChannelConnexion  SERIAL 			NOT NULL,
 	idPlayer			INT				NOT NULL,
-    idChannel           INT             NOT NULL,
+    channelName         VARCHAR(30)   	NOT NULL,
 
 	PRIMARY KEY (idChannelConnexion),
     FOREIGN KEY (idPlayer) REFERENCES Player(idPlayer) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (idChannel) REFERENCES Channel(idChannel) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (channelName) REFERENCES Channel(channelName) ON DELETE CASCADE ON UPDATE CASCADE
 );

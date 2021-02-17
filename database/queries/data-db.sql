@@ -97,13 +97,13 @@ INSERT INTO Login(idPlayer) VALUES (2);
 INSERT INTO Channel(channelName) VALUES ('ganggangchannel');
 INSERT INTO Channel(channelName) VALUES ('wasspoppin');
 
-INSERT INTO Message(idChannel,idPlayer, messageContent) VALUES (1,1,'yoo ca va');
-INSERT INTO Message(idChannel,idPlayer, messageContent) VALUES (1,2,'ouais kesspass je suis chevalier de lordre du quebec');
-INSERT INTO Message(idChannel,idPlayer, messageContent) VALUES (1,1,'yoo geee cest fouuww');
-INSERT INTO Message(idChannel,idPlayer, messageContent) VALUES (2,3,'Bonjour, je suis un genie');
-INSERT INTO Message(idChannel,idPlayer, messageContent) VALUES (2,4,'je suis elon musk s3xy');
+INSERT INTO Message(channelName,idPlayer, messageContent) VALUES ('ganggangchannel',1,'yoo ca va');
+INSERT INTO Message(channelName,idPlayer, messageContent) VALUES ('ganggangchannel',2,'ouais kesspass je suis chevalier de lordre du quebec');
+INSERT INTO Message(channelName,idPlayer, messageContent) VALUES ('ganggangchannel',1,'yoo geee cest fouuww');
+INSERT INTO Message(channelName,idPlayer, messageContent) VALUES ('wasspoppin',3,'Bonjour, je suis un genie');
+INSERT INTO Message(channelName,idPlayer, messageContent) VALUES ('wasspoppin',4,'je suis elon musk s3xy');
 
-INSERT INTO ChannelConnexion(idChannel,idPlayer) VALUES (2,3);
-INSERT INTO ChannelConnexion(idChannel,idPlayer) VALUES (2,4);
-INSERT INTO ChannelConnexion(idChannel,idPlayer) VALUES (1,1);
-INSERT INTO ChannelConnexion(idChannel,idPlayer) VALUES (1,2);
+INSERT INTO ChannelConnexion(channelName,idPlayer) VALUES ('wasspoppin',3);
+INSERT INTO ChannelConnexion(channelName,idPlayer) VALUES ('wasspoppin',4);
+INSERT INTO ChannelConnexion(channelName,idPlayer) VALUES ('ganggangchannel',1);
+INSERT INTO ChannelConnexion(channelName,idPlayer) VALUES ('ganggangchannel',2);
