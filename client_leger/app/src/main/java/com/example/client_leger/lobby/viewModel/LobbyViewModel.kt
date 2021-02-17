@@ -55,7 +55,7 @@ class LobbyViewModel @Inject constructor(
             val sdf = SimpleDateFormat("hh:mm:ss")
             val currentTime = sdf.format(Date())
             chatMessage.value = MessageModel(userInfos.username.value!!, userInfos.avatar.value.toString(), currentTime, message.value!!)
-            val jsonMsg = JSONObject("{message: " + message.value!! + ", username: " + userInfos.username.value!! +", avatar: " + userInfos.avatar.value.toString() + ", time: '" + currentTime + "'}")
+            val jsonMsg = JSONObject("{message: '" + message.value.toString() + "', username: '" + userInfos.username.value!! +"', avatar: '" + userInfos.avatar.value.toString() + "', time: '" + currentTime + "'}")
             socketConnectionService.mSocket.emit("chatMessage", jsonMsg);
             message.value = ""
         }
