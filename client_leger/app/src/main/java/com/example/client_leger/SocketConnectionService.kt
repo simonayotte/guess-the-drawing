@@ -23,7 +23,6 @@ class SocketConnectionService @Inject constructor() {
     init {
         try {
             mSocket = IO.socket(url)
-            mSocket.connect()
         } catch (e: URISyntaxException) {
             println("Exception" + e)
         }

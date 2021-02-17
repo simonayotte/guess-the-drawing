@@ -60,6 +60,7 @@ class SignInViewModel @Inject constructor(
     }
 
     fun connectToSocket() {
+        socketConnectionService.mSocket.connect()
         socketConnectionService.mSocket.emit("connectSocketid", userInfos.idplayer.value);
     }
 }
