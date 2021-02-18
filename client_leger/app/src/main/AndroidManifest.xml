@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Client_leger"
         android:usesCleartextTraffic="true">
-        <activity android:name=".lobby.activity.LobbyActivity"></activity>
+        <activity
+            android:name=".lobby.activity.LobbyActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".signup.activity.SignUpActivity"
             android:parentActivityName=".signin.activity.SiginInActivity" />
