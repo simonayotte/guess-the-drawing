@@ -3,6 +3,8 @@ package com.example.client_leger.lobby.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -40,6 +42,12 @@ class LobbyActivity : AppCompatActivity() {
         initLobbyRecyclerView()
         initChatRecyclerView()
 
+        message.setOnEditorActionListener() { v, actionId, event ->
+            when(actionId){
+            EditorInfo.IME_ACTION_DONE -> { viewModel.onClickSendMessage(); true }
+            else -> false
+        }
+        }
 
         viewModel.successfulSignOut.observe(this, Observer {
             if(it) {
@@ -75,6 +83,7 @@ class LobbyActivity : AppCompatActivity() {
         chat_recycler_view.setHasFixedSize(false)
         chat_recycler_view.scrollToPosition(messageList.size);
     }
+
 
     private fun getLobbies(): ArrayList<LobbyModel> {
         return LobbyData.createDataSet()
