@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.client_leger.MainActivity
 import com.example.client_leger.R
 import com.example.client_leger.databinding.ActivitySignUpBinding
+import com.example.client_leger.lobby.activity.LobbyActivity
 import com.example.client_leger.signin.activity.SiginInActivity
 import com.example.client_leger.signup.viewModel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +32,7 @@ class SignUpActivity : AppCompatActivity() {
         frameAnimation.setExitFadeDuration(4000)
         frameAnimation.start()
         viewModel.successfulSignUp.observe(this, Observer {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LobbyActivity::class.java)
             startActivity(intent)
         })
         viewModel.showSignIn.observe(this, Observer {
