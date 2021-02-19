@@ -3,6 +3,7 @@ package com.example.client_leger.signup.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.client_leger.SocketConnectionService
 import com.example.client_leger.signup.model.SignUpRepository
 import com.example.client_leger.signup.model.SignUpResponseModel
 import com.example.client_leger.utils.Result
@@ -14,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
         private val signUpRepository: SignUpRepository,
-        private val userInfos: UserInfos
+        private val userInfos: UserInfos,
+        private val socketConnectionService: SocketConnectionService
 ): ViewModel() {
     val successfulSignUp: MutableLiveData<Boolean> = MutableLiveData()
     val showSignIn: MutableLiveData<Boolean> = MutableLiveData()
@@ -44,6 +46,7 @@ class SignUpViewModel @Inject constructor(
                         userInfos.username.value = userNameToValidate.value!!
                         successfulSignUp.value = true
                         textErrorIsVisible.value = false
+                        connectToSocket()
                     }
                     else -> {
                         textErrorIsVisible.value = true
@@ -53,6 +56,11 @@ class SignUpViewModel @Inject constructor(
         } else {
             textErrorIsVisible.value = true
         }
+    }
+
+    fun connectToSocket() {
+        socketConnectionService.mSocket.connect()
+        socketConnectionService.mSocket.emit("connectSocketid", userInfos.idplayer.value);
     }
 
 
