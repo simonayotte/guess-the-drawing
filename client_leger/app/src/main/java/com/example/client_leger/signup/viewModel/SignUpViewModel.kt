@@ -41,6 +41,7 @@ class SignUpViewModel @Inject constructor(
                 ) {
                     is Result.Success<SignUpResponseModel> -> {
                         userInfos.idplayer.value = response.data.idplayer
+                        userInfos.username.value = userNameToValidate.value!!
                         successfulSignUp.value = true
                         textErrorIsVisible.value = false
                     }
