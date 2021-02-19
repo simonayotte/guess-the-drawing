@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { io } from 'socket.io-client';
-import { LoginService } from 'src/app/services/login/login.service';
+import { UserInfoService } from '../data/user-info.service';
 
 
 @Injectable({
@@ -11,14 +11,24 @@ export class WebSocketServiceService {
   socket: any;
   readonly url: string = 'http://log3900-server.herokuapp.com/';
 
-  constructor(private loginService: LoginService) {
+  constructor(private userInfo: UserInfoService) {
     this.socket = io(this.url);
-    const user = this.loginService.getCurrentUser();
-    if( user != null){
-      this.emit('connectSocketid', user.idplayer);
-    }
   }
 
+  connect(){
+    if(this.socket.id === undefined){
+    this.socket = io(this.url);
+    }
+    this.socket.on('playerInfo', (data: any) => {
+      this.userInfo.setUsername(data.username);
+      this.userInfo.setAvatar(data.avatar);
+    });
+    this.emit('connectSocketid', this.userInfo.getIdplayer());
+  }
+
+  disconnect(){
+    this.socket.disconnect();
+  }
 
   listen(eventName: string){
     return new Observable((subscriber: any) => {
@@ -31,7 +41,7 @@ export class WebSocketServiceService {
 
   emit(eventName: string, data: any) {
     this.socket.emit(eventName,data);
-  };
+  }
 
 }
 

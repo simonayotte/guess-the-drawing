@@ -1,7 +1,7 @@
 // contains the public information of a user
 export interface UserModel {
   idplayer: number;
-  // username: string;
+  username: string;
   // email: string;
-  // avatar: string;
+  avatar: string;
 }

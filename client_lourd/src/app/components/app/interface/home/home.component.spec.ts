@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AppModule } from 'src/app/app.module';
 import { MaterialModule } from 'src/app/material/material.module';
-import { UserModel } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login/login.service';
 import { HomeComponent } from './home.component';
 
@@ -12,7 +11,7 @@ describe('HomeComponent', () => {
   let mockLoginService: LoginService;
   let mockDialog: MatDialog;
 
-  const response: UserModel = {
+  const response: any = {
     idplayer: 42
   };
   const validUser = {

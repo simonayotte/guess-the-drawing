@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { UserInfoService } from '../data/user-info.service';
 import { LoginService } from '../login/login.service';
 
 @Injectable({
@@ -7,12 +8,13 @@ import { LoginService } from '../login/login.service';
 })
 export class AuthGuardService implements CanActivate {
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginService: LoginService, private router: Router, private userInfo: UserInfoService) { }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const currentRoute = route.url[0].path;
     const isInLoginPage = currentRoute === 'home';
-    const isUserSignedIn = this.loginService.isUserSignedIn();
+    const isUserSignedIn = this.userInfo.isUserConnected();
+    
 
     // trying to navigate in the app without being logged in
     if(!isUserSignedIn && !isInLoginPage) {
@@ -24,7 +26,7 @@ export class AuthGuardService implements CanActivate {
     // going to the login page while the user is signed in
     if(isUserSignedIn && isInLoginPage) {
       // signs out the user
-      await this.loginService.signOut();
+      this.loginService.signOut();
       return false;
     }
 

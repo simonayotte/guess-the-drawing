@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { LoginService } from 'src/app/services/login/login.service';
-import { BasicDialogComponent } from '../basic-dialog/basic-dialog.component';
 
 @Component({
   selector: 'app-main-menu',
@@ -10,10 +8,9 @@ import { BasicDialogComponent } from '../basic-dialog/basic-dialog.component';
 })
 export class MainMenuComponent {
 
-  constructor(private loginService: LoginService, private dialog: MatDialog) { }
+  constructor(private loginService: LoginService) { }
 
   public async SignOutClick(): Promise<void> {
-    await this.loginService.signOut().catch(err =>
-      this.dialog.open(BasicDialogComponent, { data: {err}}));
+    await this.loginService.signOut();
   }
 }

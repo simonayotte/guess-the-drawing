@@ -10,6 +10,7 @@ describe('AuthGardService', () => {
   let mockLoginService: jasmine.SpyObj<LoginService>;
   let router: Router;
   let navigateSpy: jasmine.Spy;
+  const USER_INFO = 'userInfo';
 
   beforeEach(() => {
     mockLoginService = jasmine.createSpyObj('loginService', ['isUserSignedIn', 'signOut']);
@@ -28,7 +29,7 @@ describe('AuthGardService', () => {
   });
 
   it('should redirect to home (login) page if the user is not signed in', () => {
-    mockLoginService.isUserSignedIn.and.returnValue(false);
+    spyOn(service[USER_INFO], 'isUserConnected').and.returnValue(false);
     const route = new ActivatedRouteSnapshot();
     route.url = [new UrlSegment('menu', {})];
     return service.canActivate(route, {url: 'testUrl'} as RouterStateSnapshot).then(result => {
@@ -38,8 +39,7 @@ describe('AuthGardService', () => {
   });
 
   it('should sign out if a connected user is going back to the home (login) page', () => {
-    mockLoginService.isUserSignedIn.and.returnValue(true);
-    mockLoginService.signOut.and.returnValue(Promise.resolve());
+    spyOn(service[USER_INFO], 'isUserConnected').and.returnValue(true);
     const route = new ActivatedRouteSnapshot();
     route.url = [new UrlSegment('home', {})];
     return service.canActivate(route, {url: 'testUrl'} as RouterStateSnapshot).then(result => {
@@ -50,7 +50,7 @@ describe('AuthGardService', () => {
   });
 
   it('should return true if a signed in user tries to navigate to a page', () => {
-    mockLoginService.isUserSignedIn.and.returnValue(true);
+    spyOn(service[USER_INFO], 'isUserConnected').and.returnValue(true);
     const route = new ActivatedRouteSnapshot();
     route.url = [new UrlSegment('menu', {})];
     return service.canActivate(route, {url: 'testUrl'} as RouterStateSnapshot).then(result => {

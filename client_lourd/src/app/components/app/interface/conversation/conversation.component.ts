@@ -1,5 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MessageModel } from 'src/app/models/message';
+import { UserInfoService } from 'src/app/services/data/user-info.service';
 import { WebSocketServiceService } from 'src/app/services/web-socket/web-socket.service';
 
 @Component({
@@ -12,21 +13,14 @@ export class ConversationComponent implements OnInit, AfterViewChecked{
 
   public lobbyName: string = "Salon 1";
   public message: string = "";
-  public username: string;
-  private avatar: string;
 
 
   lobbies: string[] = ["salon 1", "salon2", "failix", "weber"];
   messages: MessageModel[] = [];
 
-  constructor(private webSocketService: WebSocketServiceService) { }
+  constructor(private webSocketService: WebSocketServiceService,public userInfo: UserInfoService) { }
 
   ngOnInit() {
-    this.webSocketService.listen('playerInfo').subscribe((data:any) => {
-      this.username = data.username;
-      this.avatar = data.avatar.toString();
-    });
-
     this.webSocketService.listen('chatMessage').subscribe((data : any) => {
       const text:MessageModel = {
         messageWriter: data.username,
@@ -52,17 +46,17 @@ export class ConversationComponent implements OnInit, AfterViewChecked{
       const h = `${d.getHours()}`.padStart(2, '0');
       const m = `${d.getMinutes()}`.padStart(2, '0');
       const s = `${d.getSeconds()}`.padStart(2, '0');
-      const time = h + ":" + m + ":" + s;
+      const CurrentTime = h + ":" + m + ":" + s;
 
       const text:MessageModel = {
-        messageWriter: this.username,
-        messageIcon: this.avatar,
-        messageTime: time,
+        messageWriter: this.userInfo.getUsername(),
+        messageIcon: "assets/avatars/" + this.userInfo.getAvatar() + ".jpg",
+        messageTime: CurrentTime,
         messageContent: this.message,
       };
       // use push to add a new message
       this.messages.push(text);
-      this.webSocketService.emit('chatMessage', {message: this.message, username: this.username, avatar: this.avatar, time: time});
+      this.webSocketService.emit('chatMessage', {message: this.message, username: this.userInfo.getUsername(), avatar: this.userInfo.getAvatar(), time: CurrentTime});
       // get container element
     }
 
