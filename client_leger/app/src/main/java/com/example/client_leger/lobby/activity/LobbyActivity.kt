@@ -31,7 +31,7 @@ class LobbyActivity : AppCompatActivity() {
     private val lobbyList = getLobbies()
     private val lobbyAdapter = LobbyRecyclerAdapter(lobbyList)
 
-    private val messageList = getMessages()
+    private val messageList = ArrayList<MessageModel>()
     private lateinit var messageAdapter : MessageRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
