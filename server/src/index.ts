@@ -9,7 +9,7 @@ import { Server } from 'socket.io';
 import { PORT } from './config/constants';
 
 // routes imports
-import { testRouter, loginRouter, signupRouter } from './routes/routes';
+import { testRouter, loginRouter, signupRouter, logoutRouter} from './routes/routes';
 
 // Database connection
 const db = require('./database/database');
@@ -51,6 +51,7 @@ app.get('/', (req, res) => {
 app.use('/test', testRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
+app.use('logout', logoutRouter);
 
 
 const server = app.listen(PORT, () => {
@@ -58,7 +59,6 @@ const server = app.listen(PORT, () => {
 });
 
 // Exemple d'utilisation d'une query
-databaseQuery();
 //'SELECT * FROM log3900db.player;'
 function databaseQuery() {
     const username = 1;

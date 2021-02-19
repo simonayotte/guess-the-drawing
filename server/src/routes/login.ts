@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import {addNewLogin, setIsConnected} from '../database/login';
+import {addNewLogin, connect, isConnected } from '../database/login';
 import passport from 'passport';
 
 export const router = express.Router({
@@ -14,13 +14,18 @@ export const router = express.Router({
 */
 
 router.post('/', (req, res, next) => {
-    passport.authenticate('local-login', (err, idplayer , info) => {
+    passport.authenticate('local-login', async (err, idplayer , info) => {
         if (err) { return next(err); }
         if (!idplayer) {
             res.status(401).json(info); ; // Status Unauthorized
             return;
         }
-        setIsConnected(idplayer);
+        const connectionStatus = await isConnected(idplayer);
+        if (connectionStatus) {
+            res.status(401).json({message : "L'utilisateur est déjà connecté ailleurs."});
+            return;
+        }
+        connect(idplayer); 
         addNewLogin(idplayer);
         res.status(200).json({ idplayer : idplayer, message : info.message });
         return;
