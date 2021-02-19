@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserModel } from 'src/app/models/user';
+import { UserInfoService } from '../data/user-info.service';
+import { WebSocketServiceService } from '../web-socket/web-socket.service';
 
 export const SERVER_BASE = "http://log3900-server.herokuapp.com/";
 export const SIGN_IN_ENDPOINT = "login";
@@ -14,22 +16,14 @@ export const SIGN_OUT_ENDPOINT = "REPLACE/WITH/SIGNOUT/ENDPOINT";
   providedIn: 'root'
 })
 export class LoginService {
-  private currentUser: UserModel | null;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private userInfo: UserInfoService, private webSocekt: WebSocketServiceService) { }
 
-  public getCurrentUser(): UserModel | null{
-    return this.currentUser;
-  }
-
-  public isUserSignedIn(): boolean {
-    return this.currentUser != null;
-  }
 
   // returns the user if signed in successfully or an error otherwise
   public async signIn(username: string, password: string): Promise<UserModel> {
-    if(this.isUserSignedIn()) // should not happen but just to be safe
-      await this.signOut();
+    if(this.userInfo.isUserConnected()) // should not happen but just to be safe
+      this.signOut();
 
     const postData = {username, password};
     return this.http.post<UserModel>(SERVER_BASE + SIGN_IN_ENDPOINT, postData).pipe(
@@ -40,8 +34,8 @@ export class LoginService {
 
   // returns a success message if signed up successfully or an error otherwise
   public async signUp(username: string, email: string, password: string): Promise<UserModel> {
-    if(this.isUserSignedIn()) // should not happen but just to be safe
-      await this.signOut();
+    if(this.userInfo.isUserConnected()) // should not happen but just to be safe
+      this.signOut();
 
     const postData = {username, email, password};
     return this.http.post<UserModel>(SERVER_BASE + SIGN_UP_ENDPOINT, postData).pipe(
@@ -50,24 +44,20 @@ export class LoginService {
       ).toPromise();
   }
 
-  public signOut(): Promise<void> {
-    if(this.currentUser != null) {
-      const postData = { idplayer: this.currentUser.idplayer };
-      this.currentUser = null;
-      return this.http.post<void>(SERVER_BASE + SIGN_OUT_ENDPOINT, postData).pipe(
-        tap(() => {
-          this.router.navigate(['/home']);
-        }),
-        catchError(this.handleError)
-      ).toPromise();
+  public signOut(){
+    if(this.userInfo.isUserConnected() !== false) {
+      this.userInfo.setConnectionStatus(false);
+      this.webSocekt.disconnect();
+      this.router.navigate(['/home']);
     } else {
       this.router.navigate(['/home']);
-      return Promise.resolve();
     }
   }
 
   private signedIn(userSignedIn: UserModel): void {
-    this.currentUser = userSignedIn;
+    this.userInfo.setIdplayer(userSignedIn.idplayer);
+    this.userInfo.setConnectionStatus(true);
+    this.webSocekt.connect();
     this.router.navigate(['/menu']); // go to main menu
   }
 
