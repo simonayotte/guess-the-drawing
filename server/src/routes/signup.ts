@@ -1,5 +1,5 @@
 import express from 'express';
-import {addNewLogin, setIsConnected} from '../database/login';
+import {addNewLogin, connect} from '../database/login';
 import passport from 'passport';
 
 
@@ -22,7 +22,7 @@ router.post('/', (req, res, next) => {
             res.status(401).json(info); // Status Unauthorized
             return;
         }
-        setIsConnected(idplayer);
+        connect(idplayer);
         addNewLogin(idplayer);
         res.status(200).json({ idplayer : idplayer, message : info.message });
         return;
