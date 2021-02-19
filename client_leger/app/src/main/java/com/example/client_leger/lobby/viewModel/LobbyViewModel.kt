@@ -5,12 +5,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.client_leger.SocketConnectionService
 import com.example.client_leger.chat.model.MessageModel
 import com.example.client_leger.lobby.model.LobbyData
 import com.example.client_leger.lobby.model.LobbyModel
+import com.example.client_leger.lobby.model.LobbyRepository
+import com.example.client_leger.signin.model.SignInResponseModel
+import com.example.client_leger.utils.MessageResponseModel
+import com.example.client_leger.utils.Result
 import com.example.client_leger.utils.UserInfos
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -20,21 +26,19 @@ import javax.inject.Inject
 @HiltViewModel
 class LobbyViewModel @Inject constructor(
         private val userInfos: UserInfos,
-        private val socketConnectionService: SocketConnectionService
+        private val socketConnectionService: SocketConnectionService,
+        private val lobbyRepository: LobbyRepository
 ) : ViewModel() {
 
     val successfulSignOut: MutableLiveData<Boolean> = MutableLiveData()
-
     val chatName = MutableLiveData<String>("Salon 1")
     val message = MutableLiveData<String>("")
-
     val chatMessage = MutableLiveData<MessageModel>()
     val lobby = MutableLiveData<LobbyModel>()
 
 
     init {
         socketConnectionService.mSocket.on("chatMessage") { msg ->
-
             val data: String = msg[0].toString()
             val json = JSONObject(data)
             var messageModel: MessageModel = MessageModel(
@@ -62,6 +66,16 @@ class LobbyViewModel @Inject constructor(
     }
 
     fun onClickSignOut(){
-        successfulSignOut.value = true
+        viewModelScope.launch {
+            when (lobbyRepository.logOut(userInfos.idplayer.value!!)) {
+                is Result.Success<MessageResponseModel> -> {
+                    socketConnectionService.mSocket.disconnect()
+                    successfulSignOut.value = true
+                }
+                else -> {
+                    println("Logout not successful")
+                }
+            }
+        }
     }
 }
