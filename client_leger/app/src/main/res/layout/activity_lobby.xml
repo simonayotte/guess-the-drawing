@@ -13,6 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         tools:context=".lobby.activity.LobbyActivity">
 
         <TextView
@@ -93,24 +94,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#000000"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:elevation="30dp">
 
                 <TextView
                     android:id="@+id/showMore"
-                    android:layout_width="match_parent"
+                    android:layout_width="148dp"
                     android:layout_height="match_parent"
                     android:ems="10"
                     android:fontFamily="@font/roboto"
+                    android:gravity="center_vertical|right"
                     android:text="@string/message_history"
                     android:textColor="#FFFFFF"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/button2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="@string/show"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:textColor="@color/colorPrimary"/>
 
 
             </LinearLayout>
@@ -132,7 +137,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/message"
+                    android:id="@+id/send_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"

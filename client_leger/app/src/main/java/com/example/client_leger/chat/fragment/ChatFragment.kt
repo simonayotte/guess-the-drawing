@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_chat.*
 class Chat : Fragment() {
 
     private val messageList = getMessages()
-    private val messageAdapter = MessageRecyclerAdapter(messageList)
+//    private val messageAdapter = MessageRecyclerAdapter(messageList)
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -20,17 +20,19 @@ import com.example.client_leger.lobby.model.LobbyRecyclerAdapter
 import com.example.client_leger.lobby.model.TopSpacingItemDecoration
 import com.example.client_leger.lobby.viewModel.LobbyViewModel
 import com.example.client_leger.signin.activity.SiginInActivity
+import com.example.client_leger.utils.UserInfos
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_lobby.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LobbyActivity : AppCompatActivity() {
-
+    @Inject lateinit var userInfos: UserInfos
     private val lobbyList = getLobbies()
     private val lobbyAdapter = LobbyRecyclerAdapter(lobbyList)
 
     private val messageList = getMessages()
-    private val messageAdapter = MessageRecyclerAdapter(messageList)
+    private lateinit var messageAdapter : MessageRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,14 +41,16 @@ class LobbyActivity : AppCompatActivity() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 //        setContentView(R.layout.activity_lobby)
+
+        messageAdapter = MessageRecyclerAdapter(messageList, userInfos.username.value!!)
         initLobbyRecyclerView()
         initChatRecyclerView()
 
-        message.setOnEditorActionListener() { v, actionId, event ->
+        send_message.setOnEditorActionListener { v, actionId, event ->
             when(actionId){
-            EditorInfo.IME_ACTION_DONE -> { viewModel.onClickSendMessage(); true }
+            EditorInfo.IME_ACTION_SEND -> { viewModel.onClickSendMessage(); true }
             else -> false
-        }
+            }
         }
 
         viewModel.successfulSignOut.observe(this, Observer {
