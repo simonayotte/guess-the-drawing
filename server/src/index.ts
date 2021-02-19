@@ -51,7 +51,7 @@ app.get('/', (req, res) => {
 app.use('/test', testRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
-app.use('logout', logoutRouter);
+app.use('/logout', logoutRouter);
 
 
 const server = app.listen(PORT, () => {
