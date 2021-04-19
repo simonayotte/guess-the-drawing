@@ -1,0 +1,40 @@
+{
+    "virtualPlayers": [
+        {
+            "name": "Patricia",
+            "avatar": 5,
+            "hints": ["Ferme les yeux, prend une grande respiration et pense au mot: ", "Les esprits te parlent, réfléchis et comprends le sens de: ", "Relaxe, ce n'est qu'un jeu, ce n'est pas grave si tu ne comprends pas ce qui est relié à: "],
+            "cheerings": ["Restons zen", "Le soleil nous montre nos passions, le soleil nous montre notre mission, tu es mon soleil", "Bien joué"],
+            "gameStart": "Bonjour les enfants! Je m'appelle Patricia et je serai votre gardienne pour la partie. S'il y a quoi que ce soit dite le moi!",
+            "roundEnd": ["La manche est terminée, je suis très fière de toi ", "Ouf, quelle manche! Ça parrait que mon yoga m'aide à mieux dessiner ", "Déjà la fin de la manche, veux-tu un biscuit "],
+            "statsPoints": ["Maman est impresionnée par tes STAT points ", "STAT points!!! Montre moi plus "]
+        },
+        {
+            "name": "Hedwig",
+            "avatar": 3,
+            "hints": ["Quoi? Tu penses quand même pas que ve vais t'expliquer que le mot est: ", "Vais dit à Patricia que ve ne dirais pas le mot. F'est peut-être relié à: ", "Pfff, même moi vais pas besoin d'autant d'aide que toi. D'accord fait relié à: "],
+            "cheerings": ["F'est fa! Met lui en plein les dents ", "Mais f'est pas vrai! Tu gères ", "On fait une équipe du tonnere toi et moi "],
+            "gameStart": "Falut les gars! Moi f'est Hedwig. V'ai 9 ans mais ve suis tellement meilleur que vous que vous allez rien comprendre!",
+            "roundEnd": ["Waaaaw, v'espère que t'es prêt pour assurer pour la profaine manfe ", "Bonne chanfe, tu vas en as de bevoin ", "F'est dévà fini? F'est tellement fou on confinu "],
+            "statsPoints": ["Ve fuis fur que tes STAT points vont te fervire "]
+        },
+        {
+            "name": "Barry",
+            "avatar": 1,
+            "hints": ["Si tu penches un peu la tête ça ressemble à: ", "Quand je dessine, je suis inspiré par: ", "Besoin d'un coup de main? Moi je mets un coup de pinceau sur: "],
+            "cheerings": ["Mais quel style, mais quel art! Incroyable ", "Si j'étais toi j'appellerais Bob Ross et je prendrais son émission ", "T'as déjà fait des cours de peinture "],
+            "gameStart": "Salut Barry est dans la place!",
+            "roundEnd": ["On garde notre concentration pour la prochaine manche. Il faut mettre un trait à cette partie! Un trait haha ", "Efface moi cet air là, et c'est pas fini, ce n'est qu'un début, lala lala lala lala lala... ok prochaine manche ", "Quoi déjà? J'étais inspiré durant cette manche tu trouves pas "],
+            "statsPoints": ["Mon doux seigneur, STAT points! Tu es fort "]
+        },
+        {
+            "name": "Mr Dennis",
+            "avatar": 4,
+            "hints": ["Yo, c'est pas compliqué c'est juste: ", "Si tu utilisais ton cerveau tu pourrais penser à: ", "Un autre indice?"],
+            "cheerings": ["HEY, déniaise ", "C'est tout sal, c'est dégueulasse, fais mieux que ça ", "Bon, pas le crayon le plus aiguisé de la boite, prochaine fois t'es mieux de deviner "],
+            "gameStart": "Enchanté, on m'appelle Dennis.",
+            "roundEnd": ["Une autre manche de fini, ça fini quand pour de vrai ", "On est mieux de gagner après cette manche là ", "Fin. Oh non il y en a une autre "],
+            "statsPoints": ["Seulement STAT points, c'est sur qu'on perd avec toi "]
+        }
+    ]
+}
