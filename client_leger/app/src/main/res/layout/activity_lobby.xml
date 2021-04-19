@@ -36,139 +36,287 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lobby_recycler_view"
             android:layout_width="303dp"
-            android:layout_height="663dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/add_lobby_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appName"
-            android:id="@+id/lobby_recycler_view"/>
+            tools:listitem="@layout/lobby_list_item" />
 
-        <Button
-            android:id="@+id/mainDisconnectButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/disconnect"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.499"
-            android:onClick="@{() -> viewmodel.onClickSignOut()}"/>
-
-<!--        <fragment-->
+        <!--        <fragment-->
 <!--            android:id="@+id/chatFragment"-->
 <!--            android:name="com.example.client_leger.chat.fragment.Chat"-->
 <!--            android:layout_width="273dp"-->
 <!--            android:layout_height="660dp"-->
 <!--            android:layout_below="@+id/appName"-->
-<!--            android:layout_marginEnd="16dp"-->
 <!--            app:layout_constraintBottom_toBottomOf="parent"-->
 <!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/appName" />-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/appName"-->
+<!--            app:layout_constraintVertical_bias="0.0" />-->
 
-        <LinearLayout
-            android:layout_width="328dp"
-            android:layout_height="672dp"
-            android:clipToPadding="false"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical"
+
+        <ImageButton
+            android:id="@+id/mainDisconnectButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_exit_white_24dp"
+            android:onClick="@{() -> viewmodel.onClickSignOut()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/mainTutorialButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_help_white_24dp"
+            android:onClick="@{() -> viewmodel.onClickShowTutorial()}"
+            app:layout_constraintEnd_toStartOf="@+id/mainDisconnectButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <fragment
+            android:id="@+id/lobby_nav_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="273dp"
+            android:layout_height="660dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appName"
-            tools:context="com.example.client_leger.MainActivity">
+            app:navGraph="@navigation/navigation"
+            tools:layout="@layout/fragment_chat" />
 
-            <TextView
-                android:id="@+id/testChatName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:ems="10"
-                android:fontFamily="@font/julius_sans_one"
-                android:text="@{viewmodel.chatName}"
-                android:textAlignment="textStart"
-                android:textColor="#000000"
-                android:textSize="36sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#000000"
-                android:orientation="horizontal"
-                android:elevation="30dp">
-
-                <TextView
-                    android:id="@+id/showMore"
-                    android:layout_width="148dp"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:fontFamily="@font/roboto"
-                    android:gravity="center_vertical|right"
-                    android:text="@string/message_history"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
-
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/show"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:textColor="@color/colorPrimary"/>
-
-
-            </LinearLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/chat_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                 
-                />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/send_message"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:ems="10"
-                    android:hint="Write a message"
-                    android:inputType="text"
-                    android:imeOptions="actionSend"
-                    android:paddingHorizontal="10dp"
-                    android:text="@={viewmodel.message}" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:background="@drawable/ic_send_black_24dp"
-                    android:onClick="@{() -> viewmodel.onClickSendMessage()}"
-                    android:padding="20dp"
-                    android:scaleType="fitCenter" />
-            </LinearLayout>
-        </LinearLayout>
 
         <Button
             android:id="@+id/add_lobby_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:drawableStart="@drawable/ic_baseline_add_24"
             android:onClick="@{() -> viewmodel.onClickAddLobby()}"
-            android:text="AddLobby"
-            app:layout_constraintBottom_toTopOf="@+id/mainDisconnectButton"
-            app:layout_constraintStart_toStartOf="@+id/mainDisconnectButton"
-            app:layout_constraintTop_toBottomOf="@+id/appName" />
+            android:text="@string/CreateLobby"
+            app:iconGravity="textTop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/lobby_recycler_view"
+            app:layout_constraintStart_toStartOf="@+id/lobby_recycler_view" />
+
+        <ImageButton
+            android:id="@+id/leaderboard_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_leaderboard_white_24dp"
+            android:onClick="@{() -> viewmodel.onClickLeaderboard()}"
+            app:layout_constraintEnd_toStartOf="@+id/mainTutorialButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/profile_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_baseline_person_24"
+            android:onClick="@{() -> viewmodel.onClickProfile()}"
+            app:layout_constraintEnd_toStartOf="@+id/leaderboard_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lobbyContainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/gradient_list"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/lobby_nav_fragment"
+            app:layout_constraintStart_toEndOf="@+id/lobby_recycler_view"
+            app:layout_constraintTop_toBottomOf="@+id/appName">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/lobby_top_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="@{viewmodel.lobbyShown == null ? View.GONE : View.VISIBLE}"
+                app:cardBackgroundColor="#99000000"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/lobby_mode_image"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/current_lobby_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{String.format(@string/LobbyName, viewmodel.lobbyShown.id)}"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Lobby 1" />
+
+                        <TextView
+                            android:id="@+id/current_lobby_description"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@{viewmodel.lobbyShown.description}"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/current_lobby_mode"
+                            app:layout_constraintTop_toBottomOf="@+id/current_lobby_mode"
+                            tools:text="Dans un laps de temps prédéterminé, un joueur humain tente de deviner un maximum de mots ou expression à partir de dessins réalisés par un joueur virtuel." />
+
+                        <TextView
+                            android:id="@+id/current_lobby_mode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@{viewmodel.lobbyShown.gameMode.value}"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textColor="@color/white"
+                            android:textSize="24sp"
+                            app:layout_constraintStart_toStartOf="@+id/current_lobby_name"
+                            app:layout_constraintTop_toBottomOf="@+id/current_lobby_name"
+                            tools:text="Classique" />
+
+                        <TextView
+                            android:id="@+id/lobby_difficulty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/Difficulty"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textColor="@color/white"
+                            android:textSize="24sp"
+                            app:layout_constraintStart_toStartOf="@+id/current_lobby_description"
+                            app:layout_constraintTop_toBottomOf="@+id/current_lobby_description" />
+
+                        <TextView
+                            android:id="@+id/lobby_difficulty2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@{viewmodel.lobbyShown.difficulty.value}"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@+id/current_lobby_description"
+                            app:layout_constraintTop_toBottomOf="@+id/lobby_difficulty"
+                            tools:text="Intermédiaire" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <ImageView
+                        android:id="@+id/lobby_mode_image"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="24dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_star_solid" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/lobby_bottom_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="@{viewmodel.lobbyShown == null ? View.GONE : View.VISIBLE}"
+                app:cardBackgroundColor="#99000000"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lobby_top_container">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/players_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/Players"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lobby_players"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/players_title"
+                        app:layout_constraintTop_toBottomOf="@+id/players_title"
+                        tools:listitem="@layout/lobby_players_list_item">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <Button
+                        android:id="@+id/start_game_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginBottom="24dp"
+                        android:onClick="@{() -> viewmodel.onClickStartGame()}"
+                        android:text="@string/StartGame"
+                        android:enabled="@{viewmodel.canStartGame}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

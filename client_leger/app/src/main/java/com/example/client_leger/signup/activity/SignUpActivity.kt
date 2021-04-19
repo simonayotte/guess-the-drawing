@@ -1,5 +1,7 @@
 package com.example.client_leger.signup.activity
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +16,7 @@ import com.example.client_leger.databinding.ActivitySignUpBinding
 import com.example.client_leger.lobby.activity.LobbyActivity
 import com.example.client_leger.signin.activity.SiginInActivity
 import com.example.client_leger.signup.viewModel.SignUpViewModel
+import com.example.client_leger.tutorial.activity.TutorialActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,12 +35,25 @@ class SignUpActivity : AppCompatActivity() {
         frameAnimation.setExitFadeDuration(4000)
         frameAnimation.start()
         viewModel.successfulSignUp.observe(this, Observer {
-            val intent = Intent(this, LobbyActivity::class.java)
+            val firstIntent = Intent(this, LobbyActivity::class.java)
+            startActivity(firstIntent)
+            val intent = Intent(this, TutorialActivity::class.java)
             startActivity(intent)
         })
         viewModel.showSignIn.observe(this, Observer {
-            val intent = Intent(this, SiginInActivity::class.java)
-            startActivity(intent)
+            finish()
+        })
+
+        viewModel.errorMessage.observe(this, {
+            if(it != null) {
+                val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+                dialogBuilder.setMessage(if(it.isEmpty()) "Une erreur est survenue!" else it)
+                dialogBuilder.setNeutralButton("Fermer") { dialog: DialogInterface, _: Int ->
+                    dialog.dismiss()
+                    viewModel.errorMessage.value = null
+                }
+                dialogBuilder.show()
+            }
         })
     }
 }

@@ -1,85 +1,116 @@
 package com.example.client_leger.lobby.viewModel
 
-import android.annotation.SuppressLint
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.client_leger.SocketConnectionService
 import com.example.client_leger.chat.model.MessageModel
-import com.example.client_leger.lobby.model.LobbyData
-import com.example.client_leger.lobby.model.LobbyModel
-import com.example.client_leger.lobby.model.LobbyRepository
-import com.example.client_leger.signin.model.SignInResponseModel
+import com.example.client_leger.game.model.GameRepository
+import com.example.client_leger.lobby.model.*
 import com.example.client_leger.utils.MessageResponseModel
 import com.example.client_leger.utils.Result
 import com.example.client_leger.utils.UserInfos
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class LobbyViewModel @Inject constructor(
         private val userInfos: UserInfos,
         private val socketConnectionService: SocketConnectionService,
-        private val lobbyRepository: LobbyRepository
+        private val lobbyRepository: LobbyRepository,
+        private val gameRepository: GameRepository,
 ) : ViewModel() {
 
+    val lobbyShown = MutableLiveData<LobbyModel?>()
+    val lobbyAdapter: LobbyRecyclerAdapter = LobbyRecyclerAdapter(listOf(), lobbyRepository.activeLobbyId, this::changeLobby)
+    val lobbyPlayersAdapter: LobbyPlayersRecyclerAdapter =  LobbyPlayersRecyclerAdapter(listOf())
+
     val successfulSignOut: MutableLiveData<Boolean> = MutableLiveData()
+    val goToLeaderboard: MutableLiveData<Boolean> = MutableLiveData()
+    val goToProfile: MutableLiveData<Boolean> = MutableLiveData()
+    val showTutorial: MutableLiveData<Boolean> = MutableLiveData()
+    val goToGame: MutableLiveData<Boolean> = MutableLiveData()
+    val goToAddLobby: MutableLiveData<Boolean> = MutableLiveData()
     val chatName = MutableLiveData<String>("Salon 1")
     val message = MutableLiveData<String>("")
     val chatMessage = MutableLiveData<MessageModel>()
-    val lobby = MutableLiveData<LobbyModel>()
-
+    val canStartGame = MutableLiveData<Boolean>(false)
 
     init {
-        socketConnectionService.mSocket.on("chatMessage") { msg ->
-            val data: String = msg[0].toString()
-            val json = JSONObject(data)
-            var messageModel: MessageModel = MessageModel(
-                    json.getString("username"),
-                    json.getString("avatar"),
-                    json.getString("time"),
-                    json.getString("message"));
-            chatMessage.postValue(MessageModel(messageModel.messageWriter, messageModel.writerIcon, messageModel.messageTime, messageModel.messageContent))
+        lobbyRepository.lobbies.observeForever {
+            val activeLobbyId = lobbyRepository.activeLobbyId.value
+            if(activeLobbyId != null) {
+                lobbyShown.value = it?.find { lobby -> lobby.id == activeLobbyId }
+            }
+            lobbyAdapter.lobbies = it
+            lobbyAdapter.notifyDataSetChanged()
+        }
+
+        lobbyRepository.activeLobbyId.observeForever{
+            if(it == null) {
+                lobbyShown.value = null
+            } else {
+                lobbyShown.value = lobbyRepository.lobbies.value?.find { lobby -> lobby.id == it }
+            }
+        }
+
+        lobbyShown.observeForever {
+            it?.players?.let { playersList ->
+                lobbyPlayersAdapter.players = playersList
+                lobbyPlayersAdapter.notifyDataSetChanged()
+            }
+            canStartGame.value = it?.players?.size ?: 0 >= it?.minPlayers ?: 0
+        }
+
+        lobbyRepository.loadGame.observeForever {
+            if(it) {
+                goToGame.value = true
+                lobbyRepository.loadGame.value = false
+            }
+        }
+    }
+
+    fun updateLobbies() {
+        lobbyRepository.requestLobbyList()
+    }
+
+    fun changeLobby(newLobby: Int?) {
+        lobbyRepository.leaveLobby()
+        if(newLobby != null) {
+            lobbyRepository.joinLobby(newLobby)
         }
     }
 
     fun onClickAddLobby() {
-        lobby.value = LobbyModel("Salon Custom", "0/4 joueurs", "Custom")
-    }
-
-    fun onClickSendMessage(){
-        if (!message.value.isNullOrEmpty() && !message.value.isNullOrBlank()) {
-            val sdf = SimpleDateFormat("hh:mm:ss")
-            val currentTime = sdf.format(Date())
-            chatMessage.value = MessageModel(userInfos.username.value!!, userInfos.avatar.value.toString(), currentTime, message.value!!)
-            val jsonMsg = JSONObject() // avant: "{message: '" + message.value.toString() + "', username: '" + userInfos.username.value!! +"', avatar: '" + userInfos.avatar.value.toString() + "', time: '" + currentTime + "'}")
-            jsonMsg.put("message",message.value.toString())
-            jsonMsg.put("username",userInfos.username.value!!)
-            jsonMsg.put("avatar",userInfos.avatar.value.toString())
-            jsonMsg.put("time",currentTime)
-            socketConnectionService.mSocket.emit("chatMessage", jsonMsg);
-            message.value = ""
-        }
+        goToAddLobby.value = true
     }
 
     fun onClickSignOut(){
-        viewModelScope.launch {
-            when (lobbyRepository.logOut(userInfos.idplayer.value!!)) {
-                is Result.Success<MessageResponseModel> -> {
-                    socketConnectionService.mSocket.disconnect()
-                    successfulSignOut.value = true
-                }
-                else -> {
-                    println("Logout not successful")
-                }
-            }
+        successfulSignOut.value = true
+    }
+
+    fun onClickLeaderboard(){
+        goToLeaderboard.value = true
+    }
+
+    fun onClickProfile(){
+        goToProfile.value = true
+    }
+
+    fun onClickStartGame() {
+        lobbyRepository.activeLobbyId.value?.let {
+            gameRepository.startGame(it)
         }
     }
+
+
+    fun onClickShowTutorial(){
+        showTutorial.value = true
+    }
+    fun createLobby(gameMode: LobbyModel.GameMode, difficulty: LobbyModel.Difficulty) {
+        lobbyRepository.createLobby(gameMode, difficulty)
+    }
+
+
 }

@@ -32,29 +32,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <TextView
-            android:id="@+id/error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/julius_sans_one"
-            android:text="@string/veuillez_r_essayer_de_nouveau"
-            android:textAlignment="center"
-            android:textColor="#FF0000"
-            android:textSize="14sp"
-            android:visibility="@{viewmodel.textErrorIsVisible ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@+id/loginView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.879" />
-
         <View
             android:id="@+id/loginView"
             android:layout_width="250dp"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:background="#404040"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,17 +64,16 @@
             android:id="@+id/loginUsername"
             android:layout_width="219dp"
             android:layout_height="38dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="#FFFFFF"
             android:hint="@string/username"
+            android:singleLine="true"
+            android:text="@={viewmodel.userName}"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/loginView"
             app:layout_constraintEnd_toEndOf="@+id/loginView"
             app:layout_constraintStart_toStartOf="@+id/loginView"
-            app:layout_constraintTop_toTopOf="@+id/loginView"
-            app:layout_constraintVertical_bias="0.32"
-            android:singleLine="true"
-            android:text="@={viewmodel.userName}"/>
+            app:layout_constraintTop_toBottomOf="@+id/loginText" />
 
         <EditText
             android:id="@+id/loginPassword"
@@ -107,10 +87,9 @@
             android:text="@={viewmodel.password}"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/loginView"
             app:layout_constraintEnd_toEndOf="@+id/loginView"
             app:layout_constraintStart_toStartOf="@+id/loginView"
-            app:layout_constraintTop_toTopOf="@+id/loginText"
+            app:layout_constraintTop_toBottomOf="@+id/loginUsername"
             app:layout_constraintVertical_bias="0.675" />
 
         <Button
@@ -119,7 +98,6 @@
             android:layout_height="41dp"
             android:text="@string/login_button"
             app:iconTint="#303030"
-            app:layout_constraintBottom_toBottomOf="@+id/loginView"
             app:layout_constraintEnd_toEndOf="@+id/loginView"
             app:layout_constraintStart_toStartOf="@+id/loginView"
             app:layout_constraintTop_toBottomOf="@+id/loginPassword"
@@ -127,15 +105,13 @@
 
         <Button
             android:id="@+id/loginSignUpButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="214dp"
+            android:layout_height="41dp"
+            android:onClick="@{() -> viewmodel.onClickSignUp()}"
             android:text="@string/signup_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginView"
-            app:layout_constraintVertical_bias="0.06999999"
-            android:onClick="@{() -> viewmodel.onClickSignUp()}"/>
+            app:layout_constraintEnd_toEndOf="@+id/loginView"
+            app:layout_constraintStart_toStartOf="@+id/loginView"
+            app:layout_constraintTop_toBottomOf="@+id/loginButton"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

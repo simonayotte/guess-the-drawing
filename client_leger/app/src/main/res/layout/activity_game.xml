@@ -1,18 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/teal_700"
-    tools:context=".drawing.view.GameActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewmodel"
+            type="com.example.client_leger.game.viewmodel.GameViewModel"/>
+    </data>
 
-    <com.example.client_leger.drawing.view.DrawingCanvas
-        android:id="@+id/drawingCanvas"
-        android:layout_width="800dp"
-        android:layout_height="600dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="60dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp">
+
+        <View android:id="@+id/emitter_top_left"
+            android:layout_gravity="top|left"
+            android:layout_marginTop="-20dp"
+            android:layout_width="1dp"
+            android:layout_height="1dp" />
+
+        <View android:id="@+id/emiter_top_right"
+            android:layout_gravity="top|right"
+            android:layout_marginTop="-20dp"
+            android:layout_width="1dp"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/secretWordText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shadowColor="@color/white"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="1"
+            android:text="@{viewmodel.secretWord}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/black"
+            android:translationZ="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/drawing_fragment"
+            app:layout_constraintStart_toEndOf="@+id/gameLeftLayout"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="_ _ _ _ _ _ _ _" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/gameLeftLayout"
+            android:layout_width="230dp"
+            android:layout_height="470dp"
+            app:layout_constraintStart_toStartOf="@+id/drawing_fragment"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/gameTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewmodel.timer}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                app:layout_constraintEnd_toEndOf="@+id/game_leaderboard_fragment"
+                app:layout_constraintStart_toStartOf="@+id/game_leaderboard_fragment"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="00:00" />
+
+            <TextView
+                android:id="@+id/roundNb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewmodel.roundLeftDisplay}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gameTimer"
+                tools:text="Round 1/4"/>
+
+            <TextView
+                android:id="@+id/guessNb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{viewmodel.guessesLeftDisplay}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/roundNb"
+                tools:text="Essais restants: 1/3"/>
+            <TextView
+                android:id="@+id/livesNb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{viewmodel.livesLeftDisplay}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guessNb"
+                tools:text="Essais restants: 1/3"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/game_leaderboard_fragment"
+                android:name="com.example.client_leger.game.view.GameLeaderboardFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/livesNb"
+                tools:layout="@layout/fragment_game_leaderboard" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/drawing_fragment"
+            android:name="com.example.client_leger.drawing.view.DrawingView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/game_nav_fragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout="@layout/fragment_drawing" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/game_nav_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="300dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/navigation"
+            tools:layout="@layout/fragment_chat" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

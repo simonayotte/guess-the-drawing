@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    app:startDestination="@id/channelFragment">
+
+    <fragment
+        android:id="@+id/channelFragment"
+        android:name="com.example.client_leger.channel.fragment.ChannelFragment"
+        android:label="ChannelFragment" >
+        <action
+            android:id="@+id/action_channelFragment_to_chat"
+            app:destination="@id/chat"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/chat"
+            app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_channelFragment_to_channelJoinFragment"
+            app:destination="@id/channelJoinFragment"
+            app:popUpTo="@+id/channelJoinFragment"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/chat"
+        android:name="com.example.client_leger.chat.fragment.Chat"
+        android:label="Chat" >
+        <action
+            android:id="@+id/action_chat_to_channelFragment"
+            app:destination="@id/channelFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/channelFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/channelJoinFragment"
+        android:name="com.example.client_leger.channel_join.fragment.ChannelJoinFragment"
+        android:label="ChannelJoinFragment" >
+        <action
+            android:id="@+id/action_channelJoinFragment_to_channelFragment"
+            app:destination="@id/channelFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/channelFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+</navigation>

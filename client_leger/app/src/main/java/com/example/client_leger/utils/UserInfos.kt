@@ -10,5 +10,17 @@ class UserInfos @Inject constructor() {
     //TODO: ajouter l'avatar id ici
     val idplayer = MutableLiveData<Int>()
     val username = MutableLiveData<String>()
-    val avatar = MutableLiveData<Int>()
+    val avatar = MutableLiveData<String>()
+    val userChannels = MutableLiveData<ArrayList<String>>()
+    val appChannels = MutableLiveData<ArrayList<String>>()
+    val activeChannel = MutableLiveData<String>()
+    val notificationChannel = MutableLiveData<ArrayList<String>>()
+
+    init {
+        userChannels.observeForever{
+            if(!it.contains(activeChannel.value) && appChannels.value?.contains(activeChannel.value) == false) {
+                activeChannel.value = ""
+            }
+        }
+    }
 }

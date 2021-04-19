@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.profileRouter = exports.pairMotImage = exports.leaderboardRouter = exports.channelRouter = exports.messagesRouter = exports.signupRouter = exports.logoutRouter = exports.loginRouter = exports.testRouter = void 0;
+// File to organize the imports for the routes
+const Test_1 = require("./Test/Test");
+Object.defineProperty(exports, "testRouter", { enumerable: true, get: function () { return Test_1.router; } });
+const login_1 = require("./login");
+Object.defineProperty(exports, "loginRouter", { enumerable: true, get: function () { return login_1.router; } });
+const signup_1 = require("./signup");
+Object.defineProperty(exports, "signupRouter", { enumerable: true, get: function () { return signup_1.router; } });
+const logout_1 = require("./logout");
+Object.defineProperty(exports, "logoutRouter", { enumerable: true, get: function () { return logout_1.router; } });
+const messages_1 = require("./messages");
+Object.defineProperty(exports, "messagesRouter", { enumerable: true, get: function () { return messages_1.router; } });
+const channel_1 = require("./channel");
+Object.defineProperty(exports, "channelRouter", { enumerable: true, get: function () { return channel_1.router; } });
+const pairMotImage_1 = require("./pairMotImage");
+Object.defineProperty(exports, "pairMotImage", { enumerable: true, get: function () { return pairMotImage_1.router; } });
+const leaderboard_1 = require("./leaderboard");
+Object.defineProperty(exports, "leaderboardRouter", { enumerable: true, get: function () { return leaderboard_1.router; } });
+const profile_1 = require("./profile");
+Object.defineProperty(exports, "profileRouter", { enumerable: true, get: function () { return profile_1.router; } });

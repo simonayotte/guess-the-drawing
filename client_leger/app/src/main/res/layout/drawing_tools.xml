@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewmodel"
+            type="com.example.client_leger.drawing.viewModel.DrawingToolsVM"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/drawingToolsContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/toolDisabledOverlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#6A474747"
+            android:translationZ="10dp"
+            android:visibility="@{viewmodel.isEnabled() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/toolContainer"
+            app:layout_constraintEnd_toEndOf="@+id/toolContainer"
+            app:layout_constraintStart_toStartOf="@+id/toolContainer"
+            app:layout_constraintTop_toTopOf="@+id/toolContainer"
+            android:focusable="true"
+            android:clickable="true"/>
+
+        <View
+            android:id="@+id/colorDisabledOverlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#6A474747"
+            android:translationZ="10dp"
+            android:visibility="@{viewmodel.isEnabled() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/colorContainer"
+            app:layout_constraintEnd_toEndOf="@+id/colorContainer"
+            app:layout_constraintStart_toStartOf="@+id/colorContainer"
+            app:layout_constraintTop_toTopOf="@+id/colorContainer"
+            android:focusable="true"
+            android:clickable="true"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolContainer"
+            android:layout_width="460dp"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/toolOptions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/drawingOptions"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{viewmodel.pencilButtonSelected ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/strokeWidthText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Taille"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <SeekBar
+                        android:id="@+id/strokeWidthSeekBar"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:max="@{viewmodel.strokeWidthMaxValue}"
+                        android:min="@{viewmodel.strokeWidthMinValue}"
+                        android:progress="@={viewmodel.strokeWidthSeekInput}"
+                        app:layout_constraintEnd_toStartOf="@+id/strokeWidthInput"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/strokeWidthText" />
+
+                    <EditText
+                        android:id="@+id/strokeWidthInput"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:autofillHints="pixels"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:labelFor="@id/strokeWidthText"
+                        android:text="@={viewmodel.strokeWidthTextInput}"
+                        app:layout_constraintBottom_toBottomOf="@+id/strokeWidthSeekBar"
+                        app:layout_constraintEnd_toStartOf="@+id/strokeWidthUnit"
+                        app:layout_constraintTop_toTopOf="@+id/strokeWidthSeekBar" />
+
+                    <TextView
+                        android:id="@+id/strokeWidthUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pixels"
+                        app:layout_constraintBottom_toBottomOf="@+id/strokeWidthInput"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/strokeWidthInput" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/erasingOptions"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="@{viewmodel.eraserButtonSelected ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/eraserWidthText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Taille"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <SeekBar
+                        android:id="@+id/eraserWidthSeekBar"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:max="@{viewmodel.eraserWidthMaxValue}"
+                        android:min="@{viewmodel.eraserWidthMinValue}"
+                        android:progress="@={viewmodel.eraserWidthSeekInput}"
+                        app:layout_constraintEnd_toStartOf="@+id/eraserWidthInput"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/eraserWidthText" />
+
+                    <EditText
+                        android:id="@+id/eraserWidthInput"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:autofillHints="pixels"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:labelFor="@id/strokeWidthText"
+                        android:text="@={viewmodel.eraserWidthTextInput}"
+                        app:layout_constraintBottom_toBottomOf="@+id/eraserWidthSeekBar"
+                        app:layout_constraintEnd_toStartOf="@+id/eraserWidthUnit"
+                        app:layout_constraintTop_toTopOf="@+id/eraserWidthSeekBar" />
+
+                    <TextView
+                        android:id="@+id/eraserWidthUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pixels"
+                        app:layout_constraintBottom_toBottomOf="@+id/eraserWidthInput"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/eraserWidthInput" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/gridOptions"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="@{viewmodel.gridButtonSelected ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/gridText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/Grille"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintEnd_toEndOf="@+id/gridSwitch"
+                        app:layout_constraintStart_toStartOf="@+id/gridSwitch"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/gridSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:checked="@={viewmodel.gridVisible}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/gridText" />
+
+                    <TextView
+                        android:id="@+id/gridAlphaText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="none"
+                        android:maxLines="2"
+                        android:text="@string/grid_alpha"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintEnd_toStartOf="@+id/gridSizeText"
+                        app:layout_constraintStart_toEndOf="@+id/gridText"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <SeekBar
+                        android:id="@+id/gridAlphaSeekBar"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:max="@{viewmodel.gridMaxOpacity}"
+                        android:min="@{viewmodel.gridMinOpacity}"
+                        android:progress="@={viewmodel.gridOpacity}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/gridAlphaText"
+                        app:layout_constraintStart_toStartOf="@+id/gridAlphaText"
+                        app:layout_constraintTop_toBottomOf="@+id/gridAlphaText" />
+
+                    <TextView
+                        android:id="@+id/gridSizeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/grid_size"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <SeekBar
+                        android:id="@+id/seekBar2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:max="@{viewmodel.gridMaxStep}"
+                        android:min="@{viewmodel.gridMinStep}"
+                        android:progress="@={viewmodel.gridStep}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/gridSizeText"
+                        app:layout_constraintStart_toStartOf="@+id/gridSizeText"
+                        app:layout_constraintTop_toBottomOf="@+id/gridSizeText" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/colorOptions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolOptions">
+
+                <TextView
+                    android:id="@+id/opacityText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Couleur_Opacite"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.skydoves.colorpickerview.sliders.AlphaSlideBar
+                    android:id="@+id/alphaSlideBar"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="8dp"
+                    app:borderColor_AlphaSlideBar="@android:color/darker_gray"
+                    app:borderSize_AlphaSlideBar="2"
+                    app:layout_constraintEnd_toStartOf="@+id/alphaTileView"
+                    app:layout_constraintStart_toStartOf="@+id/opacityText"
+                    app:layout_constraintTop_toBottomOf="@+id/opacityText"
+                    app:selector_AlphaSlideBar="@drawable/wheel" />
+
+                <com.skydoves.colorpickerview.sliders.BrightnessSlideBar
+                    android:id="@+id/brightnessSlide"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:borderColor_BrightnessSlider="@android:color/darker_gray"
+                    app:borderSize_BrightnessSlider="2"
+                    app:layout_constraintEnd_toStartOf="@+id/alphaTileView"
+                    app:layout_constraintStart_toStartOf="@+id/alphaSlideBar"
+                    app:layout_constraintTop_toBottomOf="@+id/alphaSlideBar"
+                    app:selector_BrightnessSlider="@drawable/wheel" />
+
+                <com.skydoves.colorpickerview.AlphaTileView
+                    android:id="@+id/alphaTileView"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/opacityText"
+                    app:tileSize="20" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/toolButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/colorOptions">
+
+                <Button
+                    android:id="@+id/pencilButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:backgroundTint="@{viewmodel.pencilButtonSelected ? @color/selected : @color/colorPrimary}"
+                    android:onClick="@{() -> viewmodel.onClickPencil()}"
+                    app:icon="@drawable/ic_pencil"
+                    app:iconGravity="textStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:backgroundTint="@color/selected" />
+
+                <Button
+                    android:id="@+id/eraserButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="24dp"
+                    android:backgroundTint="@{viewmodel.eraserButtonSelected ? @color/selected : @color/colorPrimary}"
+                    android:onClick="@{() -> viewmodel.onClickEraser()}"
+                    app:icon="@drawable/ic_eraser"
+                    app:layout_constraintBottom_toBottomOf="@+id/pencilButton"
+                    app:layout_constraintDimensionRatio="1"
+                    app:layout_constraintStart_toEndOf="@+id/pencilButton"
+                    app:layout_constraintTop_toTopOf="@+id/pencilButton"
+                    tools:backgroundTint="@color/colorPrimary" />
+
+                <Button
+                    android:id="@+id/gridButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="24dp"
+                    android:backgroundTint="@{viewmodel.gridButtonSelected ? @color/selected : @color/colorPrimary}"
+                    android:onClick="@{() -> viewmodel.onClickGrid()}"
+                    app:icon="@drawable/ic_grid"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1"
+                    app:layout_constraintStart_toEndOf="@+id/eraserButton"
+                    app:layout_constraintTop_toTopOf="@+id/eraserButton"
+                    tools:backgroundTint="@color/colorPrimary" />
+
+                <Button
+                    android:id="@+id/undoButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="24dp"
+                    android:backgroundTint="@{viewmodel.undoIsClickable ? @color/colorPrimary : @android:color/darker_gray}"
+                    android:clickable="@{viewmodel.undoIsClickable}"
+                    android:enabled="@{viewmodel.undoIsClickable}"
+                    android:onClick="@{() -> viewmodel.onClickUndo()}"
+                    app:icon="@drawable/ic_undo"
+                    app:layout_constraintBottom_toBottomOf="@+id/gridButton"
+                    app:layout_constraintDimensionRatio="1"
+                    app:layout_constraintStart_toEndOf="@+id/gridButton"
+                    app:layout_constraintTop_toTopOf="@+id/gridButton"
+                    tools:backgroundTint="@color/colorPrimary" />
+
+                <Button
+                    android:id="@+id/redoButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="24dp"
+                    android:backgroundTint="@{viewmodel.redoIsClickable ? @color/colorPrimary : @android:color/darker_gray}"
+                    android:clickable="@{viewmodel.redoIsClickable}"
+                    android:enabled="@{viewmodel.redoIsClickable}"
+                    android:onClick="@{() -> viewmodel.onClickRedo()}"
+                    app:icon="@drawable/ic_redo"
+                    app:layout_constraintBottom_toBottomOf="@+id/undoButton"
+                    app:layout_constraintDimensionRatio="1"
+                    app:layout_constraintStart_toEndOf="@+id/undoButton"
+                    app:layout_constraintTop_toTopOf="@+id/undoButton"
+                    tools:backgroundTint="@android:color/darker_gray" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/colorContainer"
+            android:layout_width="470dp"
+            android:layout_height="0dp"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/toolContainer"
+            app:layout_constraintDimensionRatio=""
+            app:layout_constraintStart_toEndOf="@+id/toolContainer"
+            app:layout_constraintTop_toTopOf="@+id/toolContainer">
+
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:stretchColumns="*"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/lastColor1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/last_color_selected"
+                        android:foreground="@drawable/alpha_grid_round"
+                        android:foregroundTintMode="src_atop"
+                        app:backgroundTint="@null"
+                        app:elevation="0dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/lastColor2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/last_color_selected"
+                        android:foreground="@drawable/alpha_grid_round"
+                        android:foregroundTint="#F44336"
+                        android:foregroundTintMode="src_atop"
+                        app:backgroundTint="@null"
+                        app:elevation="0dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/lastColor3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/last_color_selected"
+                        android:foreground="@drawable/alpha_grid_round"
+                        android:foregroundTint="#9C27B0"
+                        android:foregroundTintMode="src_atop"
+                        app:backgroundTint="@null"
+                        app:elevation="0dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/lastColor4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="0dp"
+                        android:layout_marginVertical="4dp"
+                        android:contentDescription="@string/last_color_selected"
+                        android:foreground="@drawable/alpha_grid_round"
+                        android:foregroundTint="#3F51B5"
+                        android:foregroundTintMode="src_atop"
+                        app:backgroundTint="@null"
+                        app:elevation="0dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/lastColor5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="0dp"
+                        android:layout_marginVertical="4dp"
+                        android:contentDescription="@string/last_color_selected"
+                        android:foreground="@drawable/alpha_grid_round"
+                        android:foregroundTint="#00BCD4"
+                        android:foregroundTintMode="src_atop"
+                        app:backgroundTint="@null"
+                        app:elevation="0dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/lastColor6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="0dp"
+                        android:layout_marginVertical="4dp"
+                        android:contentDescription="@string/last_color_selected"
+                        android:foreground="@drawable/alpha_grid_round"
+                        android:foregroundTint="#4CAF50"
+                        android:foregroundTintMode="src_atop"
+                        app:backgroundTint="@null"
+                        app:elevation="0dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/lastColor7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="0dp"
+                        android:layout_marginVertical="4dp"
+                        android:contentDescription="@string/last_color_selected"
+                        android:foreground="@drawable/alpha_grid_round"
+                        android:foregroundTint="#FFEB3B"
+                        android:foregroundTintMode="src_atop"
+                        app:backgroundTint="@null"
+                        app:elevation="0dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/lastColor8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="0dp"
+                        android:layout_marginVertical="4dp"
+                        android:contentDescription="@string/last_color_selected"
+                        android:foreground="@drawable/alpha_grid_round"
+                        android:foregroundTint="#FF9800"
+                        android:foregroundTintMode="src_atop"
+                        app:backgroundTint="@null"
+                        app:elevation="0dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/lastColor9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="0dp"
+                        android:layout_marginVertical="6dp"
+                        android:contentDescription="@string/last_color_selected"
+                        android:foreground="@drawable/alpha_grid_round"
+                        android:foregroundTint="#80000000"
+                        android:foregroundTintMode="src_atop"
+                        app:backgroundTint="@null"
+                        app:elevation="0dp" />
+                </TableRow>
+
+            </TableLayout>
+
+            <com.skydoves.colorpickerview.ColorPickerView
+                android:id="@+id/colorPickerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

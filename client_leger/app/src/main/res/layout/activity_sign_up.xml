@@ -36,7 +36,7 @@
         <View
             android:id="@+id/signupView"
             android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_height="360dp"
             android:background="#404040"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +54,6 @@
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/signupView"
             app:layout_constraintEnd_toEndOf="@+id/signupView"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/signupView"
@@ -65,59 +64,47 @@
             android:id="@+id/signupUsername"
             android:layout_width="219dp"
             android:layout_height="38dp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="#FFFFFF"
             android:hint="@string/username"
+            android:singleLine="true"
+            android:text="@={viewmodel.userNameToValidate}"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/signupView"
             app:layout_constraintEnd_toEndOf="@+id/signupView"
             app:layout_constraintStart_toStartOf="@+id/signupView"
-            app:layout_constraintTop_toTopOf="@+id/signupView"
-            app:layout_constraintVertical_bias="0.19"
-            android:singleLine="true"
-            android:text="@={viewmodel.userNameToValidate}"/>
+            app:layout_constraintTop_toBottomOf="@+id/signupText" />
 
         <EditText
-            android:id="@+id/signupPassword"
-            android:layout_width="218dp"
-            android:layout_height="44dp"
-            android:autofillHints="@string/password"
+            android:id="@+id/editFirstName"
+            android:layout_width="219dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/email"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword"
+            android:hint="@string/firstName"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/signupView"
+            android:text="@={viewmodel.firstNameToValidate}"
             app:layout_constraintEnd_toEndOf="@+id/signupView"
             app:layout_constraintStart_toStartOf="@+id/signupView"
-            app:layout_constraintTop_toTopOf="@+id/signupText"
-            app:layout_constraintVertical_bias="0.69"
-            android:text = "@={viewmodel.passwordToValidate}"/>
+            app:layout_constraintTop_toBottomOf="@+id/signupUsername"/>
 
-        <Button
-            android:id="@+id/signupButton"
-            android:layout_width="214dp"
-            android:layout_height="41dp"
-            android:text="@string/signup_button"
-            app:iconTint="#303030"
-            app:layout_constraintBottom_toBottomOf="@+id/signupView"
-            app:layout_constraintEnd_toEndOf="@+id/signupView"
-            app:layout_constraintStart_toStartOf="@+id/signupView"
-            app:layout_constraintTop_toBottomOf="@+id/signupPassword"
-            android:onClick="@{() -> viewmodel.onClickSignUp()}"/>
-
-        <Button
-            android:id="@+id/signupLoginButton"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/editLastName"
+            android:layout_width="219dp"
             android:layout_height="wrap_content"
-            android:text="@string/login_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signupView"
-            app:layout_constraintVertical_bias="0.06999999"
-            android:onClick="@{() -> viewmodel.onClickLogIn()}"/>
+            android:autofillHints="@string/email"
+            android:backgroundTint="#FFFFFF"
+            android:ems="10"
+            android:hint="@string/lastName"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="@+id/signupView"
+            app:layout_constraintStart_toStartOf="@+id/signupView"
+            app:layout_constraintTop_toBottomOf="@+id/editFirstName"
+            android:text="@={viewmodel.lastNameToValidate}"
+            />
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
@@ -130,29 +117,53 @@
             android:inputType="textEmailAddress"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
-            app:layout_constraintBottom_toTopOf="@+id/signupPassword"
             app:layout_constraintEnd_toEndOf="@+id/signupView"
             app:layout_constraintStart_toStartOf="@+id/signupView"
-            app:layout_constraintTop_toBottomOf="@+id/signupUsername"
+            app:layout_constraintTop_toBottomOf="@+id/editLastName"
             android:text="@={viewmodel.emailToValidate}"/>
 
-        <TextView
-            android:id="@+id/error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/signupPassword"
+            android:layout_width="218dp"
+            android:layout_height="44dp"
+            android:autofillHints="@string/password"
+            android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:fontFamily="@font/julius_sans_one"
-            android:text="@string/veuillez_r_essayer_de_nouveau"
-            android:textAlignment="center"
-            android:textColor="#FF0000"
-            android:textSize="14sp"
-            android:visibility="@{viewmodel.textErrorIsVisible ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@+id/signupView"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:text="@={viewmodel.passwordToValidate}"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="@+id/signupView"
+            app:layout_constraintStart_toStartOf="@+id/signupView"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
+            app:layout_constraintVertical_bias="0.69" />
+
+        <Button
+            android:id="@+id/signupButton"
+            android:layout_width="214dp"
+            android:layout_height="41dp"
+            android:onClick="@{() -> viewmodel.onClickSignUp()}"
+            android:text="@string/signup_button"
+            app:iconTint="#303030"
+            app:layout_constraintEnd_toEndOf="@+id/signupView"
+            app:layout_constraintStart_toStartOf="@+id/signupView"
+            app:layout_constraintTop_toBottomOf="@+id/signupPassword" />
+
+        <Button
+            android:id="@+id/signupLoginButton"
+            android:layout_width="214dp"
+            android:layout_height="41dp"
+            android:onClick="@{() -> viewmodel.onClickLogIn()}"
+            android:text="@string/login_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.879" />
+            app:layout_constraintTop_toBottomOf="@+id/signupButton"
+            app:layout_constraintVertical_bias="0.06999999" />
+
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

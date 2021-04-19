@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewmodel"
+            type="com.example.client_leger.game.viewmodel.GameLeaderboardViewModel"/>
+    </data>
+
+    <FrameLayout
+        android:id="@+id/GameLeaderboardFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        tools:context=".game.view.GameLeaderboardFragment"
+        tools:layout_height="420dp"
+        tools:layout_width="230dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/LeaderboardLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp">
+
+            <View
+                android:id="@+id/thumbsDisableOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="#6A474747"
+                android:visibility="invisible"
+                />
+
+            <ImageButton
+                android:id="@+id/thumbsUpButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="@{() -> viewmodel.thumbsUp()}"
+                android:background="@drawable/ic_thumbs_up_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/thumbsDownButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="40dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="@{() -> viewmodel.thumbsDown()}"
+                android:background="@drawable/ic_thumbs_down_black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/LeaderboardView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/thumbsUpButton"
+                tools:listitem="@layout/game_leaderboard_list_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</layout>

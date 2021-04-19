@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewmodel"
+            type="com.example.client_leger.leaderboard.viewModel.LeaderboardViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".leaderboard.activity.LeaderboardActivity">
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="1292dp"
+            android:layout_height="45dp"
+            android:background="@color/colorPrimary"
+            android:fontFamily="@font/julius_sans_one"
+            android:padding="10dp"
+            android:text="@string/app_name"
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/leaderboard_back_button"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_back_white_24dp"
+            android:onClick="@{() -> viewmodel.onClickBack()}"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/leaderboard_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/gradient_list"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/chat_fragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appName">
+
+            <TextView
+                android:id="@+id/leaderboard_title"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/leaderboard"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appName" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/leaderboard_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_rank" />
+
+            <TextView
+                android:id="@+id/leaderboard_rank"
+                android:textColor="@color/white"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="32dp"
+                android:text="@string/rank"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
+
+            <TextView
+                android:id="@+id/leaderboard_players"
+                android:textColor="@color/white"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text="@string/player_name"
+                app:layout_constraintStart_toEndOf="@+id/leaderboard_rank"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
+
+            <TextView
+                android:id="@+id/leaderboard_victories"
+                android:textColor="@color/white"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="@string/victories"
+                app:layout_constraintStart_toEndOf="@+id/leaderboard_players"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
+
+            <TextView
+                android:id="@+id/leaderboard_points"
+                android:textColor="@color/white"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="@string/points"
+                app:layout_constraintStart_toEndOf="@+id/leaderboard_victories"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
+
+
+            <TextView
+                android:id="@+id/leaderboard_classic_victories"
+                android:textColor="@color/white"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:text="@string/classic_victories"
+                app:layout_constraintStart_toEndOf="@+id/leaderboard_points"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
+
+            <TextView
+                android:id="@+id/leaderboard_br_victories"
+                android:textColor="@color/white"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="Victoires battle royale"
+                app:layout_constraintStart_toEndOf="@+id/leaderboard_classic_victories"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
+
+            <TextView
+                android:id="@+id/leaderboard_best_score_sprint_Solo"
+                android:textColor="@color/white"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="Résultat sprint solo"
+                app:layout_constraintStart_toEndOf="@+id/leaderboard_br_victories"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
+
+            <TextView
+                android:id="@+id/leaderboard_best_score_coop"
+                android:textColor="@color/white"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="Résultat coop"
+                app:layout_constraintStart_toEndOf="@+id/leaderboard_best_score_sprint_Solo"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
+
+            <TextView
+                android:id="@+id/leaderboard_played_games"
+                android:textColor="@color/white"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:text="@string/played_games"
+                app:layout_constraintStart_toEndOf="@+id/leaderboard_best_score_coop"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
+
+            <TextView
+                android:id="@+id/leaderboard_likes"
+                android:textColor="@color/white"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="Pouces vers le haut"
+                app:layout_constraintStart_toEndOf="@+id/leaderboard_played_games"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
+
+            <TextView
+                android:id="@+id/leaderboard_dislikes"
+                android:layout_width="80dp"
+                android:textColor="@color/white"
+                android:layout_height="40dp"
+                android:text="Poucess vers le bas"
+                app:layout_constraintStart_toEndOf="@+id/leaderboard_likes"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <fragment
+            android:id="@+id/chat_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="273dp"
+            android:layout_height="660dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:navGraph="@navigation/navigation"
+            tools:layout="@layout/fragment_chat" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

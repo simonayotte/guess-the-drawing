@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:layout_width="500dp">
+
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/CreatingLobby"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gameModeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/GameMode"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/dialogTitle"
+        app:layout_constraintTop_toBottomOf="@+id/dialogTitle" />
+
+    <RadioGroup
+        android:id="@+id/modeRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/gameModeTitle"
+        app:layout_constraintTop_toBottomOf="@+id/gameModeTitle">
+
+        <RadioButton
+            android:id="@+id/sprintSoloButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/SprintSolo" />
+
+        <RadioButton
+            android:id="@+id/sprintCoopButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/SprintCoop" />
+
+        <RadioButton
+            android:id="@+id/classicButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/Classic" />
+
+        <RadioButton
+            android:id="@+id/battleRoyaleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/BattleRoyale" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/gameDifficultyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/GameDifficulty"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/gameModeTitle"
+        app:layout_constraintTop_toBottomOf="@+id/modeRadioGroup" />
+
+    <RadioGroup
+        android:id="@+id/difficultyRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/modeRadioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/gameDifficultyTitle">
+
+        <RadioButton
+            android:id="@+id/easyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/EasyDifficulty" />
+
+        <RadioButton
+            android:id="@+id/mediumButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/MediumDifficulty" />
+
+        <RadioButton
+            android:id="@+id/hardButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/HardDifficulty" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/white"
+        android:drawableStart="@drawable/ic_baseline_close_24"
+        android:text="@string/Cancel"
+        android:textColor="@color/black"
+        app:iconGravity="textTop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/gameDifficultyTitle"
+        app:layout_constraintTop_toBottomOf="@+id/difficultyRadioGroup" />
+
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:drawableStart="@drawable/ic_baseline_add_24"
+        android:enabled="false"
+        android:text="@string/CreateLobby"
+        app:iconGravity="textTop"
+        app:layout_constraintStart_toEndOf="@+id/cancelButton"
+        app:layout_constraintTop_toTopOf="@+id/cancelButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

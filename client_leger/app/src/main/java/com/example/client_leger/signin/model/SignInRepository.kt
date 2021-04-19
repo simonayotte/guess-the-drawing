@@ -1,25 +1,24 @@
 package com.example.client_leger.signin.model
 
-import android.util.Log
+import com.example.client_leger.lobby.api.LeaderboardApi
+import com.example.client_leger.signin.api.SignInApi
 import com.example.client_leger.utils.Result
 import com.example.client_leger.utils.RetrofitApiProvider
 import dagger.hilt.android.scopes.ViewModelScoped
 import java.lang.Exception
 import javax.inject.Inject
+import javax.inject.Singleton
 
 
-@ViewModelScoped
+@Singleton
 class SignInRepository @Inject constructor(
     private val retrofitApiProvider:RetrofitApiProvider
 ) {
 
+    private var api: SignInApi = retrofitApiProvider.getApi(SignInApi::class.java)
+
     suspend fun makeLoginRequest(userName: String, password: String) : Result<SignInResponseModel> {
-        return try {
-            val body = SignInRequestModel(userName, password)
-            val response = retrofitApiProvider.api.signIn(body)
-            Result.Success(response.body()!!)
-        } catch (e:Exception) {
-            Result.Error(Exception("There was an error with the server"))
-        }
+        val body = SignInRequestModel(userName, password)
+        return retrofitApiProvider.getResponse(api::signIn, body)
     }
 }

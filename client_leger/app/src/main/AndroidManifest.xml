@@ -16,12 +16,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Client_leger"
         android:usesCleartextTraffic="true">
+        <activity android:name=".leaderboard.activity.LeaderboardActivity"></activity>
+        <activity android:name=".profile.activity.ProfileActivity"></activity>
+        <activity android:name=".tutorial.activity.TutorialActivity"></activity>
         <activity
             android:name=".lobby.activity.LobbyActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".signup.activity.SignUpActivity"
             android:parentActivityName=".signin.activity.SiginInActivity" />
+        <activity
+            android:name=".game.view.GameActivity"
+            android:exported="true" />
         <activity android:name=".signin.activity.SiginInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,10 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".drawing.view.GameActivity"
-            android:exported="true" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

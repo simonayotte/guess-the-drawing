@@ -1,5 +1,7 @@
 package com.example.client_leger.signin.activity
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -8,10 +10,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.example.client_leger.MainActivity
 import com.example.client_leger.R
 import com.example.client_leger.signup.activity.SignUpActivity
 import com.example.client_leger.databinding.ActivitySignInBinding
+import com.example.client_leger.game.view.GameActivity
 import com.example.client_leger.lobby.activity.LobbyActivity
 import com.example.client_leger.signin.viewModel.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +35,7 @@ class SiginInActivity : AppCompatActivity() {
 
         viewModel.successfulLogin.observe(this, Observer {
             if(it) {
-                val intent = Intent(this, LobbyActivity::class.java)
+                val intent = Intent(this, LobbyActivity::class.java) // GameActivity
                 startActivity(intent)
             }
         })
@@ -41,6 +43,18 @@ class SiginInActivity : AppCompatActivity() {
         viewModel.showSignUp.observe(this, Observer {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
+        })
+
+        viewModel.errorMessage.observe(this, {
+            if(it != null) {
+                val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+                dialogBuilder.setMessage(if(it.isEmpty()) "Une erreur est survenue!" else it)
+                dialogBuilder.setNeutralButton("Fermer") { dialog: DialogInterface, _: Int ->
+                    dialog.dismiss()
+                    viewModel.errorMessage.value = null
+                }
+                dialogBuilder.show()
+            }
         })
     }
 }

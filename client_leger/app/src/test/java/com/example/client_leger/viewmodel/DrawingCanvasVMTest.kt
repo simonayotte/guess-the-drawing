@@ -1,73 +1,104 @@
 package com.example.client_leger.viewmodel
 
-import com.example.client_leger.drawing.viewmodel.DrawingCanvasVM
-import com.example.client_leger.model.DrawingPath
+import android.graphics.Color
+import android.graphics.PointF
+import androidx.core.graphics.plus
+import com.example.client_leger.UndoRedo.model.DrawCommand
+import com.example.client_leger.UndoRedo.service.CommandInvoker
+import com.example.client_leger.drawing.model.*
+import com.example.client_leger.drawing.viewModel.DrawingCanvasVM
+import io.mockk.MockKAnnotations
+import io.mockk.every
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.spyk
+import io.mockk.verify
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 
 class DrawingCanvasVMTest {
-    private var drawingCanvasVM = DrawingCanvasVM()
-    private val defaultX = 10f
-    private val defaultY = 15f
+    private lateinit var drawingCanvasVM: DrawingCanvasVM
+    private val defaultPoint = PointF(10f, 15f)
+    private val defaultColorCode = Color.BLACK
+    private val defaultStrokeWidth = 4
+    private val defaultOpacity = 255
+    @RelaxedMockK lateinit var commandInvoker: CommandInvoker
+    @RelaxedMockK lateinit var pathRepository: PathRepository
+    @RelaxedMockK lateinit var drawingOptions: DrawingOptions
+    @RelaxedMockK lateinit var eraserOptions: EraserOptions
+    @RelaxedMockK lateinit var gridOptions: GridOptions
+    private lateinit var defaultDrawingPath: DrawingPath
+
+
+    @Before
+    fun setUp() {
+        MockKAnnotations.init(this)
+        drawingCanvasVM = spyk(DrawingCanvasVM(commandInvoker, pathRepository, drawingOptions,
+            eraserOptions, gridOptions))
+        defaultDrawingPath = DrawingPath(defaultPoint, defaultColorCode, defaultStrokeWidth, defaultOpacity)
+        every { drawingOptions.isDrawingMode } returns true
+    }
 
     @Test
     fun testDefaultDrawingPath() {
-        val drawingPath = DrawingPath(defaultX, defaultY)
-
-        assertNotNull(drawingPath.path)
-        assertNotNull(drawingPath.paint)
-        assertEquals(drawingPath.lastPosX, defaultX)
-        assertEquals(drawingPath.lastPosX, defaultX)
-        assertEquals(drawingPath.lastPosY, defaultY)
+        assertNotNull(defaultDrawingPath.path)
+        assertNotNull(defaultDrawingPath.paint)
+        assertEquals(defaultColorCode, defaultDrawingPath.paint.color)
+        assertEquals(defaultStrokeWidth, defaultDrawingPath.paint.strokeWidth)
+        assertEquals(defaultOpacity, defaultDrawingPath.paint.alpha)
+        assertEquals(defaultPoint, defaultDrawingPath.initPos)
+        assertEquals(defaultColorCode, defaultDrawingPath.colorCode)
+        assertEquals(defaultStrokeWidth, defaultDrawingPath.strokeWidth)
+        assertEquals(defaultOpacity, defaultDrawingPath.opacity)
     }
 
     @Test
     fun testStartDrawingPath() {
-        drawingCanvasVM.startDrawingPath(defaultX, defaultY)
+        drawingCanvasVM.startDrawingPath(defaultPoint)
 
-        val expectedPath = DrawingPath(defaultX, defaultY)
-        assertEquals(expectedPath, drawingCanvasVM.currentDrawingPath)
-        assertEquals(1, drawingCanvasVM.drawingPaths.size)
-        assertEquals(expectedPath, drawingCanvasVM.drawingPaths[0])
+        assertEquals(defaultDrawingPath, drawingCanvasVM.currentDrawingPath)
+        verify { pathRepository.sendFirstPoint(defaultPoint, defaultStrokeWidth, "#000000") }
+        assertEquals(true, drawingCanvasVM.drawing.value)
+        assertEquals(0, drawingCanvasVM.drawingPaths.size)
     }
 
     @Test
     fun testUpdateDrawingPath() {
-        drawingCanvasVM.startDrawingPath(defaultX, defaultY)
+        drawingCanvasVM.startDrawingPath(defaultPoint)
         val newX = 50f
         val newY = 100f
-        val expectedPath = DrawingPath(defaultX, defaultY)
-        assertEquals(expectedPath, drawingCanvasVM.currentDrawingPath)
 
-        drawingCanvasVM.updateDrawingPath(newX, newY)
+        drawingCanvasVM.updateDrawingPath(PointF(newX, newY))
 
-        expectedPath.path.quadTo(defaultX, defaultY, (defaultX + newX)/2, (defaultY + newY)/2)
-        expectedPath.lastPosX = newX
-        expectedPath.lastPosY = newX
-        assertEquals(expectedPath, drawingCanvasVM.currentDrawingPath)
+        defaultDrawingPath.path.quadTo(defaultPoint.x, defaultPoint.y, (defaultPoint.x + newX)/2, (defaultPoint.y + newY)/2)
+        assertEquals(defaultDrawingPath, drawingCanvasVM.currentDrawingPath)
     }
 
     @Test
     fun testNegligibleUpdate() {
-        drawingCanvasVM.startDrawingPath(defaultX, defaultY)
-        val newX = defaultX+3
-        val newY = defaultY+3
-        val expectedPath = DrawingPath(defaultX, defaultY)
-        assertEquals(expectedPath, drawingCanvasVM.currentDrawingPath)
+        drawingCanvasVM.startDrawingPath(defaultPoint)
+        val newX = defaultPoint.x+3
+        val newY = defaultPoint.y+3
 
-        drawingCanvasVM.updateDrawingPath(newX, newY)
+        drawingCanvasVM.updateDrawingPath(PointF(newX, newY))
 
-        assertEquals(expectedPath, drawingCanvasVM.currentDrawingPath)
+        assertEquals(defaultDrawingPath, drawingCanvasVM.currentDrawingPath)
     }
 
     @Test
     fun testEndDrawingPath() {
-        drawingCanvasVM.startDrawingPath(defaultX, defaultY)
-        drawingCanvasVM.updateDrawingPath(defaultX+10, defaultY+10)
+        drawingCanvasVM.startDrawingPath(defaultPoint)
+        val movedPoint = defaultPoint.plus(10f)
+        drawingCanvasVM.updateDrawingPath(defaultPoint)
+        val finishedPoint = movedPoint.plus(20f)
+        drawingCanvasVM.endDrawingPath(finishedPoint)
 
-        drawingCanvasVM.endDrawingPath()
-
-        assertEquals(null, drawingCanvasVM.currentDrawingPath)
         assertEquals(1, drawingCanvasVM.drawingPaths.size)
+        assertEquals(drawingCanvasVM.currentDrawingPath, drawingCanvasVM.drawingPaths[0])
+        verify { pathRepository.sendLastPoint(0, finishedPoint) }
+        verify { drawingCanvasVM.currentDrawingPath != null }
+        drawingCanvasVM.currentDrawingPath?.let {
+            verify { commandInvoker.addCommand(DrawCommand(drawingCanvasVM, 0, it)) }
+        }
     }
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewmodel"
+            type="com.example.client_leger.channel_join.viewModel.ChannelJoinViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".chat.fragment.ChannelJoinFragment">
+
+        <LinearLayout
+            android:id="@+id/toolButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/ic_back_black_24dp"
+                android:padding="20dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/testChatName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:ems="10"
+                android:fontFamily="@font/julius_sans_one"
+                android:text="@string/create_channel"
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="36sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:fontFamily="@font/roboto"
+            tools:layout_editor_absoluteX="245dp"
+            tools:layout_editor_absoluteY="206dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
