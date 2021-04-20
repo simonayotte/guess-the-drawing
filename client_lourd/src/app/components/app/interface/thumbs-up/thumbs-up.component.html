@@ -1,0 +1,12 @@
+<div class="thumbs-up-section">
+        <button mat-icon-button (click)="thumbsUp()" [disabled]="!gameService.thumbsEnable" aria-label="pairMotImage">
+            <mat-icon>
+                thumb_up
+            </mat-icon>
+        </button>
+        <button mat-icon-button (click)="thumbsDown()" [disabled]="!gameService.thumbsEnable" aria-label="pairMotImage">
+            <mat-icon>
+                thumb_down
+            </mat-icon>
+        </button>
+</div>

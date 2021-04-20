@@ -1,0 +1,21 @@
+.tool {
+  .attributesTitle{
+    margin: 0;
+  }
+
+  .toolAttributes {
+    display: flex;
+    flex-direction: row;
+    mat-slider {
+      width: 100%;
+      flex: 1;
+    }
+    input {
+      margin-left: 10px;
+      margin-right: 10px;
+      width: 40px;
+      height: fit-content;
+      align-self: center;
+    }
+  }
+}

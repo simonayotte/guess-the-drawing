@@ -1,0 +1,12 @@
+<div id = 'lastTenColors' >
+  <ng-container *ngFor="let i of [0,1,2,3,4,5,6,7,8]">
+    <div class="btnContainer">
+      <a mat-mini-fab
+      class="colorBtn"
+      (click) = 'reUseColor(i, $event)'
+      (contextmenu) = 'reUseColor(i, $event)' [style.background] = 'color[i]'>
+      </a>
+      <img src="assets/iconPictures/alphaGridRound.png">
+    </div>
+  </ng-container>
+</div>

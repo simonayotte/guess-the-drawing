@@ -1,0 +1,26 @@
+.toolAttributes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#activation {
+  margin-top: 10px;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  font-weight: bolder;
+  font-size: 2em;
+}
+
+.subtitle {
+  margin: 0;
+  //padding: 0;
+}
+
+mat-slider {
+  width: 100%;
+}

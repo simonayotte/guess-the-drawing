@@ -1,0 +1,47 @@
+<div id="header">
+  <h3 id="title">FAIS-MOI UN DESSIN</h3>
+  <div>
+    <button mat-icon-button (click)="changeComponent('pairMotImage')" *ngIf="showComponentButton" aria-label="pairMotImage">
+      <mat-icon>add_to_photos</mat-icon>
+    </button>
+    <button mat-icon-button (click)="changeComponent('profile')" *ngIf="showComponentButton" aria-label="Profile">
+      <mat-icon>person</mat-icon>
+    </button>
+    <button mat-icon-button (click)="changeComponent('leaderboard')" *ngIf="showComponentButton" aria-label="Leaderboard">
+      <mat-icon>leaderboard</mat-icon>
+    </button>
+    <button mat-icon-button (click)="resetCompenentView()" *ngIf="showBackArrow" aria-label="back">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <button mat-icon-button (click)="openGuide()" aria-label="guide">
+      <mat-icon>help</mat-icon>
+    </button>
+    <button mat-icon-button (click)="SignOutClick()" aria-label="Se déconnecter">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="lobby-list" *ngIf="showLobby">
+    <app-lobby-list></app-lobby-list>
+  </div>
+  <div class="current-lobby" *ngIf="showLobby">
+      <app-lobby></app-lobby>
+  </div>
+  <div class="leaderboard" *ngIf="showLeaderboard">
+    <app-leaderboard></app-leaderboard>
+  </div>
+  <div class="pair-mot-image" *ngIf="showPairMotImage">
+    <app-word-image></app-word-image>
+  </div>
+  <div class="profile" *ngIf="showProfile">
+    <app-user-profile></app-user-profile>
+  </div>
+
+  <div class="chat" >
+    <app-conversation></app-conversation>
+  </div>
+
+</div>

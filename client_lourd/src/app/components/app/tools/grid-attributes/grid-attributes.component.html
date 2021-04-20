@@ -1,0 +1,36 @@
+<div class="toolAttributes">
+  <div id="title-container">
+    <p class="subtitle">Grille</p>
+    <div id="activation">
+      <mat-slide-toggle color="primary" [checked]="checked" (change)="updateActivation($event.checked)"></mat-slide-toggle>
+    </div>
+  </div>
+  <div id="transparency">
+    <p class="subtitle">Transparence de la grille</p>
+    <mat-slider
+      class="example-margin"
+      [max]="maxTransparency"
+      [min]="minTransparency"
+      [step]="0.05"
+      [thumbLabel]="true"
+      [tickInterval]="1"
+      (input)="updateTransparency($event.value)"
+      [value]="maxTransparency"
+      color="primary">
+    </mat-slider>
+  </div>
+  <div id="grid-size">
+    <p class="subtitle">Taille des carrés de la grille</p>
+    <mat-slider
+      class="example-margin"
+      [max]="maxGridPixelSize"
+      [min]="minGridPixelSize"
+      [step]="gridPixelStep"
+      [thumbLabel]="true"
+      [tickInterval]="1"
+      (input)="updateGridPixelSize($event.value)"
+      [value]="gridPixelSize"
+      color="primary">
+    </mat-slider>
+  </div>
+</div>

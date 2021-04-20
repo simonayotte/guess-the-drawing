@@ -1,0 +1,106 @@
+:host {
+  display: block;
+  padding: 10px;
+}
+
+.colorPickerBackground {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.color-wrapper {
+  display: flex;
+  height: 200px;
+  justify-content: center;
+  align-self: center;
+}
+
+.input-wrapper {
+  margin-bottom: 16px;
+  display: flex;
+  border-radius: 1px;
+  border: 1px solid rgb(220, 220, 220);
+  padding: 8px;
+  height: 10px;
+  justify-content: center;
+  width: 270px;
+  align-self: center;
+}
+
+.text {
+  flex: 1;
+
+}
+
+.rgbaValues {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-self: center;
+  align-items: center;
+  justify-content: center;
+  border: 0px;
+}
+
+.valueInput {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  align-self: center;
+  height: 50px;
+  border: 0px;
+  align-items: center;
+}
+
+p {
+  color: black;
+  padding-right: 5px;
+  height: 20px;
+  font-family: 'Helvetica';
+  line-height: 16px;
+  margin: 0px;
+}
+
+input {
+  color: black;
+  height: 20px;
+  width: 44px;
+  align-self: center;
+  font-family: 'Helvetica';
+  line-height: 16px;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid rgb(132, 255, 132);
+}
+
+#hexValue {
+  width: 270px;
+  text-align: center;
+}
+
+.selectColorBtn {
+  align-self: center;
+}
+
+input:focus {
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline-width: 0;
+  box-shadow: 1px 1px 4px rgb(94, 94, 94);
+  transition: 0.4s;
+}
+
+.invalid {
+  border: 1px solid rgb(255, 132, 132);
+  transition: 0.4s;
+  border-radius: 4px;
+}
+
+.valid {
+  border: 1px solid rgb(132, 255, 132);
+  outline-width: thin;
+  transition: 0.4s;
+}

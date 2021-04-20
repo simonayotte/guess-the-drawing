@@ -1,0 +1,8 @@
+<div class="tool">
+  <p class="attributesTitle">Taille</p>
+  <div class="toolAttributes">
+    <mat-slider color="primary" min="3" max="250" step="1" [(ngModel)]="size" (input)="onSliderChange($event)" aria-hidden="false"></mat-slider>
+    <input #sizeInput [(ngModel)]="size" (keyup)="onInput($event)" (change)="onValueChange($event)" type="number" min="3" max="250"/>
+    <p>px</p>
+  </div>
+</div>

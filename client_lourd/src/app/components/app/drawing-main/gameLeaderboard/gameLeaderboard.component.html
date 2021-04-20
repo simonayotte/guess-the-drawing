@@ -1,0 +1,21 @@
+<app-thumbs-up></app-thumbs-up>
+<div class = "gameLeaderboardContainer">
+    <div class="playerContainer" *ngFor="let player of players" [ngClass]="{'blueTeam': player.team === 1, 'redTeam': player.team === 2}">
+        <img class="avatar" src="assets/avatars/{{player.avatar}}.jpg">
+        <div class="playerInfo">
+            <p class="name">{{player.name}}</p>
+            <p class="role">{{player.role}}</p>
+        </div>
+        <div *ngIf="showThumbsUp && player.role == 'Dessine'">
+            <mat-icon>
+                thumb_up
+            </mat-icon>
+        </div>
+        <div *ngIf="showThumbsDown && player.role == 'Dessine'">
+            <mat-icon>
+                thumb_down
+            </mat-icon>
+        </div>
+        <p class="score">{{player.score ? player.score : 0}}</p>
+    </div>
+</div>

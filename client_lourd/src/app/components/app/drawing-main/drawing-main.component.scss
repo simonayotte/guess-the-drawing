@@ -1,0 +1,20 @@
+.drawing-main {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  height: 100%;
+  width: fit-content;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+  .workspace {
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+    background-color: #888888;
+    height: 602px; // todo: change drawing canvas size here
+    width: 896px;
+  }
+
+  toolbar {
+    margin-top: 24px;
+  }
+}

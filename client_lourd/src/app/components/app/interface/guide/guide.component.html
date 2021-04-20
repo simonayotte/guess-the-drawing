@@ -1,0 +1,132 @@
+
+
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <h1>Guide de l'utilisateur</h1>
+    </mat-toolbar-row>
+    </mat-toolbar>
+    
+    <mat-sidenav-container>
+    <mat-sidenav mode="side" #sidenav opened="true" disableClose="true" role="navigation">
+        <mat-nav-list>
+            <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.WELCOME)">
+                Bienvenue
+            </a>
+            <!-- to allow all categories to be expanded at the same time -->
+            <!-- for more details:
+                https://stackblitz.com/edit/stackoverflow-49230894?file=app%2Fexpansion-overview-example.html -->
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Page d'accueil
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.SIGNIN)">
+                    Connexion
+                </a>
+                <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.SIGNUP)">
+                    Inscription
+                </a>
+            </mat-expansion-panel>
+    
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Application
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+    
+                <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.MAIN_MENU)">
+                    Menu principal
+                </a>
+                <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.LOBBIES)">
+                    Salons
+                </a>
+                <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.CHANNELS)">
+                    Canaux de discussion
+                </a>
+                <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.CHAT)">
+                    Clavardage
+                </a>
+            </mat-expansion-panel>
+    
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Le jeu
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.GAME_VIEW)">
+                    Tableau de jeu
+                </a>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Outils
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.PEN)">
+                        Crayon
+                    </a>
+                    <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.COLORS)">
+                        Couleurs
+                    </a>
+                    <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.ERASER)">
+                        Efface
+                    </a>
+                    <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.GRID)">
+                        Grille
+                    </a>
+                    <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.UNDO_REDO)">
+                        Annuler-refaire
+                    </a>
+                </mat-expansion-panel>
+
+                <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.CLASSIC)">
+                    Mode de jeu classique
+                </a>
+                <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.SOLO)">
+                    Mode de jeu Sprint Solo
+                </a>
+                <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.COOP)">
+                    Mode de jeu Sprint Coop
+                </a>
+                <a mat-list-item (click)="loadNewGuideContent(SECTION_INDEXES.BATTLE_ROYAL)">
+                    Mode de jeu Battle Royal
+                </a>
+                
+            </mat-expansion-panel>
+            
+            <a mat-list-item (click)="goToMenu()">
+                Terminer le tutoriel
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class= "scrollbar">
+    
+    
+            
+            <!--Displays the content of the currently selected element -->
+            <h2 class="content-title">{{currentlyDisplayedContent.title}}</h2>
+            <div class="content" *ngFor="let text of currentlyDisplayedContent.paragraphs">
+                <p>{{text}}</p>
+            </div> 
+            <img class="image" *ngIf="currentlyDisplayedContent.image!=='null'"  src={{currentlyDisplayedContent.image}} alt="Image">
+        
+        <div>
+    
+            <div class="center-buttons">
+                
+                <button class="navigation-button" mat-button [disabled]="contentIndex === 0" (click)="switchExpandSubjects();decrementContentIndex();">
+                    ← Précédent
+                </button>
+                <button class="navigation-button" mat-button [disabled]="contentIndex === lastIndex" (click)="switchExpandSubjects();incrementContentIndex();">
+                    Suivant →
+                </button>
+            </div> 
+        
+        
+        </div> 
+    </mat-sidenav-content>
+    </mat-sidenav-container>
+    

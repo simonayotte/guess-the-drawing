@@ -1,0 +1,169 @@
+.animated-background {
+    background: linear-gradient(231deg, #5d13e7, #22b2da, #f0d43a, #f23557, #f0d43a, #22b2da, #5d13e7);
+    background-size: 400% 400%;
+    -webkit-animation: animated-background 120s infinite;
+    -moz-animation: animated-background 120s infinite;
+    animation: animated-background 120s infinite;
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden
+}
+
+.accelerated {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s ;
+}
+
+@-webkit-keyframes animated-background {
+    0%{background-position:0 90%}
+    50%{background-position:100% 11%}
+    100%{background-position:0 90%}
+}
+@-moz-keyframes animated-background {
+    0%{background-position:0 90%}
+    50%{background-position:100% 11%}
+    100%{background-position:0 90%}
+}
+@keyframes animated-background {
+    0%{background-position:0 90%}
+    50%{background-position:100% 11%}
+    100%{background-position:0 90%}
+}
+
+.fade-in {
+    -webkit-animation: fade-in 2s ease;
+    -moz-animation: fade-in ease-in-out 2s both;
+    -o-animation: fade-in ease-in-out 2s both;
+    animation: fade-in 2s ease;
+    visibility: visible;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden
+}
+
+@-webkit-keyframes fade-in{
+    0%{opacity:0;}
+    100%{opacity:1;}
+}
+
+@-moz-keyframes fade-in{
+    0%{opacity:0}
+    100%{opacity:1}
+}
+
+@-o-keyframes fade-in{
+    0%{opacity:0}
+    100%{opacity:1}
+}
+
+@keyframes fade-in{
+    0%{opacity:0}
+    100%{opacity:1}
+}
+
+mat-card {
+    background: transparent;
+    color:#fff;
+    height: 96.5%;
+    border-radius: 0px;
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.description-box {
+    height: 45%;
+    width: 95%;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 1%;
+    background: #000000CC;
+    z-index: 1;
+}
+
+.lobby-title {
+    padding: 2%;
+    position: relative;
+}
+
+.game-mode-title {
+   padding-left: 2%;
+   position: relative; 
+}
+
+.game-mode-description {
+    padding: 2%;
+    position: relative;
+    width: 100%;
+}
+
+#left {
+    width: 70%;
+    height: 100%;
+}
+
+#right {
+    width:30%;
+    height:100%;
+}
+
+.game-icon {
+    position: relative;
+    text-align: right;
+    padding-top: 8%;
+    width: 70%;
+    height: 70%;
+}
+
+h1, h2, h3, h4, p {
+    color: white;
+}
+
+.player-list {
+    height: auto;
+    width: 50%;
+    padding: 2%;
+}
+
+.bottom-container {
+    height: 50%;
+    width: 95%;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 3%;
+    background: #000000CC;
+    z-index: 1; 
+}
+
+.start-button-container {
+    position: relative;
+    width: 50%;
+    height: auto;
+    padding: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-button {
+    height: 30%; 
+    width: 70%;
+    position: relative;
+}

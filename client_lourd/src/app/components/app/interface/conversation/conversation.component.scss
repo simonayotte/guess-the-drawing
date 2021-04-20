@@ -1,0 +1,199 @@
+
+.content {
+    width: 100%;
+    height: 100%;
+    min-height: 98%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.conversation {
+    width: 100%;
+    height: calc(100% - 36px);;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 3px 10px 0 rgb(0 0 0 / 30%);
+}
+
+.title {
+    height: 46px;
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.vertical-center {
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.historic {
+    width: 100%;
+    height: 44px;
+    padding-top: auto;
+    padding-bottom: auto;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    background: #000000;
+    box-shadow: (0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+
+.messages {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+.my-text-container {
+    margin: 12px;
+    margin-top: 0;
+    padding: 0px 8px 4px 8px;
+    border-radius: 15px;
+    color: white;
+    background-color: var(--primary-selected-color);
+    box-shadow: (0px 4px 4px rgba(0, 0, 0, 0.25));
+    text-align: right;
+}
+
+.hidden {
+    display: none;
+}
+
+.message-container {
+    display:flex;
+    padding-left: 8px;
+    padding-top: 5px;
+}
+
+.my-message-container {
+    display:flex;
+    padding-left: 8px;
+    padding-top: 5px;
+    justify-content: flex-end;
+}
+
+.message {
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+}
+
+img {
+    border-radius: 50%;
+    height: 38px;
+}
+
+.text-container {
+    margin: 12px;
+    margin-top: 0;
+    padding: 1px 8px 3px 8px;
+    border-radius: 15px;
+    background-color: #EFEFEF;
+    box-shadow: (0px 4px 4px rgba(0, 0, 0, 0.25));
+    display: inline-block;
+}
+
+.text-info {
+    color: #A0A0A0;
+    font-size: 8px;
+    padding-left: 12px;
+}
+
+.text {
+    padding-top: 4px;
+    word-break: break-all;
+}
+
+mat-form-field {
+    align-items: center;
+    padding-left: 10px;
+}
+
+.input {
+    width: 100%;
+    height: 60px;
+    background-color: rgb(226, 226, 226);
+    align-items: flex-end;
+}
+.toggle {
+    display: flex;
+    flex-direction: row;
+}
+.toggle-button {
+    box-shadow: (0px 4px 4px rgba(0, 0, 0, 0.25));
+    width: 50%;
+    border-radius: 0px 0px 0px 0px;
+    color: white;
+    background-color: var(--primary-color);
+}
+.active-button {
+    background-color: var(--primary-selected-color);
+}
+.create-channels-container {
+    display: flex;
+}
+.channels {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+.channel-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+.cancel {
+    margin-left: 5px;
+}
+.chat-button {
+    padding: 5px;
+    width: 40px;
+}
+
+.game-inputs {
+    background-color: rgb(226, 226, 226);
+    padding: 10px;
+}
+
+#guess-button {
+    &.mat-button-disabled {
+        background: var(--disabled-color);
+    }
+    &:not(.mat-button-disabled) {
+        background: var(--accent-color);
+        color: white;
+    }
+    width: 60%;
+}
+
+#hint-button {
+    &.mat-button-disabled {
+        background: var(--disabled-color);
+    }
+    &:not(.mat-button-disabled) {
+        background: var(--primary-color);
+        color: white;
+    }
+    width: 80%;
+    margin-left: 5%;
+}
+
+.toggle-buttons {
+    display: flex;
+    width: 100%;
+}
+
+
+.get-in-channel {
+  display: flex;
+  width: 100%;
+}
+
+.mat-flat-button{
+  font-family: 'Helvetica' !important;
+  font-size: 18px !important;
+}

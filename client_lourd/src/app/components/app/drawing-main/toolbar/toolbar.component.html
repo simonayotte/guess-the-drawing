@@ -1,0 +1,45 @@
+<div id="toolbarContainer">
+  <div id="toolAttributesContainer">
+    <div *ngIf="disabled" class="disabled-overlay"></div>
+    <div class="toolAttributes">
+      <div>
+        <app-pencil [hidden]="!(selectedButton.tool.name === 'Crayon')" [tool]='selectedButton.tool'></app-pencil>
+        <app-eraser [hidden]="!(selectedButton.tool.name === 'Efface')"></app-eraser>
+        <app-grid-attributes [hidden]="!(selectedButton.tool.name === 'Grille')" [tool]='selectedButton.tool'></app-grid-attributes>
+      </div>
+      <div>
+        <p class="subtitle">Couleur et opacité</p>
+        <div class="sliderContainer">
+          <mat-slider #sliderAlpha id="alpha-slider" color="primary" min="0" max="1" value="1" step="0.01" (input)="changeAlpha($event)"></mat-slider>
+          <!-- <input #sliderAlpha type="range" min="0" max="1" value="1" step="0.01" id="alpha-slider" (input) = 'changeAlpha($event)'> -->
+          <div id='selectedColorContainer'>
+            <img src="assets/iconPictures/alphaGridSquare.png"/>
+            <div id="selectedColorOverlay" [style.background] = 'selectedColorString'></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toolButtons">
+      <div *ngFor= "let button of buttons">
+          <button  mat-raised-button class="material" (click)='onSelect(button)' title={{button.name}} [ngClass]="button === selectedButton ? 'selected' : button.category">
+              <img class="icon" width="24" height="24" aria-hidden="false" aria-label="Example home icon" src="assets/iconPictures/{{button.iconName}}.svg">
+          </button>
+      </div>
+      <button mat-raised-button class="material" [disabled] = "!undoAvailable" title='Annuler'[ngClass]="'undoRedo'" (click) = 'undo()'>
+        <img class="icon" width="24" height="24" aria-hidden="false" aria-label="Example home icon" src="assets/iconPictures/undo.svg">
+      </button>
+      <button mat-raised-button class="material" [disabled] = "!redoAvailable" title='Refaire' [ngClass]="'undoRedo'" (click) = 'redo()'>
+        <img class="icon" width="24" height="24" aria-hidden="false" aria-label="Example home icon" src="assets/iconPictures/redo.svg">
+      </button>
+    </div>
+  </div>
+  <div id="colorPickerContainer">
+    <div *ngIf="disabled" class="disabled-overlay"></div>
+    <div id = 'tenLastColors'>
+        <app-last-selected-colors></app-last-selected-colors>
+    </div>
+    <div id = 'colorPickerDiv'>
+      <app-color-picker></app-color-picker>
+    </div>
+  </div>
+</div>

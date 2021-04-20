@@ -1,0 +1,183 @@
+.userPictureContainer {
+    position: relative;
+    width: 250px;
+    height: 250px;
+}
+
+.userPicture {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+
+.userInfo {
+    position: relative;
+    height: 225px;
+    width: 500px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    background-color: #4FB3BF;
+    border-radius: 5px;
+    color: white;
+}
+
+// Contains the avatar + userInfo
+.userContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userInfoContainer {
+    padding: 20px;
+}
+
+.playerInfoContainer {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.listHeader {
+    background-color: #4FB3BF;
+    height: 75px;
+    width: 100%;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.connectionListContainer {
+    width: 380px;
+    height: 650px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.connectionList {
+    width: 100%;
+    height: 80%;
+    padding-top: 10px;
+}
+
+.connectionItem {
+    width: 100%;
+    height: 80px;
+}
+
+mat-list {
+    overflow: auto;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.gameHistoryListContainer {
+    width: 380px;
+    height: 650px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.gameHistoryList {
+    width: 100%;
+    height: 80%;
+    padding-top: 10px;
+}
+
+.playerStatisticsContainer {
+    width: 380px;
+    height: 650px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.playerStatisticsList {
+    width: 100%;
+    height: 80%;
+    padding-top: 10px; 
+}
+
+// Gradient animation
+
+.animated-background {
+    background: linear-gradient(231deg, #5d13e7, #22b2da, #f0d43a, #f23557, #f0d43a, #22b2da, #5d13e7);
+    background-size: 400% 400%;
+    -webkit-animation: animated-background 120s infinite;
+    -moz-animation: animated-background 120s infinite;
+    animation: animated-background 120s infinite;
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    width:100%;
+    height:100%;
+  }
+  
+  .accelerated {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+  
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s ;
+  }
+  
+  @-webkit-keyframes animated-background {
+    0%{background-position:0 90%}
+    50%{background-position:100% 11%}
+    100%{background-position:0 90%}
+  }
+  @-moz-keyframes animated-background {
+    0%{background-position:0 90%}
+    50%{background-position:100% 11%}
+    100%{background-position:0 90%}
+  }
+  @keyframes animated-background {
+    0%{background-position:0 90%}
+    50%{background-position:100% 11%}
+    100%{background-position:0 90%}
+  }
+  
+  .fade-in {
+    -webkit-animation: fade-in 2s ease;
+    -moz-animation: fade-in ease-in-out 2s both;
+    -o-animation: fade-in ease-in-out 2s both;
+    animation: fade-in 2s ease;
+    visibility: visible;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden
+  }
+  
+  @-webkit-keyframes fade-in{
+    0%{opacity:0;}
+    100%{opacity:1;}
+  }
+  
+  @-moz-keyframes fade-in{
+    0%{opacity:0}
+    100%{opacity:1}
+  }
+  
+  @-o-keyframes fade-in{
+    0%{opacity:0}
+    100%{opacity:1}
+  }
+  
+  @keyframes fade-in{
+    0%{opacity:0}
+    100%{opacity:1}
+  }
+
+mat-card {
+    padding:0px;
+}

@@ -1,0 +1,105 @@
+<mat-card class="animated-background accelerated">
+<div class="content">
+<div class="userContainer">
+    <div class="userPictureContainer">
+        <img class="userPicture" src="assets/avatars/{{userIdentity.avatar}}.jpg">
+    </div>
+    <div class="userInfoContainer">
+        <div class="userInfo">
+            <h1>{{userInfoService.getUsername()}}</h1>
+            <h2>{{userIdentity.firstName + " " + userIdentity.lastName}}</h2>
+            <h2>{{userIdentity.email}}</h2>
+        </div>
+    </div>
+</div>
+
+<div class="playerInfoContainer">
+
+    <div class="connectionListContainer">
+        <h1 class="listHeader">Historique de connexion</h1>
+            <mat-list class="connectionList">
+                <mat-list-item *ngFor="let login of userLoginHistoryList">
+                        <h2 mat-line>{{login.isLogin ? 'Connexion' : 'Déconnexion'}}</h2>
+                        <p mat-line>{{getDateString(login.loginDate)}}</p>
+                    <mat-divider></mat-divider>
+                </mat-list-item>
+            </mat-list>
+    </div>
+
+    <div class="gameHistoryListContainer">
+        <h1 class="listHeader">Historique de jeu</h1>
+        <mat-list class="gameHistoryList">
+            <mat-list-item *ngFor="let game of userGameHistoryList">
+                <mat-icon mat-list-icon>sports_esports</mat-icon>
+                <h2 mat-line>{{game.iswinner ? 'Victoire' : 'Défaite'}}</h2>
+                <h2 mat-line>{{game.gameResult + " points"}}</h2>
+                <h3 mat-line>{{gameModes[game.gameModeId]}}</h3>
+                <p mat-line>{{getDateString(game.gameDate)}}</p>
+                <mat-divider></mat-divider>
+                <div *ngIf="game.players.length > 0">
+                <mat-list dense>
+                    <mat-list-item *ngFor="let player of game.players">
+                        <mat-icon mat-list-icon>face</mat-icon>
+                        <p mat-line>{{player}}</p>
+                    </mat-list-item>
+                </mat-list>
+                </div>
+            </mat-list-item>   
+        </mat-list>
+    </div>
+
+    <div class="playerStatisticsContainer">
+        <h1 class="listHeader">Statistiques de jeu</h1>
+        <mat-list class="playerStatisticsList">
+
+            <h3 mat-subheader>Nombres de parties jouées</h3>
+            <mat-list-item>
+                <h4 mat-line>{{userStatistics.gamePlayed}}</h4>
+            </mat-list-item>
+
+
+            <h3 mat-subheader>Pourcentage de victoire</h3>
+            <mat-list-item>
+                <h4 mat-line>{{userStatistics.winRate * 100 + "%"}}</h4>
+            </mat-list-item>
+
+
+            <h3 mat-subheader>Temps moyen d'une partie jouée</h3>
+            <mat-list-item>
+                <h4 mat-line>{{userStatistics.averageTimePerGame}}</h4>
+            </mat-list-item>
+
+           
+
+            <h3 mat-subheader>Temps total de jeu</h3>
+            <mat-list-item>
+                <h4 mat-line>{{userStatistics.totalTimePlayed}}</h4>
+            </mat-list-item>
+           
+            
+
+            <h3 mat-subheader>Meilleur score en sprint solo</h3>
+            <mat-list-item>
+                <h4 mat-line>{{userStatistics.bestScoreSprintSolo}}</h4>
+            </mat-list-item>
+
+            
+        
+            <h3 mat-subheader>J'aime</h3>
+            <mat-list-item>
+                <h4 mat-line>{{userStatistics.likes}}</h4>
+            </mat-list-item>
+
+           
+
+            <h3 mat-subheader>Je n'aime pas</h3>
+            <mat-list-item>
+                <h4 mat-line>{{userStatistics.dislikes}}</h4>
+            </mat-list-item>
+
+        </mat-list>
+    </div>
+
+</div>
+</div>
+</mat-card>

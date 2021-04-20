@@ -1,0 +1,32 @@
+<h1>Création d'un lobby</h1>
+<div mat-dialog-content>
+    <h2>Mode de jeu de la partie</h2>
+    <mat-radio-group class="radio-group" [(ngModel)]="gameMode">
+        <mat-radio-button class="radio-button" *ngFor="let gamemode of gameModes" [value]="gamemode">
+           {{gamemode}}
+        </mat-radio-button>
+    </mat-radio-group>
+    <h2>Difficulté de la partie</h2>
+    <mat-radio-group class="radio-group" [(ngModel)]="difficultyLevel">
+        <mat-radio-button class="radio-button" *ngFor="let difficulty of difficultyLevels" [value]="difficulty">
+           {{difficulty}}
+        </mat-radio-button>
+    </mat-radio-group>
+</div>
+<div mat-dialog-actions>
+
+    <button mat-raised-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+        Annuler
+    </button>
+
+    <button mat-raised-button color='primary' [disabled]="!(this.gameMode && this.difficultyLevel)" [mat-dialog-close]="true" (click)="createLobby()">
+        <mat-icon>add</mat-icon>
+        Créer un lobby
+    </button>
+
+</div>
+
+
+
+

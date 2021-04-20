@@ -1,0 +1,144 @@
+<!-- <mat-card class="animated-background accelerated"> -->
+  <div class=content>
+    <div [hidden]="showPreview === 'true'">
+      <div class=drawing [hidden]="showDraw()">
+        <app-drawing-main></app-drawing-main>
+      </div>
+      <div class=import [hidden]="showImport()">
+        <div class="importOption">
+          <div class=dropBox
+          style="width: 500px; height: 350px; text-align: center;"
+          appImageDrag
+          (files)="filesDropped($event)">
+          <span style="font-size: 25px;">Drop your files here</span>
+          </div>
+          <div>
+            <div>
+              <p class="attributesTitle">Supression de point</p>
+              <div>
+                <mat-slider class="importSlider" min="0" max="100" step="1" color="primary" [(ngModel)]="turdSize" (input)="onSliderChangeTurdSize($event)" aria-hidden="false"></mat-slider>
+                <input #turdSizeInput [(ngModel)]="turdSize" (change)="onValueChangeTurdSize($event)" type="number" min="0" max="100"/>
+              </div>
+            </div>
+            <div>
+              <p class="attributesTitle">Seuil de coin</p>
+              <div>
+                <mat-slider class="importSlider" min="0" max="1.3" step="0.1" color="primary" [(ngModel)]="alphaMax" (input)="onSliderChangeAlphaMax($event)" aria-hidden="false"></mat-slider>
+                <input #turdSizeInput [(ngModel)]="alphaMax" (change)="onValueChangeAlphaMax($event)" type="number" min="0" max="1.3"/>
+              </div>
+            </div>
+            <div>
+              <mat-radio-group class=radio-group aria-label="Select an option"  [(ngModel)]="thresholdAuto">
+                <mat-label>Seuil de considération de noir </mat-label>
+                <mat-radio-button value='true'>Auto</mat-radio-button>
+                <mat-radio-button value='false'>Manuel</mat-radio-button>
+              </mat-radio-group>
+              <div [hidden]="thresholdAuto === 'true'">
+                <div>
+                  <mat-slider class="importSlider"  min="0" max="255" step="1" color="primary" [(ngModel)]="colorThreshold" (input)="onSliderChangeColorThreshold($event)" aria-hidden="false"></mat-slider>
+                  <input #turdSizeInput [(ngModel)]="colorThreshold" (change)="onValueChangeColorThreshold($event)" type="number" min="0" max="255"/>
+                </div>
+              </div>
+            </div>
+            <div>
+              <mat-radio-group class=radio-group aria-label="Select an option"  [(ngModel)]="optCurve">
+                <mat-label>Optimisation de courbe </mat-label>
+                <mat-radio-button value="true">Oui</mat-radio-button>
+                <mat-radio-button value="false">Non</mat-radio-button>
+              </mat-radio-group>
+              <div [hidden]="optCurve === 'false'">
+                <div>
+                  <mat-slider class="importSlider"  min="0" max="1" step="0.1" color="primary" [(ngModel)]="optTolerence" (input)="onSliderChangeOptTolerence($event)" aria-hidden="false"></mat-slider>
+                  <input [(ngModel)]="optTolerence" (change)="onValueChangeOptTolerence($event)" type="number" min="0" max="1"/>
+                </div>
+              </div>
+            </div>
+            <button mat-stroked-button (click)="recompileImage()" >Afficher</button>
+          </div>
+        </div>
+        <svg #svg style='background-color:white; z-index: 0;'></svg>
+      </div>
+      <div class=quickdraw [hidden]="showQuickDraw()">
+        <button mat-stroked-button (click)="generateQuickDraw()" >Générer nouveau dessin</button>
+        <svg #svgquickdraw style='background-color:white; z-index: 0;'></svg>
+      </div>
+    </div>
+    <div class=drawing>
+      <app-word-image-preview #wordImagePreview [hidden]="showPreview === 'false'" ></app-word-image-preview>
+    </div>
+    <div class=information [hidden]="showPreview === 'true'">
+      <div class=title>
+        Création d'une paire mot-image
+      </div>
+      <div class=options>
+        <mat-radio-group aria-label="Select an option"  [(ngModel)]="creationMode">
+          <mat-radio-button [value]=DRAW (click)='switchMethode(DRAW)'>Dessin</mat-radio-button>
+          <mat-radio-button [value]=IMPORT (click)='switchMethode(IMPORT)'>Importation</mat-radio-button>
+          <mat-radio-button [value]=QUICKDRAW (click)='switchMethode(QUICKDRAW)'>Générateur quick draw</mat-radio-button>
+        </mat-radio-group>
+
+
+
+        <form [formGroup]="wordForm">
+          <mat-form-field>
+            <mat-label>Nom à deviner</mat-label>
+            <input matInput placeholder="Crocodile" formControlName="word" #name maxlength=20>
+          </mat-form-field>
+        </form>
+        <mat-radio-group class=radio-group aria-label="Select an option" [(ngModel)]="difficulty">
+          <mat-label>Niveau de difficulté</mat-label>
+          <mat-radio-button [value]="1">Facile</mat-radio-button>
+          <mat-radio-button [value]="2">Intermédiaire</mat-radio-button>
+          <mat-radio-button [value]="3">Difficile</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-radio-group class=radio-group aria-label="Select an option" [(ngModel)]="drawingMode">
+          <mat-label>Mode de dessin</mat-label>
+          <mat-radio-button *ngIf="creationMode !== IMPORT" value="classic">Mode conventionnel</mat-radio-button>
+          <mat-radio-button value="random">Mode aléatoire</mat-radio-button>
+          <mat-radio-button value="panoramic">Mode panoramique</mat-radio-button>
+          <mat-radio-button value="centered">Mode centré</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-radio-group class=radio-group *ngIf="drawingMode === 'panoramic'" aria-label="Select an option"  [(ngModel)]="drawingModeOptionPanoramic">
+          <mat-label>Le dessin s'affichera: </mat-label>
+          <mat-radio-button value="left-right">De gauche à droite</mat-radio-button>
+          <mat-radio-button value="right-left">De droite à gauche</mat-radio-button>
+          <mat-radio-button value="down-up">De bas en haut</mat-radio-button>
+          <mat-radio-button value="up-down">De haut en bas</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-radio-group class=radio-group *ngIf="drawingMode === 'centered'" aria-label="Select an option"  [(ngModel)]="drawingModeOptionCentered">
+          <mat-label>Le dessin s'affichera: </mat-label>
+          <mat-radio-button value="outwards">De l'intérieur vers l'extérieur</mat-radio-button>
+          <mat-radio-button value="inwards">De l'extérieur vers l'intérieur</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field class="example-chip-list">
+          <mat-label>Indices</mat-label>
+          <mat-chip-list #chipList aria-label="Fruit selection">
+            <mat-chip *ngFor="let hint of hints" [selectable]="selectable"
+                     [removable]="removable" (removed)="remove(hint)">
+              {{hint}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Un animal"
+                   [matChipInputFor]="chipList"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="addOnBlur"
+                   (matChipInputTokenEnd)="add($event)"
+                   maxlength=50>
+          </mat-chip-list>
+        </mat-form-field>
+        <button mat-button (click)="imagePreview()" >Prévisualiser le dessin</button>
+        <button mat-button type="submit" (click)="createPair()">Créer la paire mot-image</button>
+      </div>
+    </div>
+    <div class=information [hidden]="showPreview === 'false'">
+      <div class=options>
+        <button mat-button (click)="hidePreview()" >Return</button>
+      </div>
+    </div>
+  </div>
+<!-- </mat-card> -->
+

@@ -1,0 +1,13 @@
+<div class="game-activity">
+    <app-confetti *ngIf="gameWon"></app-confetti>
+    <div class="game-info">
+        <div class="time">{{time}}</div>
+        <div class="hint">{{secretWord}}</div>
+        <div [hidden]="gameService.maxRound == null" class="round">{{gameService.roundDisplay}}</div>
+        <div [hidden]="gameService.maxGuess == null" class="guess">{{gameService.guessDisplay}}</div>
+        <div [hidden]="gameService.maxLives == null" class="lives">{{gameService.livesDisplay}}</div>
+        <app-gameLeaderboard></app-gameLeaderboard>
+    </div>
+    <app-drawing-main [disabled]="!clientIsArtist"></app-drawing-main>
+    <app-conversation inGame="true"></app-conversation>
+</div>

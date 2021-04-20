@@ -1,0 +1,48 @@
+<div class="container">
+    <mat-card class="animated-background accelerated">
+        <div *ngIf="activeLobbyID != -1" class="description-box">
+            <div id="left">
+                <h1 class="lobby-title">
+                    {{'Lobby ' + activeLobby.id}}
+                </h1>
+                <h2 class="game-mode-title">
+                    {{activeLobby.gamemode}}
+                </h2>
+
+                <p class="game-mode-description">
+                    {{activeLobbyDescription}}
+                </p>
+                <h3 class="game-mode-description">Difficulté</h3>
+                <p class="game-mode-description">
+                    {{activeLobby.difficulty}}
+                </p>
+            </div>
+            <div id="right">
+                <img *ngIf="activeLobby.gamemode == 'Classique' " src='assets/iconPictures/gameMode/star-solid.svg' class="game-icon">
+                <img *ngIf="activeLobby.gamemode == 'Battle Royale' " src='assets/iconPictures/gameMode/crown-solid.svg' class="game-icon">
+                <img *ngIf="activeLobby.gamemode == 'Sprint Solo' " src='assets/iconPictures/gameMode/running-solid.svg' class="game-icon">
+                <img *ngIf="activeLobby.gamemode == 'Sprint Co-Op' " src='assets/iconPictures/gameMode/running-solid.svg' class="game-icon">
+            </div>
+        </div>
+
+        <div *ngIf="activeLobbyID != -1" class="bottom-container">
+            <mat-list class="player-list">
+               <h1>Joueurs</h1>
+               <mat-list-item *ngFor="let player of activeLobby.players">
+                    <img mat-list-avatar src="assets/avatars/{{player.avatar}}.jpg">
+                    <h2 mat-line>{{player.name}}</h2>
+                    <mat-divider></mat-divider>
+               </mat-list-item>
+            </mat-list>
+
+            <div class="start-button-container">
+                <button mat-raised-button [disabled]="canStart" (click)="startGame()" color="primary" class="start-button">
+                    Commencer la partie !
+                </button>
+            </div>
+        </div>
+        <div class="fade-in accelerated">
+        </div>
+    </mat-card>
+</div>
+

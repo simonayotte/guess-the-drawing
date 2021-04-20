@@ -1,0 +1,115 @@
+
+<div class=content *ngIf="windowReference===null">
+  <div class=toggle>
+    <div class=toggle-buttons>
+      <button class=toggle-button [ngClass]="{'active-button': !chatIsActive}" mat-raised-button (click)="toggleChat(false)">Canaux</button>
+      <button class=toggle-button [ngClass]="{'active-button': chatIsActive}" mat-raised-button (click)="toggleChat(true)">Conversation</button>
+    </div>
+  </div>
+  <div class=conversation *ngIf="chatIsActive">
+    <div class=title>
+      <div class=vertical-center>{{activeChannel}}</div>
+      <div style="margin-top: 3px; margin-right: 3px;">
+        <!-- COMMENT TO RUN ON WEB -->
+        <button *ngIf="windowURL!=url" mat-mini-fab color="primary" aria-label="Example icon button with a delete icon" (click)="switchWindowMode()">
+          <mat-icon>fullscreen</mat-icon>
+        </button> 
+        <!-- COMMENT TO RUN ON WEB -->
+      </div>
+    </div>
+    <div class=historic *ngIf="!messagesAreLoaded">
+      <div class=vertical-center>Voir l'historique</div>
+      <button mat-button color="primary" (click)="loadEntireConvo()">
+        <div style="color:#4FB3BE;">Afficher</div>
+      </button>
+    </div>
+    <div class=messages #scrollMe>
+      <div *ngFor = "let message of channels.get(activeChannel)">
+        <div [ngClass]="message.messageWriter === userInfo.getUsername() ? 'my-message-container' : 'message-container'">
+          <img [ngClass]="{'hidden': message.messageWriter === userInfo.getUsername()}" src={{message.messageIcon}} alt="Avatar">
+          <!-- <div class=text-info>{{message.messageWriter}}</div> -->
+          <div class=message>
+            <div class=text-info>{{message.messageWriter}}  {{message.messageTime}}</div>
+            <div [ngClass]="message.messageWriter === userInfo.getUsername() ? 'my-text-container' : 'text-container'">
+              <div class=text>{{message.messageContent}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=input>
+      <mat-form-field [style.width.px]=275 autocomplete="disabled" class="example-form-field">
+        <input (keyup.enter)="sendMessage()" matInput type="Message" placeholder="Message" [(ngModel)]="message">
+        <button mat-button [disabled]="this.message.trim() === ''" matSuffix mat-icon-button aria-label="Clear" (click)="sendMessage()">
+          <mat-icon>send</mat-icon>
+        </button>
+      </mat-form-field>
+
+    </div>
+    <!--  -->
+    <div class="input" *ngIf="inGame" >
+      <mat-form-field [style.width.px]=275 autocomplete="disabled" class="example-form-field">
+        <input (keyup.enter)="guess()" [disabled]="!canGuess" matInput type="Message" placeholder="Deviner" [(ngModel)]="guessMessage">
+        <button mat-button [disabled]="this.guessMessage.trim() === ''" matSuffix mat-icon-button aria-label="Clear" (click)="guess()">
+          <mat-icon>check_circle_outline</mat-icon>
+        </button>
+      </mat-form-field>
+
+    </div>
+    <div class=input *ngIf="inGame">
+      <button id="hint-button" class="button" mat-button (click)="hint()" [disabled]="!canHint">Indice</button>
+    </div>
+
+  </div>
+  <div class=conversation *ngIf="!chatIsActive" >
+      <div class=create-channels-container>
+        <div>
+          <form class="example-form">
+            <mat-form-field class="example-full-width">
+              <mat-label>Créer/Joindre un canal</mat-label>
+              <input [(ngModel)]="channel" type="text"
+                    placeholder="Choisir un canal"
+                    aria-label="Number"
+                    matInput
+                    [formControl]="findChannelsControl"
+                    [matAutocomplete]="auto"
+                    #channelName>
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let channel of filteredChannels | async" [value]="channel">
+                  {{channel}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
+        </div>
+        <div class="vertical-center">
+          <button class="button" mat-button (click)="createChannel(channelName.value)" > Créer/Joindre </button>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class=channels>
+        <div class=channel *ngFor = "let channel of channelsKeys">
+          <div class=channel-content >
+              <button class="vertical-center get-in-channel" mat-flat-button (click)="openChannel(channel)"> {{channel}} </button>
+              <div>
+                <!-- <button (click)="openChannel(channel)" mat-mini-fab color=primary aria-label="Example icon button with a delete icon">
+                  <mat-icon>subdirectory_arrow_right</mat-icon>
+                </button> -->
+                <button *ngIf="channel !== 'general' && channel.slice(0, 5) !== 'Lobby'" (click)="quitChannel(channel)" mat-icon-button class=cancel aria-label="Example icon button with a delete icon">
+                  <!-- <mat-icon>delete</mat-icon> -->
+                  <img src='assets/iconPictures/delete.svg' class="game-icon">
+                </button>
+              </div>
+          </div>
+
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+    </div>
+
+</div>
+<div class=chat-button *ngIf="windowReference!==null">
+  <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon" (click)="switchWindowMode()">
+    <mat-icon>message</mat-icon>
+  </button>
+</div>

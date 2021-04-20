@@ -1,0 +1,244 @@
+{
+    "keyDown": {
+        "arrowRight": "window:keydown.ArrowRight",
+        "arrowLeft": "window:keydown.ArrowLeft",
+        "event": "$event"
+    },
+    "guideContent": [
+        {
+            "title": "Bienvenue dans le guide de l'utilisateur de Fais moi un dessin",
+            "paragraphs": [
+                "Pour visionner une section du guide en particulier, utilisez la barre de navigation à gauche.",
+                "Pour visionner les sections précédentes et suivantes, utilisez les boutons Précédent et Suivant au bas de la page.",
+                "Pour revenir où vous étiez précédement, utilisez le bouton Retour."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Se connecter",
+            "paragraphs": [
+                "À l'entrée de l'application, vous aurez la possibilité de vous connecter ou de vous inscrire.",
+                "Pour vous connecter, insérez votre pseudo ainsi que votre mot de passe.",
+                "Pour vous inscrire, appuyez tout simplement sur le bouton S'inscrire."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "S'inscrire",
+            "paragraphs": [
+                "Ici, vous pourrez créer un nouveau compte.",
+                "Pour créer un nouveau compte, insérez votre pseudo, votre adresse courriel ainsi que votre mot de passe.",
+                "Pour retourner à la page de connexion, appuyez tout simplement sur le bouton Se connecter."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Menu principal",
+            "paragraphs": [
+                "Vous arrivez sur le menu principal, ce dernier vous permet d'exécuter plusieurs actions et de naviguer dans l'application.",
+                "1. Déconnexion: Veuillez appuyer ici pour vous déconnecter.",
+                "2. Tutoriel: Vous pouvez revisionner le tutoriel à tout moment en appuyant sur cette icone.",
+                "3. Profil: Vous pouvez voir votre profil contenant toutes vos informations et vos statistiques.",
+                "4. Classement: Vous pouvez voir le classement mondial de l'application, les meilleurs joueurs et leurs points.",
+                "5. Créer un salons: Vous pourrez créer un nouveau salon si vous le désirez, un salon permet d'établir les règles d'une partie ainsi que les participants.",
+                "6. Salons: Vous avez accès à une liste de salons, vous pouvez joindre celui que vous voulez.",
+                "7. Salle d'attente: Vous verrez les paramètres du salon choisi ici au centre de l'écran.",
+                "8. Difficulté: Il existe trois difficultés (facile, intermédiaire et difficile).",
+                "9. Canaux: Vous pourrez choisir des canaux de discussion, en chercher, en joindre, en créer ou en quitter.",
+                "10. Clavardage: Une fois dans un canal de discussion, vous pourrez clavarder avec tous les membres du canal.",
+                "11. Paire mot-image (client-lourd seulement): Vous pouvez créer un dessin avec un nom et des indices. Il sera utilisé dans les parties de la difficultée correspondante."
+
+            ],
+            "image": "assets/tutoriel/menu-principal.JPG"
+        },
+        {
+            "title": "Salons",
+            "paragraphs": [
+                "Vous verrez à gauche tous les salons avec le nombre de joueurs dans ce salon et son mode de jeu.",
+                "Il est possible de naviguer dans les salons ou d'en créer un nouveau.",
+                "1. Créer un salon.",
+                "2. Joindre un salon.",
+                "3. Commencer une partie (il est possible de commencer une partie uniquement si le nombre minimum de joueur est atteint).",
+                "4. Quitter un salon."
+            ],
+            "image": "assets/tutoriel/salon.JPG"
+        },
+        {
+            "title": "Canaux de discussion",
+            "paragraphs": [
+                "Vous verrez à droite vos canaux de discussion, il est possible de clavarder avec tous les membres qui en font partie.",
+                "Le mode fenêtré est aussi disponible pour les modes de discussion.",
+                "1. Joindre un canal s'il existe, sinon en créer un nouveau.",
+                "2. Ouvrir le fil de discussion du canal.",
+                "3. Quitter le canal."
+            ],
+            "image": "assets/tutoriel/canaux.JPG"
+        },
+        {
+            "title": "Clavardage ",
+            "paragraphs": [
+                "Une fois dans un fil de discussion, vous pouvez clavarder avec les autres joueurs.",
+                "1. Envoyer un message (on peut utiliser enter aussi).",
+                "2. Retourner à la liste de canaux.",
+                "3. Mode fenêtré."
+            ],
+            "image": "assets/tutoriel/chat.JPG"
+        },
+        {
+            "title": "Tableau de jeu",
+            "paragraphs": [
+                "Une fois dans un fil de discussion, vous pouvez clavarder avec les autres joueurs.",
+                "1. Envoyer un message (on peut utiliser enter aussi).",
+                "2. Retourner à la liste de canaux."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Crayon ",
+            "paragraphs": [
+                "Cet outil permet de faire de simples traits. ",
+                "On peut configurer l'épaisseur de son trait en pixels ainsi que sa couleur."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Sélecteur de couleurs",
+            "paragraphs": [
+                "Cet outil permet de choisir la couleur du crayon.",
+                "Il est possible de choisir parmi les 9 dernières couleurs utilisées.",
+                "Il est possible de choisir une toute nouvelle couleur. ",
+                "Il est possible de choisir la transparence de la couleur."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Efface ",
+            "paragraphs": [
+                "Cet outil permet de supprimer des objets de la surface de dessin. ",
+                "Tout objet se trouvant en contact avec l'efface lors d’un clic gauche est effacé. ",
+                "L'objet effacé est toujours celui au-dessus des autres objets. ",
+                "On peut également se servir de l'efface comme d'une brosse en maintenant le bouton gauche de la souris enfoncé. ",
+                "Tout objet qui entre en contact avec le pointeur de la souris est alors supprimé. ",
+                "Si le pointeur survole un objet, sans qu'il n'y ait de clic, alors l'objet survolé a un contour rouge. ",
+                "On peut configurer la taille de l'efface en pixels, soit la taille du carré qui représente l'efface."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Grille ",
+            "paragraphs": [
+                "Cela permet d'afficher une grille superposée à la surface de dessin et à son contenu. ",
+                "Il est possible d'activer ou de désactiver la grille et de lui assigner une valeur de transparence. ",
+                "Il est aussi possible de définir la taille en pixels des carrés de la grille. ",
+                "La grille n'est pas présente lorsque le dessin est sauvegardé sur le serveur, exporté ou envoyé par courriel."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Annuler-refaire ",
+            "paragraphs": [
+                "Cela permet d'annuler une action altérant le dessin faite par l'utilisateur en commençant par la dernière exécutée. ",
+                "Cela permet également de refaire ce qui a été annulé, en commençant par la dernière action annulée. ",
+                "Dès qu'une nouvelle action est exécutée, la pile des actions annulées est supprimée. ",
+                "Cette fonctionnalité ne tient pas compte du presse-papier sauf pour un détail: la valeur de décalage lors d'un coller. ",
+                "Si une action annulée ou refaite comportait une modification de la valeur de décalage, celle-ci doit être appliquée à l'inverse. ",
+                "Cette fonctionnalité est accessible par des boutons sur l'écran et des raccourcis clavier."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Mode de jeu classique",
+            "paragraphs": [
+                "Le mode de jeu classique se joue à 4 personnes. Un minimum de deux joueurs réels est requis.",
+                "Les joueurs manquants seront remplacés par des joueurs virtuels.",
+                "Ce mode de jeu se joue en équipe de deux et chaque équipe joue une après l'autre.",
+                "DÉBUT DE MANCHE:",
+                "L'équipe qui commence la manche est composée d'un artiste et d'un devineur.",
+                "L'artiste reçoit un mot à dessiner puis il se met à l'oeuvre.",
+                "Son cohéquipier se doit de deviner le mot dans le temps imparti.",
+                "Si le cohéquipier rate toutes ses chances ou manque de temps, l'équipe adverse a un droit de réplique.",
+                "L'équipe qui devine le mot se verra attribué un point.",
+                "MANCHE SUIVANTE:",
+                "Les rôles sont inversés, c'est à dire que l'équipe qui dessinait est maintenant en attente et l'autre équipe dessine.",
+                "La personne qui devinait il y a deux manches est maintenant l'artiste.",
+                "Cela dit, si l'équipe est composée d'un joueur virtuel, ce dernier est artiste en permanence.",
+                "FIN DE LA PARTIE:",
+                "La partie est terminée après 4 manches."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Mode de jeu Sprint Solo",
+            "paragraphs": [
+                "Le mode de jeu Sprint Solo se joue seul.",
+                "Votre rôle est de deviner les mots dessinés par un joueur virtuel.",
+                "Attention, vous avez un nombre d'essais limité.",
+                "Chaque bonne réponse vous rapporte un point et du temps supplémentaire.",
+                "FIN DE LA PARTIE:",
+                "La partie est terminée lorsque le compteur de temps se rend à 0."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Mode de jeu Sprint Coop",
+            "paragraphs": [
+                "Le mode de jeu Sprint Coop se joue à maximum 4 personnes.",
+                "Votre rôle est de deviner les mots dessinés par un joueur virtuel.",
+                "Attention, vous avez un nombre d'essais limité.",
+                "Chaque bonne réponse rapporte un point à votre équipe et du temps supplémentaire.",
+                "FIN DE LA PARTIE:",
+                "La partie est terminée lorsque le compteur de temps se rend à 0."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Mode de jeu Battle Royal",
+            "paragraphs": [
+                "Le mode de jeu Sprint Battle Royal se joue de 2 à 4 personnes.",
+                "Votre but est d'être le premier à deviner le mot dessiné par un joueur virtuel.",
+                "Il n'y a pas de nombre d'essaies limité dans ce mode de jeu.",
+                "LES VIES:",
+                "Vous aurez un certain nombre de vies.",
+                "La seule façon de perdre une vie est d'être le dernier à deviner.",
+                "Lorsque vous n'avez plus de vie, vous ne pouvez plus jouer.",
+                "LES POINTS:",
+                "Le premier à deviner reçoit 2 points, le deuxième 1 points et le troisième 0 seul point.",
+                "La dernière personne à deviner ne reçoit jamais de point.",
+                "FIN DE LA PARTIE:",
+                "La partie est terminée lorsqu'il ne reste qu'un seul joueur en vie."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Difficultés",
+            "paragraphs": [
+                "La difficulté d'un mode de jeu défini son temps et son nombre d'essais.",
+                "FACILE:",
+                "Temps: 60 secondes",
+                "5 essais",
+                "INTERMÉDIAIRE:",
+                "Temps: 40 secondes",
+                "3 essais.",
+                "DIFFICILE:",
+                "Temps: 20 secondes",
+                "1 essai.",
+                "____________________",
+                "Le mode Battle Royal est différent puisque les joueurs ont des vies.",
+                "Facile:        5 vies.",
+                "Intermédiaire: 3 vies.",
+                "Difficile:     1 vie."
+            ],
+            "image": "null"
+        },
+        {
+            "title": "Fin du tutoriel",
+            "paragraphs": [
+                "Vous avez terminé de tutoriel!",
+                "Clickez sur la flèche de retour pour aller sur le menu principal.",
+                "Amusez-vous bien!."
+            ],
+            "image": "null"
+        }
+    ]
+    
+}

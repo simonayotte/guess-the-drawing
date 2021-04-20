@@ -1,0 +1,73 @@
+.gameLeaderboardContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: 400px;
+    width: 225px;
+    box-shadow: 0 3px 10px 0 rgb(0 0 0 / 30%);
+    border-radius: 2px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: white;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    align-items: stretch;
+    overflow-y: auto;
+    
+    .playerContainer {
+        height: 60px;
+        padding: 5px 10px;
+        margin-bottom:10px;
+        background-color: lightgray;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        &.redTeam {
+            background-color: rgb(255, 189, 186);
+        }
+
+        &.blueTeam {
+            background-color: rgb(186, 225, 255);
+        }
+
+        .avatar {
+            height: 80%;
+            border-radius: 50%;
+        }
+
+        .score {
+            margin: 0;
+            font-size: 1.5em;
+            color:rgb(100, 100, 100);
+        }
+
+        .playerInfo {
+            height: 100%;
+            flex-grow: 1;
+            min-width: 0;
+            padding-left: 10px;
+            padding-right: 10px;
+
+            .name {
+                width: 100%;
+                margin: 0;
+                padding-top: 8px;
+                font-size: 1.2em;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .role {
+                width: 100%;
+                margin: 0;
+                padding-top: 2px;
+                font-size: 0.9em;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+    }
+}

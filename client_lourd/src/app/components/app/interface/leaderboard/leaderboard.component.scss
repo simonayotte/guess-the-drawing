@@ -1,0 +1,102 @@
+.animated-background {
+  background: linear-gradient(231deg, #5d13e7, #22b2da, #f0d43a, #f23557, #f0d43a, #22b2da, #5d13e7);
+  background-size: 400% 400%;
+  -webkit-animation: animated-background 120s infinite;
+  -moz-animation: animated-background 120s infinite;
+  animation: animated-background 120s infinite;
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  width:100%;
+  height:100%;
+  box-sizing: border-box;
+}
+
+.accelerated {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+
+  -moz-transition: all 1s;
+  -webkit-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s ;
+}
+
+@-webkit-keyframes animated-background {
+  0%{background-position:0 90%}
+  50%{background-position:100% 11%}
+  100%{background-position:0 90%}
+}
+@-moz-keyframes animated-background {
+  0%{background-position:0 90%}
+  50%{background-position:100% 11%}
+  100%{background-position:0 90%}
+}
+@keyframes animated-background {
+  0%{background-position:0 90%}
+  50%{background-position:100% 11%}
+  100%{background-position:0 90%}
+}
+
+.fade-in {
+  -webkit-animation: fade-in 2s ease;
+  -moz-animation: fade-in ease-in-out 2s both;
+  -o-animation: fade-in ease-in-out 2s both;
+  animation: fade-in 2s ease;
+  visibility: visible;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden
+}
+
+@-webkit-keyframes fade-in{
+  0%{opacity:0;}
+  100%{opacity:1;}
+}
+
+@-moz-keyframes fade-in{
+  0%{opacity:0}
+  100%{opacity:1}
+}
+
+@-o-keyframes fade-in{
+  0%{opacity:0}
+  100%{opacity:1}
+}
+
+@keyframes fade-in{
+  0%{opacity:0}
+  100%{opacity:1}
+}
+
+table {
+    width: 100%;
+    height: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.title {
+  font-size:large;
+  color:white;
+}
+
+mat-card {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.table-wrapper {
+  overflow-y: scroll;
+  max-height: 960px;
+}
+
+.content {
+  height: auto;
+}

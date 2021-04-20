@@ -1,0 +1,44 @@
+
+.game-activity {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 16px;
+}
+
+.game-info{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .hint{
+    text-align: center;
+    font-size: 35px;
+  }
+  .time{
+    text-align: center;
+    font-size: 35px;
+  }
+  .round{
+    text-align: center;
+    font-size: 35px;
+  }
+  .guess{
+    text-align: center;
+    font-size: 35px;
+  }
+  .lives{
+    text-align: center;
+    font-size: 35px;
+  }
+}
+
+app-conversation {
+  width: 320px;
+  height: 762px;
+}
+
+app-confetti {
+  z-index: 100;
+}

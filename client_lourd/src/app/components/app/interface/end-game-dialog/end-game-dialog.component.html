@@ -1,0 +1,6 @@
+<h2 mat-dialog-title id="victoire" *ngIf="gameWon">Victoire !</h2>
+<h2 mat-dialog-title id="defaite" *ngIf="!gameWon">Défaite !</h2>
+<div mat-dialog-content>{{this.data.message}}</div>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="naviguateToLobbies()">Retourner au salon</button>
+</mat-dialog-actions>

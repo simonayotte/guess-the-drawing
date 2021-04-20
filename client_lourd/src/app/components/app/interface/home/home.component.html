@@ -1,0 +1,58 @@
+<mat-card class="animated-background accelerated">
+  <div style="width: 100%; height: 100%" class="fade-in accelerated">
+    <div class="row">
+      <p id="title">Fais-moi un dessin</p>
+    </div>
+    <div id="content" class="row">
+      <div class="login-box">
+        <div class="button-position">
+          <h3 style="height:30px"> Connexion </h3>
+          <div>
+            <form [formGroup]="loginForm" (submit)="submit()">
+              <mat-form-field>
+                <mat-label>Pseudo</mat-label>
+                <input matInput placeholder="ex. jaykot" formControlName="username" required>
+                <mat-error *ngIf="loginForm.controls.username.invalid">{{getErrorMessage(loginForm.controls.username)}}</mat-error>
+                <mat-error *ngIf="loginForm.get('username')!!.errors === null ? false : loginForm.get('username')!!.errors!!.maxlength">Maximum des 30 caractères</mat-error>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="!isLoggingIn">
+                <mat-label>Prénom</mat-label>
+                <input matInput placeholder="ex. Mark" formControlName="firstName" required>
+                <mat-error *ngIf="loginForm.controls.firstName.invalid">{{getErrorMessage(loginForm.controls.firstName)}}</mat-error>
+                <mat-error *ngIf="loginForm.get('firstName')!!.errors === null ? false : loginForm.get('firstName')!!.errors!!.maxlength">Maximum des 30 caractères</mat-error>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="!isLoggingIn">
+                <mat-label>Nom</mat-label>
+                <input matInput placeholder="ex. Weber-Sadler" formControlName="lastName" required>
+                <mat-error *ngIf="loginForm.controls.lastName.invalid">{{getErrorMessage(loginForm.controls.lastName)}}</mat-error>
+                <mat-error *ngIf="loginForm.get('lastName')!!.errors === null ? false : loginForm.get('lastName')!!.errors!!.maxlength">Maximum des 30 caractères</mat-error>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="!isLoggingIn">
+                <mat-label>Adresse courriel</mat-label>
+                <input matInput placeholder="ex. jerôme.kotlin@polymtl.ca" formControlName="email" required>
+                <mat-error *ngIf="loginForm.controls.email.invalid">{{getErrorMessage(loginForm.controls.email)}}</mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Mot de passe</mat-label>
+                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+                <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                  <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="loginForm.controls.password.invalid">{{getErrorMessage(loginForm.controls.password)}}</mat-error>
+                <mat-error *ngIf="loginForm.get('password')!!.errors === null ? false : loginForm.get('password')!!.errors!!.maxlength">Maximum des 30 caractères</mat-error>
+              </mat-form-field>
+
+              <button mat-button class=button-loggin type="submit"> {{isLoggingIn ? signInText : signUpText}} </button>
+
+            </form>
+            <button mat-button class=button-loggin (click)="toggleDisplay()"> {{isLoggingIn ? signUpText : signInText}} </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

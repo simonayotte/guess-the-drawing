@@ -1,0 +1,6 @@
+<div class="drawing-main" [ngStyle]="{'pointer-events':disabled ? 'none':'auto'}">
+    <div class="workspace" (scroll)="onScroll($event)">
+        <drawing #drawing></drawing >
+    </div>
+    <toolbar [disabled]="disabled"></toolbar>
+</div>
