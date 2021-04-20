@@ -29,7 +29,6 @@ export const TIME_PERCENTAGE_COMPLETION = 0.75;
 
 import { ThumbsModel} from '../../models/Game/tumbsModel';
 import { thumbsUp, thumbsDown } from '../../database/thumbs';
-import { BattleRoyalLivesModel } from '../../models/Game/battleRoyaleLivesModel';
 
 
 module.exports = (io : Server, socket : Socket) => {
@@ -336,6 +335,7 @@ module.exports = (io : Server, socket : Socket) => {
                     await virtualPlayerRoundEnd(lobbyId)
                     await gameService.prepareLobbyForNewRound(lobbyId)
                     startRound(lobbyId)
+                    startVirtualPlayerRound(lobbyId)
                 }
             } else if (currentLobbyState === LobbyState.gameHasEnded) {
                 clearInterval(interval)
