@@ -13,7 +13,8 @@ export enum LobbyState {
     default = "default",
     guessing = "guessing",
     foundRightWord = "foundRightWord",
-    gameHasEnded = "gameHasEnded"
+    gameHasEnded = "gameHasEnded",
+    waitingForPlayerResponse = "waitingForPlayerResponse"
 }
 //TODO : changer
 export const MAX_GUESS = 4
@@ -43,6 +44,7 @@ export abstract class AbsGameLobby {
     scoreFirstTeam: number
     time: number
     gameStartedTime: Date
+    virtualPlayerIsDrawing: boolean
     constructor(id: number, playerIds: Array<number>, difficulty: string) {
         this.gameLobbyId = id
         this.playersIds = []
@@ -82,6 +84,7 @@ export abstract class AbsGameLobby {
         this.scoreFirstTeam = 0
         this.scoreSecondTeam = 0
         this.gameStartedTime = new Date()
+        this.virtualPlayerIsDrawing = false
     }
 
     containsPlayer(playerId: number): boolean {
@@ -106,7 +109,6 @@ export abstract class AbsGameLobby {
     }
 
     isReadyToStart(): boolean {
-        console.log(this.playerStatus);
         return Array.from(this.playerStatus.values()).every(it => it === true)
     }
 
@@ -365,5 +367,11 @@ export abstract class AbsGameLobby {
 
     getMaxRound(): number | null {
         return null
+    }
+    setVirtualPlayerIsDrawing(value: boolean) {
+        this.virtualPlayerIsDrawing = value
+    }
+    isVirtualPlayerDrawing(): boolean {
+        return this.virtualPlayerIsDrawing
     }
 }

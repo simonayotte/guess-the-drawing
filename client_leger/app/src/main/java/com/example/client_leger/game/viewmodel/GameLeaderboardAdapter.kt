@@ -44,6 +44,7 @@ class GameLeaderboardAdapter(var players: List<PlayerInfo>, var artistIdLiked: M
             "6" -> viewHolder.playerAvatar.setImageResource(R.drawable.icon_6)
             "7" -> viewHolder.playerAvatar.setImageResource(R.drawable.icon_7)
             "8" -> viewHolder.playerAvatar.setImageResource(R.drawable.icon_8)
+            "9" -> viewHolder.playerAvatar.setImageResource(R.drawable.icon_9)
             else -> {
                 viewHolder.playerAvatar.setImageResource(R.drawable.icon_0)
             }

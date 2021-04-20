@@ -88,7 +88,6 @@ class DrawingCanvasView(context: Context, attributes: AttributeSet?) : View(cont
             super.onTouchEvent(it)
             if(viewModel.drawingOptions.isGridMode || !this.isEnabled)
                 return true
-            //Log.d(TAG, ("x " + it.x + " y " + it.y + " precision x " + it.xPrecision))
             val pos = PointF(it.x.coerceIn(0f, drawingCanvas.width.toFloat()), it.y.coerceIn(0f, drawingCanvas.height.toFloat()))
 
             when(it.action) {

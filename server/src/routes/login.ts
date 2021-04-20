@@ -27,10 +27,9 @@ router.post('/', (req, res, next) => {
             return;
         }
         try {
-            connect(idplayer); 
-            addNewLogin(idplayer);
+            await connect(idplayer); 
+            await addNewLogin(idplayer);
         } catch(err) {
-            console.error(err);
             return next(err);
         }
         const avatar = await getAvatar(idplayer);
@@ -70,8 +69,6 @@ router.post('/createWindow', async (req, res, next) => {
     for (let channel of appChannelsRes) {
         appChannels.push(channel.channelname)
     }
-    console.log(userChannels);
-    console.log(appChannels);
     
     res.status(200).json({ idplayer : req.body.idplayer, avatar: avatar, userChannels: userChannels, appChannels: appChannels, username: username, idSocket: idSocket}); // changer aussi dans signup
     return;

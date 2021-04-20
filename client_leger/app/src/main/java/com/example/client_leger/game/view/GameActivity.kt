@@ -36,11 +36,6 @@ class GameActivity : AppCompatActivity() {
 
     var openedDialog: AlertDialog? = null
 
-    override fun onDestroy() {
-        lobbyRepository.activeLobbyId.value = null
-        super.onDestroy()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityGameBinding = DataBindingUtil.setContentView<ActivityGameBinding>(this, R.layout.activity_game)
@@ -73,7 +68,6 @@ class GameActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d("GameActivity onStart()", "client is ready")
         viewModel.clientIsReady()
     }
 
@@ -97,15 +91,21 @@ class GameActivity : AppCompatActivity() {
     }
 
     public fun showEndGameDialog(message: String) {
-        if (isWinner())
+        val isWinner = isWinner()
+        if (isWinner)
             showFireworks()
-        createBasicAlertDialog(message, "Retourner au salon") {
+        val title = if (isWinner) "Victoire !" else "Défaite !"
+        createBasicAlertDialog(message, title, "Retourner au salon") {
+            lobbyRepository.activeLobbyId.value = null
             finish() //go back to previous activity (lobbies)
         }
     }
 
-    private fun createBasicAlertDialog(message: String, neutralButton: String = "Fermer", dismissListener: DialogInterface.OnDismissListener? = null) {
+    private fun createBasicAlertDialog(message: String, title: String = "", neutralButton: String = "Fermer", dismissListener: DialogInterface.OnDismissListener? = null) {
         val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        if(!title.isNullOrEmpty()) {
+            dialogBuilder.setTitle(title)
+        }
         dialogBuilder.setMessage(message)
         dialogBuilder.setNeutralButton(neutralButton) { dialog: DialogInterface, _: Int ->
             dialog.dismiss()

@@ -9,7 +9,6 @@ export const router = express.Router({
 
 router.post('/getStats', async (req, res) => {
     let stats: any[] = await getStats();
-    console.log(stats);
     res.status(200).json({stats: stats});
     return;
 });

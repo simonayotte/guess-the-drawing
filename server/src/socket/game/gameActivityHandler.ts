@@ -154,26 +154,42 @@ module.exports = (io : Server, socket : Socket) => {
     }
 
     const startGame = async (data: any) => {
-        let arrayOfPlayersId = []
         const lobbyId = (JSON.parse(data) as StartGameInfoModel).lobbyId // TODO: passer les avatars et les id aussi
-        const users = lobbyList.getLobby(lobbyId).players
-        for(const player of users) {
-            arrayOfPlayersId.push(player.id)
+        if(gameService.getState(lobbyId) !== LobbyState.waitingForPlayerResponse) {
+            let arrayOfPlayersId = []
+            gameService.setState(lobbyId, LobbyState.waitingForPlayerResponse)
+            const users = lobbyList.getLobby(lobbyId).players
+            for(const player of users) {
+                arrayOfPlayersId.push(player.id)
+            }
+            const difficulty = lobbyList.getLobby(lobbyId).difficulty
+            const gamemode = lobbyList.getLobby(lobbyId).gamemode
+            gameService.addLobby(lobbyId, arrayOfPlayersId, difficulty, gamemode)
+            lobbyList.lobbyGameStarted(lobbyId)
+            const list = lobbyList.getLobbies();
+            io.emit('lobbyListRequested', list);
+            arrayOfPlayersId = gameService.getPlayersId(lobbyId) 
+            await gameService.genWord(lobbyId)
+            const virtualPlayers = gameService.getVirtualPlayers(lobbyId)
+            const players : PlayerInfo[] = await constructPlayersInfo(users, lobbyId, virtualPlayers)
+            io.to(LOBBY_PREFIX + lobbyId).emit("gameSetup", JSON.stringify(players))
+            io.to(LOBBY_PREFIX + lobbyId).emit("loadGame")
+            io.to(LOBBY_PREFIX + lobbyId).emit("toggleChat", {lobbyid: lobbyId});
+            gameService.startGameTimer(lobbyId);
+            startWaitingTimer(lobbyId)
         }
-        const difficulty = lobbyList.getLobby(lobbyId).difficulty
-        const gamemode = lobbyList.getLobby(lobbyId).gamemode
-        gameService.addLobby(lobbyId, arrayOfPlayersId, difficulty, gamemode)
-        lobbyList.lobbyGameStarted(lobbyId)
-        const list = lobbyList.getLobbies();
-        io.emit('lobbyListRequested', list);
-        arrayOfPlayersId = gameService.getPlayersId(lobbyId) 
-        await gameService.genWord(lobbyId)
-        const virtualPlayers = gameService.getVirtualPlayers(lobbyId)
-        const players : PlayerInfo[] = await constructPlayersInfo(users, lobbyId, virtualPlayers)
-        io.to(LOBBY_PREFIX + lobbyId).emit("gameSetup", JSON.stringify(players))
-        io.to(LOBBY_PREFIX + lobbyId).emit("loadGame")
-        io.to(LOBBY_PREFIX + lobbyId).emit("toggleChat", {lobbyid: lobbyId});
-        gameService.startGameTimer(lobbyId);
+    }
+    async function startWaitingTimer(lobbyId: number) {
+        let time = 8000
+        const interval = setInterval(async function(){
+            time -= 1000
+            if(gameService.lobbyReadyToStart(lobbyId)){
+                clearInterval(interval)
+            } else if(time <= 0) {
+                clearInterval(interval)
+                endGame(lobbyId, "Erreur! Un joueur a rencontré un problème de connexion, veuillez retourner au lobby et réessayer", false)
+            }
+        }, 1000);
     }
     async function constructPlayersInfo(lobbyUsers: UserInfo[], lobbyId: number, virtualPlayers: number[]) {
         const players : PlayerInfo[]  = []
@@ -192,7 +208,8 @@ module.exports = (io : Server, socket : Socket) => {
         const lobbyId = gameService.getUserLobby(userId)
         if(lobbyId !== null){
             gameService.setPlayerStatus(lobbyId, userId, true)
-            if(gameService.lobbyReadyToStart(lobbyId)) {
+            if(gameService.lobbyReadyToStart(lobbyId) && !gameService.isVirtualPlayerDrawing(lobbyId)) {
+                gameService.setVirtualPlayerIsDrawing(lobbyId, true)
                 startRound(lobbyId)
                 await virtualPlayerGameStart(lobbyId)
                 startVirtualPlayerRound(lobbyId)
@@ -215,8 +232,6 @@ module.exports = (io : Server, socket : Socket) => {
     async function startRound(lobbyId: number) {
         if (gameService.getGamemode(lobbyId) === "battleRoyal") {
             const users = lobbyList.getLobby(lobbyId).players
-            // const virtualPlayers = gameService.getVirtualPlayers(lobbyId)
-            // const players : PlayerInfo[] = await constructPlayersInfo(users, lobbyId, virtualPlayers) 
             const players : PlayerInfo[] = gameService.getPlayerInfo(lobbyId, users)
             io.to(LOBBY_PREFIX + lobbyId).emit("gameSetup", JSON.stringify(players))
         }
@@ -396,13 +411,15 @@ module.exports = (io : Server, socket : Socket) => {
         }
         return playerInfo
     }
-    async function endGame(lobbyId: number, message?:string) {
+    async function endGame(lobbyId: number, message?:string, gameIsValid: boolean = true) {
         const lobbyName = "Lobby " + lobbyId
         const endGameModel: EndGameModel = {
-            message: message ? message : "La partie est terminée, appuyez sur ok pour retourner au lobby"
+            message: message ? message : "La partie est terminée"
         }
         io.to(LOBBY_PREFIX + lobbyId).emit('endGame', JSON.stringify(endGameModel))
-        await gameService.addGameToDb(lobbyId);
+        if(gameIsValid){
+            await gameService.addGameToDb(lobbyId);
+        }
         io.to(LOBBY_PREFIX + lobbyId).emit('leaveChannelLobby', {channelName: lobbyName})
         gameService.setState(lobbyId, LobbyState.gameHasEnded)
         lobbyList.removeAllPlayers(lobbyId)
@@ -445,13 +462,12 @@ module.exports = (io : Server, socket : Socket) => {
         }
 
         const timeBetweenEachPoint = getDelay(lobbyId, amountOfPoints);
-
-        console.log('Debut d envoie du dessin du lobby ' + lobbyId);
         
         // envoie des path
         for (let i = 0; i < pathData.length; i++){                        
             const gameState : LobbyState | undefined = gameService.getState(lobbyId);
             if(gameState === LobbyState.foundRightWord || gameState === LobbyState.failedRightOfReply || gameState === undefined){
+                gameService.setVirtualPlayerIsDrawing(lobbyId, false)
                 break;
             }
 
@@ -465,6 +481,7 @@ module.exports = (io : Server, socket : Socket) => {
 
                 const gameState = gameService.getState(lobbyId);
                 if(gameState === LobbyState.foundRightWord || gameState === LobbyState.failedRightOfReply || gameState === undefined){
+                    gameService.setVirtualPlayerIsDrawing(lobbyId, false)
                     break;
                 }
             }
@@ -472,10 +489,7 @@ module.exports = (io : Server, socket : Socket) => {
             const lastPoint: LastPointModel = { point: orderedPath[i].point[orderedPath[i].point.length - 1], room: lobbyId, pathId: i};
             io.to(LOBBY_PREFIX + lobbyId).emit('lastPoint', JSON.stringify(lastPoint));
             
-        }       
-
-        console.log('Fin d envoie du dessindu lobby ' + lobbyId);
-
+        }
     }
 
     async function delay(ms: number) {

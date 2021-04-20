@@ -40,7 +40,7 @@ data class DrawingPath(val initPos: PointF, val colorCode: Int, val strokeWidth:
 
     // adding a point at each 'pointsDistance' pixels
     fun finish(finalPoint: PointF) {
-        // path.setLastPoint(finalPoint.x, finalPoint.y)
+        path.setLastPoint(finalPoint.x, finalPoint.y)
         val pathMeasure = PathMeasure(path, false)
         val pathLength = pathMeasure.length.toInt()
         val positions = FloatArray(2)

@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 class RetrofitApiProvider @Inject constructor() {
-    private val url = "http://log3900-server.herokuapp.com/" // http://192.168.2.24:4000/ http://log3900-server.herokuapp.com/
+    private val url = "http://log3900-server.herokuapp.com/"
     fun <T> getApi(klass: Class<T>): T {
         return Retrofit
                 .Builder()

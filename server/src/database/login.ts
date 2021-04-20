@@ -1,20 +1,25 @@
 const db = require('./database');
 
-export function addNewLogin(idplayer : number) : void {
-    db.query(`INSERT INTO log3900db.login(idplayer) VALUES($1)`,
-    [idplayer],
+export async function addNewLogin(idplayer : number) : Promise<void> {
+    await db.query(`SET TIMEZONE = 'America/Montreal';`,
+    [],
     (err: any, results: any) => {
         if (err) throw err;
+        db.query(`INSERT INTO log3900db.login(idplayer) VALUES($1)`,
+            [idplayer],
+            (err: any, results: any) => {
+                if (err) throw err;
+            });
+        
     });
 };
 
 // Sets connection status to true
-export function connect(idplayer : number) : void {
-    db.query(`UPDATE log3900db.Person SET isconnected = true WHERE idplayer = $1`,
+export async function connect(idplayer : number) : Promise<void> {
+    await db.query(`UPDATE log3900db.Person SET isconnected = true WHERE idplayer = $1`,
     [idplayer],
     (err: any, results: any) => {
         if (err) throw err;
-        console.log(`L'utilisateur ${idplayer} est connecte.`);
     });
 };
 

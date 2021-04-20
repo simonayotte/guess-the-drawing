@@ -1,6 +1,7 @@
 import { Socket, Server } from 'socket.io';
 import { leaveChannelLobby } from '../database/channel';
 import { getUsername } from '../database/login';
+import { addNewLogout, disconnect } from '../database/logout';
 import { lobbyList } from '../index';
 import { gameService } from '../index'
 module.exports = (io : Server, socket : Socket) => {
@@ -17,22 +18,20 @@ module.exports = (io : Server, socket : Socket) => {
     }); 
 
     socket.on('disconnect', async () => {
-        console.log('client has disconnected');
         let idplayer: number = await getIdPlayer();
         if (idplayer != -1){
-            let username = await getUsername(idplayer);
-            db.query(`UPDATE log3900db.Person SET isconnected = false WHERE idSocket = $1`,
-            [socket.id],
-            (err: any, results: any) => {
-                if (err) console.error(`error when trying to update isconnected of idSocket ${socket.id}`);
-            });
+            try{
+                await disconnect(idplayer);
+                await addNewLogout(idplayer);
+            } catch(err) {
+                console.log(err)
+            }
             
+            let username = await getUsername(idplayer);
             let lobbyName = "Lobby " + lobbyList.getActiveLobby(username)
-            console.log(lobbyName)
             if(lobbyName !== "Lobby -1"){
                 socket.emit('leaveChannelLobby', {channelName: lobbyName})
                 await leaveChannelLobby(lobbyName, username);
-                console.log(lobbyName)
             }
             lobbyList.removePlayer(username)
             gameService.playerHasLeft(idplayer)

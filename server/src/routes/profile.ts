@@ -25,7 +25,6 @@ Request form :
 } */
 
 router.post('/identity', async (req, res) => {
-    console.log('POST : Identity...');
     try {
         let result = await getUserIdentity(req.body.idplayer);
         const identity: UserIdentity = {
@@ -42,7 +41,6 @@ router.post('/identity', async (req, res) => {
 });
 
 router.post('/statistics', async (req, res) => {
-    console.log('POST : Statistics...');
     try {
         let result = await getUserStatistics(req.body.idplayer);
         const statistics: UserStatistics = {
@@ -62,22 +60,17 @@ router.post('/statistics', async (req, res) => {
 });
 
 router.post('/gamehistory', async (req, res) => {
-    console.log('POST : Game History...');
     try {
         var result = await getUserGameHistory(req.body.idplayer);
         var gameHistoryList = new Array<UserGameHistory>();
-
-        console.log("Result of the getUserGameHistory", result);
 
         for (const game of result) {
             var players = await getGamePlayers(game.idgame);
             var playersList = new Array<string>();
 
             players.forEach((player : any) => {
-                console.log("username : ", player.username);
                 playersList.push(player.username)
             })
-
             const userGameHistory : UserGameHistory = {
                 gameModeId: game.gamemodeid,
                 gameDate: game.gamedate,
@@ -85,7 +78,7 @@ router.post('/gamehistory', async (req, res) => {
                 players: playersList, 
                 iswinner: game.iswinner 
             }
-
+            
             gameHistoryList.push(userGameHistory);
         }
         
@@ -98,10 +91,8 @@ router.post('/gamehistory', async (req, res) => {
 
 
 router.post('/loginhistory', async (req, res) => {
-    console.log('POST : Login History...');
     try {
         let result = await getUserLoginHistory(req.body.idplayer);
-        console.log("Result array from login... ", result);
         var loginHistory = new Array<UserLoginHistory>();
         result.forEach((login : any) => {
             const userLogin : UserLoginHistory = {

@@ -164,7 +164,7 @@
                 android:textColor="@color/white"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
-                android:text="Pouces vers le haut"
+                android:text="J'aime"
                 app:layout_constraintStart_toEndOf="@+id/leaderboard_played_games"
                 app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
 
@@ -173,7 +173,7 @@
                 android:layout_width="80dp"
                 android:textColor="@color/white"
                 android:layout_height="40dp"
-                android:text="Poucess vers le bas"
+                android:text="Je n'aime pas"
                 app:layout_constraintStart_toEndOf="@+id/leaderboard_likes"
                 app:layout_constraintTop_toBottomOf="@+id/leaderboard_title" />
 

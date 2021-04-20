@@ -27,6 +27,7 @@ class LobbyPlayersRecyclerAdapter(var players: List<LobbyPlayer>) :
             "6" -> R.drawable.icon_6
             "7" -> R.drawable.icon_7
             "8" -> R.drawable.icon_8
+            "9" -> R.drawable.icon_9
             else -> {
                 R.drawable.icon_0
             }

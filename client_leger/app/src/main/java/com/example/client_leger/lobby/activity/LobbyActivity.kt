@@ -120,7 +120,6 @@ class LobbyActivity : AppCompatActivity() {
                             }
                             intent.putExtra("Stats", stats)
                             startActivity(intent)
-                            Log.d("getStatsLeaderboard", "succes")
                         }
                         else -> {
                             Log.d("getStatsLeaderboard", "bad")
@@ -146,7 +145,6 @@ class LobbyActivity : AppCompatActivity() {
                                 logins.add(loginElement)
                             }
                             intent.putExtra("logins", logins)
-                            Log.d("getLoginHistory", "success")
                         }
                         else -> {
                             Log.d("getLoginHistory", "failure")
@@ -165,7 +163,6 @@ class LobbyActivity : AppCompatActivity() {
                                 games.add(gameElement)
                             }
                             intent.putExtra("games", games)
-                            Log.d("getGameHistory", "success")
                         }
                         else -> {
                             Log.d("getGameHistory", "failure")
@@ -174,7 +171,6 @@ class LobbyActivity : AppCompatActivity() {
                     when (val user_identity_response = userIdentityRepository.makeGetLoginHistoryRequest(userInfos.idplayer.value!!)) {
                         is Result.Success<UserIdentityModel> -> {
                             intent.putExtra("userIdentity", user_identity_response.data)
-                            Log.d("getUserIdentity", "success")
                         }
                         else -> {
                             Log.d("getUserIdentity", "failure")
@@ -183,7 +179,6 @@ class LobbyActivity : AppCompatActivity() {
                     when (val statistics_response = statisticsRepository.makeGetStatisticsRequest(userInfos.idplayer.value!!)) {
                         is Result.Success<StatisticsModel> -> {
                             intent.putExtra("statistics", statistics_response.data)
-                            Log.d("getStatistics", "success")
                         }
                         else -> {
                             Log.d("getStatistics", "failure")

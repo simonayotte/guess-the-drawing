@@ -10,7 +10,6 @@ router.post('/leave', async (req, res) => {
     let channelExists: boolean = await doesChannelExist(req.body.channel)
     if (channelExists) {
         let isChannelDeleted = await leaveChannel(req.body.channel, req.body.idplayer);
-        console.log(isChannelDeleted)
         res.status(200).json({ isChannelDeleted: isChannelDeleted, message : "L'utilisateur a ete retire du channel"});
         return;
     } else {

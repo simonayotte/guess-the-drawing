@@ -61,7 +61,6 @@ export const virtualPlayerService = new VirtualPlayerService();
 export let lobbyList = new LobbyList();
 
 const server = app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
 });
 
 // Socket.io Initialization

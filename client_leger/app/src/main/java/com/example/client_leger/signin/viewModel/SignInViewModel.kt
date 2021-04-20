@@ -28,8 +28,8 @@ class SignInViewModel @Inject constructor(
     val successfulLogin: MutableLiveData<Boolean> = MutableLiveData()
     val showSignUp: MutableLiveData<Boolean> = MutableLiveData()
     val errorMessage = MutableLiveData<String?>(null)
-    val userName = MutableLiveData<String>("failix")
-    val password = MutableLiveData<String>("123")
+    val userName = MutableLiveData<String>("")
+    val password = MutableLiveData<String>("")
     fun onClickSignUp(){
         showSignUp.value = true
     }

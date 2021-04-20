@@ -22,7 +22,6 @@ export async function deleteHistory(channelName : string) {
         DELETE FROM log3900db.message WHERE message.channelName = $1;`,
                     [channelName],(err: any) => {
                         if (err) throw err;
-                        console.log("history deleted for " + channelName);
                         resolve(true)
                     });
     });

@@ -72,7 +72,6 @@ class ChannelJoinFragment : Fragment() {
                             val bodyChannel: JSONObject = JSONObject()
                             bodyChannel.put("channel", it)
                             socketConnectionService.mSocket.emit("joinChannelRoom", bodyChannel )
-                            Log.d("joinChannel", "success")
                         } else -> {
                             Log.d("joinChannel", "bad")
                         }

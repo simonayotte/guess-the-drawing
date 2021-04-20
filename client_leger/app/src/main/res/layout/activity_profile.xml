@@ -409,8 +409,8 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="#000"
                                 android:textSize="18sp"
-                                android:text="Nombre de pouces vers le haut"
-                                tools:text="Nombre de pouces vers le haut" />
+                                android:text="J'aime"
+                                tools:text="Je n'aime pas" />
 
                             <TextView
                                 android:id="@+id/thumbs_up"
@@ -426,8 +426,8 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="#000"
                                 android:textSize="18sp"
-                                android:text="Nombre de pouces vers le bas"
-                                tools:text="Nombre de pouces vers le bas" />
+                                android:text="Je n'aime pas"
+                                tools:text="Je n'aime pas" />
 
                             <TextView
                                 android:id="@+id/thumbs_down"

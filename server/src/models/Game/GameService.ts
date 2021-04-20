@@ -20,17 +20,14 @@ export class GameService {
             case "Sprint Solo": 
             case "Sprint Co-Op": {
                 this.gameLobbies.set(lobbyId, new GameLobbyCoop(lobbyId, playersId, difficulty))
-                console.log("Sprint Co-Op");
                 break
             }
             case "Classique": {
-                this.gameLobbies.set(lobbyId, new GameLobbyClassic(lobbyId, playersId, difficulty))   
-                console.log("Classique");
+                this.gameLobbies.set(lobbyId, new GameLobbyClassic(lobbyId, playersId, difficulty))
                 break
             }
             case "Battle Royale": {
-                this.gameLobbies.set(lobbyId, new GameLobbyBattleRoyal(lobbyId, playersId, difficulty))   
-                console.log("BR");
+                this.gameLobbies.set(lobbyId, new GameLobbyBattleRoyal(lobbyId, playersId, difficulty))
                 break
             }
         }
@@ -385,5 +382,15 @@ export class GameService {
         }
 
         return D[aSize][bSize];
+    }
+    public setVirtualPlayerIsDrawing(lobbyId: number, value: boolean)  {
+        const lobby =  this.gameLobbies.get(lobbyId)
+        if(lobby) {
+            lobby.setVirtualPlayerIsDrawing(value)
+        }
+    }
+    public isVirtualPlayerDrawing(lobbyId: number): boolean {
+        const lobby = this.gameLobbies.get(lobbyId)
+        return lobby ? lobby.isVirtualPlayerDrawing() : true
     }
 }

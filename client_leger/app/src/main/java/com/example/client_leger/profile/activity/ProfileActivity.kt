@@ -63,6 +63,7 @@ class ProfileActivity : AppCompatActivity() {
             "6" -> R.drawable.icon_6
             "7" -> R.drawable.icon_7
             "8" -> R.drawable.icon_8
+            "9" -> R.drawable.icon_9
             else -> {
                 R.drawable.icon_0
             }
@@ -127,6 +128,7 @@ class ProfileActivity : AppCompatActivity() {
         val games: ArrayList<GameHistoryModel> = intent.getParcelableArrayListExtra<GameHistoryModel>(
             "games"
         ) as ArrayList<GameHistoryModel>
+
         return games
     }
 

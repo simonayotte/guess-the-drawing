@@ -114,7 +114,6 @@ class GameRepository @Inject constructor(
 
         socketConnectionService.mSocket.on("thumbsUp") {
             var newArtistLikedId = gson.fromJson<ThumbsSocketModel>(it[0].toString(), ThumbsSocketModel::class.java)
-            Log.d("thumbsUp", "thumbsUp");
             artistLikedId.postValue(newArtistLikedId.idplayer)
             Timer().schedule(3000) {
                 artistLikedId.postValue(-1)
@@ -123,7 +122,6 @@ class GameRepository @Inject constructor(
 
         socketConnectionService.mSocket.on("thumbsDown") {
             var newartistDisLikedId = gson.fromJson<ThumbsSocketModel>(it[0].toString(), ThumbsSocketModel::class.java)
-            Log.d("thumbsDown", "thumbsDown");
             artistDislikedId.postValue(newartistDisLikedId.idplayer)
             Timer().schedule(3000) {
                 artistDislikedId.postValue(-1)
@@ -144,7 +142,6 @@ class GameRepository @Inject constructor(
                     }
                 }
             }
-            Log.d("gameRepo", players.toString())
             players.postValue(players.value)
         }
         socketConnectionService.mSocket.on("roundInfo") {
@@ -195,7 +192,6 @@ class GameRepository @Inject constructor(
     fun clientIsReady(userId: Int) {
         val json = JSONObject().put("userId", userId)
         socketConnectionService.mSocket.emit("clientReadyToStart", json.toString())
-        Log.d("GameActivity onStart()", "sent clientReadyToStart")
     }
 
     fun artistIsReady(userId: Int) {

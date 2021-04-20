@@ -95,7 +95,6 @@ export async function updatePlayerStats(idPlayer : number, isWinner: boolean, ga
                                 break;
                             }
                             default:{
-                                console.log("Mode incompatible")
                                 break;
                             }
                     
@@ -130,13 +129,14 @@ export async function addNewPlayerGame(idGame: number, idPlayer: number, isWinne
 export async function addNewGame(gameModeId: number, difficultyLevel: number, gameLength: number): Promise<number> {
     const gameTime: string = gameLength + "S"
     let promise: Promise<number> = new Promise((resolve) => {
-        db.query(`INSERT INTO log3900db.Game(gameModeId, difficultyLevel, gameLength) VALUES ($1, $2, $3) RETURNING idGame;
-               `,
-                           [gameModeId, difficultyLevel, gameTime],(err: any, result: any) => {
+        db.query(`SET TIMEZONE = 'America/Montreal';`,
+        [], (err: any, results: any) => {
+            db.query(`INSERT INTO log3900db.Game(gameModeId, difficultyLevel, gameLength) VALUES ($1, $2, $3) RETURNING idGame;
+               `, [gameModeId, difficultyLevel, gameTime],(err: any, result: any) => {
                                if (err) throw err;
-                               console.log("la game " + result.rows[0].idgame + " a été ajouté")
                                resolve(result.rows[0].idgame)
                            });
+                        });
     });
 
     promise.catch((error) => {

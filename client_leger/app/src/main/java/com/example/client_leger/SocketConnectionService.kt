@@ -17,7 +17,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SocketConnectionService @Inject constructor() {
-    val url = "http://log3900-server.herokuapp.com/" // adresse ip locale: ipconfig dans votre terminal -> ip.v4
+    val url = "http://log3900-server.herokuapp.com/" //"http://log3900-server.herokuapp.com/" // adresse ip locale: ipconfig dans votre terminal -> ip.v4
     lateinit var mSocket: Socket
 
     init {

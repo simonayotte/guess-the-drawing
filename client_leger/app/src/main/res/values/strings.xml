@@ -23,8 +23,8 @@
     <string name="find">Trouver</string>
     <string name="find_channel">Trouver un canal</string>
     <string name="join">Joindre</string>
-    <string name="firstName">Nom</string>
-    <string name="lastName">Prénom</string>
+    <string name="firstName">Prénom</string>
+    <string name="lastName">Nom</string>
     <string name="veuillez_r_essayer_de_nouveau">Veuillez réessayer de nouveau</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

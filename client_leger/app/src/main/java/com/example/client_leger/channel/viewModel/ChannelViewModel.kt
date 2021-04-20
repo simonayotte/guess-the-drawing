@@ -52,7 +52,6 @@ class ChannelViewModel  @Inject constructor(
                         userInfos.userChannels.value = userInfos.userChannels.value
 
                         channelRepository.newChannelCreation(newChannelName)
-                        Log.d("createChannel", "succes")
                         channelName.value = ""
                     } else -> {
                         Log.d("createChannel", "bad")
@@ -75,7 +74,6 @@ class ChannelViewModel  @Inject constructor(
                     userInfos.appChannels.value?.addAll(diffChannels)
                     userInfos.appChannels.postValue(userInfos.appChannels.value)
 
-                    Log.d("getChannels", "success")
                     view.findNavController()
                         .navigate(R.id.action_channelFragment_to_channelJoinFragment)
                 } else -> {

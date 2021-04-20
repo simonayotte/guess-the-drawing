@@ -12,18 +12,11 @@ const qdsr = require('quickdraw-svg-render');
 const fs = require('fs');
 
 router.post('/drawing', async (req, res) => {
-    console.log('Incoming PMI drawing info')
-    console.log(req.body);
     const iddrawing = await sendDrawing(req.body);
     res.send({idDrawing: iddrawing});
-    console.log('idDrawing associated with PMI drawing ' + iddrawing);
-
-
 });
 
 router.post('/point', async (req, res) => {
-    console.log('Incoming path for PMI')
-    console.log(req.body);
     await sendPoint(req.body);
     res.send();
 });
@@ -36,8 +29,6 @@ router.post('/quickdraw', async (req, res) => {
         const randomNumber = Math.floor((Math.random()*10000))%numCategories;
         quickdraw = QUICKDRAW_OBJECTS[randomNumber]
     } while(quickdraw === previousWord)
-    
-    console.log(quickdraw.word);
     let drawingSvg = qdsr(quickdraw.drawing, false);
     res.send({quickdraw: drawingSvg, word: quickdraw.word});
 
@@ -91,7 +82,6 @@ router.post('/populate-quickdraw', async (req, res) => {
         response.on("end", () => {
         
             try {
-                console.log("quickdraw request done")
             } catch (error) {
                 console.error(error.message);
             };

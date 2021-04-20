@@ -9,7 +9,6 @@ export async function leaveChannel(channelName : string, idPlayer: string): Prom
         DELETE FROM log3900db.ChannelConnexion WHERE ChannelConnexion.channelName = $1 AND ChannelConnexion.idplayer = $2;`,
                     [channelName, idPlayer],(err: any) => {
                         if (err) throw err;
-                        console.log(`Le joueur ${idPlayer} a quitter le channel ${channelName}.`);
                         // check if channel is empty and delete it if empty
                         db.query(`
                             SELECT COUNT (channelName) AS numUsers
@@ -27,7 +26,6 @@ export async function leaveChannel(channelName : string, idPlayer: string): Prom
                                                         DELETE FROM log3900db.Channel WHERE Channel.channelName = $1;`,
                                                     [channelName],(err: any) => {
                                                         if (err) throw err;
-                                                        console.log(`Le channel ${channelName} a été supprimer.`);
                                                         isDeleted = true;
                                                         resolve(true);
                                                 });
@@ -43,7 +41,6 @@ export async function leaveChannel(channelName : string, idPlayer: string): Prom
     });
 
     promise.catch((error) => {
-        console.error(error);
       });
 
     return promise;
@@ -99,7 +96,6 @@ export async function leaveChannelLobbyWithIdPlayer(channelName : string, idPlay
         DELETE FROM log3900db.ChannelConnexion WHERE ChannelConnexion.channelName = $1 AND ChannelConnexion.idplayer = $2;`,
                     [channelName, idPlayer],(err: any) => {
                         if (err) throw err;
-                        console.log(`Le joueur ${idPlayer} a quitter le channel ${channelName}.`);
                         // check if channel is empty and delete it if empty
                         resolve(true);         
         });          
@@ -119,7 +115,6 @@ export async function joinChannel(channelName : string, idPlayer: string) {
     INSERT INTO log3900db.ChannelConnexion(channelName, idPlayer) VALUES ($1, $2);`,
                 [channelName, idPlayer],(err: any) => {
                     if (err) throw err;
-                    console.log(`Le player ${idPlayer} a ete ajoute a ${channelName}.`);
                 });
 };
 
@@ -144,7 +139,6 @@ export async function joinChannelLobby(channelName : string, username: string): 
                                 INSERT INTO log3900db.ChannelConnexion(channelName, idPlayer) VALUES ($1, $2);`,
                                     [channelName, idPlayer],(err: any) => {
                                         if (err) throw err;
-                                        console.log(`Le player ${idPlayer} a ete ajoute a ${channelName}.`);
                                         resolve(true)
                                     });
                             } else {
@@ -172,13 +166,11 @@ export async function createChannel(channelName : string, idPlayer: string) {
                 [channelName],
                 (err: any) => {
                     if (err) throw err;
-                    console.log(`Le channel ${channelName} a ete cree.`);
                     db.query(`
                     INSERT INTO log3900db.ChannelConnexion(channelName, idPlayer) VALUES ($1, $2);`,
                                 [channelName, idPlayer],
                                 (err: any) => {
                                     if (err) throw err;
-                                    console.log(`L'utilisateur ${idPlayer} est ajoute.`);
                                 });
                 });
 };
@@ -187,7 +179,6 @@ export async function createChannelLobby(channelName : string): Promise<boolean>
     let channelExists = await doesChannelExist(channelName);
     let promise: Promise<boolean> = new Promise((resolve, reject) => {
         if (channelExists){
-            console.log("Channel already exists");
             resolve(false);
         } else {
             db.query(`
@@ -195,7 +186,6 @@ export async function createChannelLobby(channelName : string): Promise<boolean>
                         [channelName],
                         (err: any) => {
                             if (err) throw err;
-                            console.log(`Le channel ${channelName} a ete cree.`);
                             resolve(true);
                         });
         }

@@ -49,6 +49,7 @@ class MessageRecyclerAdapter(private val username: String) :
                 "6" -> holder.avatar.setImageResource(R.drawable.icon_6)
                 "7" -> holder.avatar.setImageResource(R.drawable.icon_7)
                 "8" -> holder.avatar.setImageResource(R.drawable.icon_8)
+                "9" -> holder.avatar.setImageResource(R.drawable.icon_9)
                 else -> {
                     holder.avatar.setImageResource(R.drawable.icon_0)
                 }
